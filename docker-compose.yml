@@ -1,0 +1,44 @@
+version: "3.9"
+
+networks:
+  corp:
+    driver: bridge
+
+services:
+  attendance-node1:
+    build:
+      context: NodeJS\.
+      dockerfile: Dockerfile
+    container_name: attendance-node1
+    networks:
+      - corp
+    ports:
+      - "5000:5000"
+    restart: always
+  proxy:
+    container_name: proxy
+    networks:
+      - corp
+    build:
+      context: .\Nginx
+      dockerfile: Dockerfile
+    ports:
+      - "1234:80"
+    restart: always
+    depends_on:
+      - 'attendance-node1'
+      
+  # psqlDB:
+  #   image: "postgres" # use latest official postgres version
+  #   networks:
+  #     - corp
+  #   expose:
+  #     - 5432
+  #   container_name: psqlDB
+  #   restart: always
+  #   environment:
+  #     - POSTGRES_USER=karol
+  #     - POSTGRES_PASSWORD=testing123
+  #     - POSTGRES_DB=karolk72app
+  #   volumes:
+  #     - ../../MountData/db:/var/lib/postgresql/data:z # persist data even if container shuts down
