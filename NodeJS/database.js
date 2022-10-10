@@ -2,7 +2,7 @@
 
 const mongoose = require("mongoose");
 
-mongoose.connect(`mongodb://test:123@nginx:2000/testing?authMechanism=DEFAULT`, {
+mongoose.connect(`mongodb://nginx:2000/testing?authMechanism=DEFAULT`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
