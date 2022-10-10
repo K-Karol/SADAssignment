@@ -30,10 +30,14 @@ services:
       - target: 1000
         published: 1234
         mode: host
-
-      - target: 2000
+      - target: 3000
         published: 4321
         mode: host
+      # - target: 2000
+      #   published: 4321
+      #   mode: host
+    expose:
+      - "2000"
     restart: always
     depends_on:
       - 'attendance-node1'
