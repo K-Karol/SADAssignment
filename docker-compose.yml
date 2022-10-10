@@ -1,8 +1,8 @@
 version: "3.9"
 
-networks:
-  corp:
-    driver: bridge
+# networks:
+#   corp:
+#     driver: bridge
 
 services:
   attendance-node1:
@@ -10,24 +10,52 @@ services:
       context: NodeJS\.
       dockerfile: Dockerfile
     container_name: attendance-node1
-    networks:
-      - corp
-    ports:
-      - "5000:5000"
+    # networks:
+    #   - corp
+    # ports:
+    #   - "5000:5000"
+    expose:
+      - "5000"
     restart: always
-  proxy:
-    container_name: proxy
-    networks:
-      - corp
+    depends_on:
+      - mongodb
+  nginx:
+    container_name: nginx
+    # networks:
+    #   - corp
     build:
       context: .\Nginx
       dockerfile: Dockerfile
     ports:
-      - "1234:80"
+      - target: 1000
+        published: 1234
+        mode: host
+
+      - target: 2000
+        published: 4321
+        mode: host
     restart: always
     depends_on:
       - 'attendance-node1'
-      
+      - 'mongodb'
+  mongodb:
+    image: mongo:latest
+    command: mongod --port 57478
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    # expose:
+    #   - "27017"
+    expose:
+      - "57478"
+    # networks:
+    #   - corp
+    volumes:
+      - mongodb_data_container:/data/db
+    container_name: mongodb
+volumes:
+  mongodb_data_container:
+
   # psqlDB:
   #   image: "postgres" # use latest official postgres version
   #   networks:

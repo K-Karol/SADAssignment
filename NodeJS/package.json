@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.1"
+    "express": "^4.16.1",
+    "mongoose": "^6.6.5",
+    "net-ping": "^1.2.3",
+    "request": "^2.88.2"
   }
 }
