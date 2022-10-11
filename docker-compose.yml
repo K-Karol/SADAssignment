@@ -24,7 +24,7 @@ services:
     # networks:
     #   - corp
     build:
-      context: .\Nginx
+      context: .\Http
       dockerfile: Dockerfile
     ports:
       - target: 1000
