@@ -15,8 +15,8 @@ RUN npm run build
 
 FROM nginx
 
-# COPY ["nginx/karol.crt", "/etc/ssl/certs/karol.crt"]
-# COPY ["nginx/karol.key", "/etc/ssl/private/karol.key"]
+COPY ["nginx-selfsigned.crt", "/etc/nginx/certs/nginx-selfsigned.crt"]
+COPY ["nginx-selfsigned.key", "/etc/nginx/certs/nginx-selfsigned.key"]
 COPY ["nginx.conf", "/etc/nginx/nginx.conf"]
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=builder /src/reactspa/dist /usr/share/nginx/html

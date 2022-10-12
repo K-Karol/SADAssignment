@@ -24,7 +24,7 @@ function App() {
           onClick={() =>
             {
               var apiResponse = "";
-              fetch("http://localhost:1234/api", {
+              fetch("https://localhost/api", {
                 method: "GET",
               })
                 .then((res) => res.text())

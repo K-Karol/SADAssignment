@@ -1,9 +1,9 @@
 "use strict";
 
 const express = require("express");
-const db = require("./database");
+// const db = require("./database");
 
-const fetchData = require("./fetch-model");
+// const fetchData = require("./fetch-model");
 
 
 const app = express();

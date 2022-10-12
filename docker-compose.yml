@@ -27,15 +27,17 @@ services:
       context: .\Http
       dockerfile: Dockerfile
     ports:
-      - target: 1000
-        published: 1234
+      - target: 80
+        published: 80
         mode: host
-      - target: 3000
-        published: 4321
+      - target: 443
+        published: 443
         mode: host
       # - target: 2000
       #   published: 4321
       #   mode: host
+    # volumes:
+    #   - nginx_certs:/etc/nginx/certs
     expose:
       - "2000"
     restart: always
@@ -57,26 +59,26 @@ services:
     volumes:
       - mongodb_data_container:/data/db
     container_name: mongodb
-  mongo-express:
-    image: mongo-express:latest
-    container_name: mongo-express
-    ports:
-      - target: 8081
-        published: 8081
-        mode: host
-    environment:
-      # ME_CONFIG_MONGODB_SERVER: "nginx"
-      # ME_CONFIG_BASICAUTH_USERNAME: "root"
-      # ME_CONFIG_BASICAUTH_PASSWORD: "rootpassword"
-      # ME_CONFIG_MONGODB_PORT: "2000"
-      # ME_CONFIG_MONGODB_ENABLE_ADMIN: "false"
-      ME_CONFIG_MONGODB_URL: "mongodb://root:rootpassword@nginx:2000/"
-    depends_on:
-      - mongodb
+  # mongo-express:
+  #   image: mongo-express:latest
+  #   container_name: mongo-express
+  #   ports:
+  #     - target: 8081
+  #       published: 8081
+  #       mode: host
+  #   environment:
+  #     # ME_CONFIG_MONGODB_SERVER: "nginx"
+  #     # ME_CONFIG_BASICAUTH_USERNAME: "root"
+  #     # ME_CONFIG_BASICAUTH_PASSWORD: "rootpassword"
+  #     # ME_CONFIG_MONGODB_PORT: "2000"
+  #     # ME_CONFIG_MONGODB_ENABLE_ADMIN: "false"
+  #     ME_CONFIG_MONGODB_URL: "mongodb://root:rootpassword@nginx:4321/"
+  #   depends_on:
+  #     - mongodb
       
 volumes:
   mongodb_data_container:
-
+  nginx_certs:
   # psqlDB:
   #   image: "postgres" # use latest official postgres version
   #   networks:
