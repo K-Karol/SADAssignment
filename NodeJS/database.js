@@ -1,8 +1,9 @@
 "use strict";
 
 const mongoose = require("mongoose");
+const config = require("./configs/db_config");
 
-mongoose.connect(`mongodb://nginx:2000/testing?authMechanism=DEFAULT`, {
+mongoose.connect(config.url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
