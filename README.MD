@@ -16,3 +16,17 @@ In root of the repo, running `docker-compose up --build` should be enough. Using
 After each change, you can Ctrl+C the current `docker-compose up` session, and then run it again.
 
 You can also use `docker-compose down` to stop and take down containers that were created for this. Adding the parameter `--volumes` should clear the volume created for MongoDb.
+
+
+## Extra
+
+You need a `.env` file which is ignored on git by default.
+
+The current version of the file:
+
+```
+PORT=5000
+DATABASE_URL=mongodb://mongodb:27017/saddb
+SECRET="<YOUR SECRET HERE>"
+CORS_ORIGIN=https://localhost
+```
