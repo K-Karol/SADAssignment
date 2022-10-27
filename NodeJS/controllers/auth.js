@@ -28,7 +28,7 @@ exports.login = async (req, res) => {
       if (result) {
         // sign token and send it in response
         const token = await jwt.sign({ username: user.username }, SECRET, {
-          expiresIn: "10s",
+          expiresIn: "2h",
         });
         var decoded = await jwt.decode(token, { complete: true });
 

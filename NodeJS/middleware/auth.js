@@ -14,13 +14,12 @@ const isLoggedIn = async (req, res, next) => {
         if (payload) {
           // store user data in request object
           req.user = payload;
+          // I would say to not store roles here incase they are revoked.
           next();
         } else {
-        //   res.status(400).json({ error: "token verification failed" });
             res.status(404).json(resGen.generateResult(false, false, "Token verification failed"));
         }
       } else {
-        //res.status(400).json({ error: "malformed auth header" });
         res.status(404).json(resGen.generateResult(false, false, "Malformed auth header"));
 
       }
