@@ -18,4 +18,8 @@ router.get("/", authMiddleware.isLoggedIn , async(req, res) => {
     }
 });
 
+router.get("/checkAdmin", authMiddleware.isLoggedIn, authMiddleware.checkRoles(["Admin"]),  async(req, res) => {
+    res.json(respGen.generateResult(true, "wassup admin"));
+});
+
 module.exports = router;
