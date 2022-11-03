@@ -10,6 +10,7 @@ const cors = require("cors");
 var bodyParser = require('body-parser');
 
 const auth_route = require("./routes/auth");
+const user_route = require("./routes/users");
 const test_route = require("./routes/test");
 
 const {PORT = 5000, CORS_ORIGIN="https://localhost"} = process.env
@@ -34,5 +35,7 @@ app.get("/api", (req, res) => {res.send("Root of the API")})
 app.use("/api/auth", auth_route);
 
 app.use("/api/test", test_route)
+
+app.use("/api/users", user_route);
 
 app.listen(PORT, () => console.log("Server is up and running"));

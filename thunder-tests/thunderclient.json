@@ -72,12 +72,31 @@
     "method": "POST",
     "sortNum": 5000,
     "created": "2022-11-03T11:08:18.552Z",
-    "modified": "2022-11-03T11:08:54.401Z",
+    "modified": "2022-11-03T16:04:53.820Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"username\" : \"{{username}}\",\n  \"password\" : \"{{password}}\"\n}",
+      "raw": "{\n  \"username\" : \"{{username}}\",\n  \"password\" : \"{{password}}\",\n  \"fullname\" : {\n    \"firstname\" : \"{{firstname}}\",\n    \"middlenames\" : \"{{middlenames}}\",\n    \"lastname\" : \"{{lastname}}\"\n  },\n  \"address\" : {\n    \"addressLine1\" : \"test address\",\n    \"postcode\" : \"abcde\",\n    \"city\" : \"sheffield\",\n    \"country\" : \"UK\"\n  }\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "2e6725ef-e8f3-444e-8204-8a40fbc6fd9c",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/users/register",
+    "url": "users/register",
+    "method": "POST",
+    "sortNum": 40000,
+    "created": "2022-11-03T16:04:05.153Z",
+    "modified": "2022-11-03T17:37:46.619Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"generatePassword\": false,\n  \"userDetails\" : {\n    \"username\" : \"AAA\",\n    \"password\" : \"A Secure Password\",\n    \"fullname\" : {\n      \"firstname\" : \"AAA\",\n      \"lastname\" : \"BBB\"\n    },\n    \"address\" : {\n      \"addressLine1\" : \"addressLine1\",\n      \"postcode\" : \"abcde\",\n      \"city\" : \"sheffield\",\n      \"country\" : \"UK\"\n    }\n  }\n}",
       "form": []
     },
     "tests": []
