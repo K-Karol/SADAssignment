@@ -1,0 +1,85 @@
+[
+  {
+    "_id": "532780b0-c944-465b-a68e-53d4d62e3cb9",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/auth/login",
+    "url": "auth/login",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2022-11-03T11:02:16.707Z",
+    "modified": "2022-11-03T11:06:13.017Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "set-env-var",
+        "custom": "json.Response.token",
+        "action": "setto",
+        "value": "{{access-token}}"
+      }
+    ]
+  },
+  {
+    "_id": "38a06531-62dd-4a31-a6bc-cbdccdd4a112",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/test/",
+    "url": "test",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2022-11-03T11:06:55.807Z",
+    "modified": "2022-11-03T11:09:25.717Z",
+    "headers": [],
+    "params": [],
+    "tests": [],
+    "preReq": {
+      "runRequests": [
+        {
+          "reqId": "532780b0-c944-465b-a68e-53d4d62e3cb9",
+          "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+          "triggerCondition": "run-always",
+          "triggerValue": ""
+        }
+      ]
+    }
+  },
+  {
+    "_id": "f83c3e38-16eb-4a84-9e82-b98d456e3a15",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/test/checkAdmin",
+    "url": "test/checkAdmin",
+    "method": "GET",
+    "sortNum": 30000,
+    "created": "2022-11-03T11:07:40.455Z",
+    "modified": "2022-11-03T11:07:50.163Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "8be4b9ff-8fb2-4136-989b-70b1bed2c9f8",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/auth/register",
+    "url": "auth/register",
+    "method": "POST",
+    "sortNum": 5000,
+    "created": "2022-11-03T11:08:18.552Z",
+    "modified": "2022-11-03T11:08:54.401Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"username\" : \"{{username}}\",\n  \"password\" : \"{{password}}\"\n}",
+      "form": []
+    },
+    "tests": []
+  }
+]

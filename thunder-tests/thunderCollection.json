@@ -1,0 +1,21 @@
+[
+  {
+    "_id": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "colName": "SAD",
+    "created": "2022-11-03T11:00:27.145Z",
+    "sortNum": 10000,
+    "folders": [],
+    "settings": {
+      "headers": [],
+      "auth": {
+        "type": "bearer",
+        "bearer": "{{access-token}}"
+      },
+      "tests": [],
+      "options": {
+        "baseUrl": "https://localhost/api/"
+      },
+      "envId": "bd699659-6bb4-45cf-9de0-2e67a81a1abe"
+    }
+  }
+]
