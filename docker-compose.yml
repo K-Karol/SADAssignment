@@ -29,9 +29,6 @@ services:
         mode: host
     volumes:
       - nginx_certs:/etc/nginx/certs
-    expose:
-    # normally 2000 is exposed internally for node
-      - "2000"
     restart: always
     depends_on:
       - 'attendance-node1'
@@ -52,7 +49,7 @@ services:
         published: 8081
         mode: host
     environment:
-      ME_CONFIG_MONGODB_URL: "mongodb://nginx:2000/"
+      ME_CONFIG_MONGODB_URL: "mongodb://mongodb:27017/"
     depends_on:
       - mongodb
       
