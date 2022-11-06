@@ -1,12 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const user_constoller = require("../controllers/users");
+const user_controller = require("../controllers/users");
 const authMiddleware = require("../middleware/auth");
 
-router.get("/", authMiddleware.authenticateRequest, (req, res) => {
-  res.send("Users endpoint root");
-});
+router.post("/register", authMiddleware.authenticateRequest, authMiddleware.checkRoles(["Admin"]),  user_controller.register);
 
-router.post("/register", authMiddleware.authenticateRequest, authMiddleware.checkRoles(["Admin"]),  user_constoller.register);
+// crud
 
+router.get("/", authMiddleware.authenticateRequest, authMiddleware.checkRoles(["Admin"]), user_controller.getUsers);
+
+//router.post("/", authMiddleware.authenticateRequest, authMiddleware.checkRoles(["Admin"]), user_controller.postUserBatched);
+
+// router.post("/batch", authMiddleware.authenticateRequest, authMiddleware.checkRoles(["Admin"]));
 module.exports = router;

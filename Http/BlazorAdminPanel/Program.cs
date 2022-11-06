@@ -1,4 +1,5 @@
 using BlazorAdminPanel;
+using BlazorDownloadFile;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -17,7 +18,7 @@ if(string.IsNullOrEmpty(baseAddress) || string.IsNullOrEmpty(apiKey))
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(baseAddress) });
 builder.Services.AddSingleton<BlazorAdminPanel.Services.IAPIService>(sp => (BlazorAdminPanel.Services.IAPIService)ActivatorUtilities.CreateInstance(sp, typeof(BlazorAdminPanel.Services.APIService), apiKey));
-
+builder.Services.AddBlazorDownloadFile(lifetime: ServiceLifetime.Scoped);
 var app = builder.Build();
 
 

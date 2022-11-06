@@ -44,6 +44,7 @@ const authenticateRequest = async (req, res, next) => {
         .json(resGen.generateResult(false, false, "No authorization header"));
     }
   } catch (error) {
+    console.error(error);
     res.status(401).json(resGen.generateResult(false, false, error));
   }
 };

@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "_id": "36ea0028-5c18-4733-b22b-0df9094efd95",
+    "colId": "history",
+    "containerId": "",
+    "name": "admin/users",
+    "url": "admin/users",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-11-06T21:19:33.339Z",
+    "modified": "2022-11-06T21:19:35.625Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  }
+]

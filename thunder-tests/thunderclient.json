@@ -8,7 +8,7 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-11-03T11:02:16.707Z",
-    "modified": "2022-11-03T11:06:13.017Z",
+    "modified": "2022-11-06T15:40:43.290Z",
     "headers": [],
     "params": [],
     "body": {
@@ -34,7 +34,7 @@
     "method": "GET",
     "sortNum": 20000,
     "created": "2022-11-03T11:06:55.807Z",
-    "modified": "2022-11-03T11:09:25.717Z",
+    "modified": "2022-11-06T15:41:05.171Z",
     "headers": [],
     "params": [],
     "tests": [],
@@ -103,6 +103,64 @@
       "type": "json",
       "raw": "{\n  \"generatePassword\": false,\n  \"userDetails\" : {\n    \"username\" : \"AAA\",\n    \"password\" : \"A Secure Password\",\n    \"fullname\" : {\n      \"firstname\" : \"AAA\",\n      \"lastname\" : \"BBB\"\n    },\n    \"address\" : {\n      \"addressLine1\" : \"addressLine1\",\n      \"postcode\" : \"abcde\",\n      \"city\" : \"sheffield\",\n      \"country\" : \"UK\"\n    }\n  }\n}",
       "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "8b9b5443-860b-4aca-b288-4bb6a2e38af1",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/users/",
+    "url": "users?page=51",
+    "method": "GET",
+    "sortNum": 50000,
+    "created": "2022-11-06T15:43:42.529Z",
+    "modified": "2022-11-06T21:41:32.073Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "page",
+        "value": "51",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "f0790667-bb5b-4660-9aa2-8fccf035801a",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/users/",
+    "url": "users",
+    "method": "POST",
+    "sortNum": 60000,
+    "created": "2022-11-06T18:04:29.210Z",
+    "modified": "2022-11-06T18:06:31.227Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"username\": \"Test\",\n  \"password\": \"123\",\n  \"fullname\": {\n    \"firstname\": \"AAA\",\n    \"lastname\": \"BBB\"\n  },\n  \"address\": {\n    \"addressLine1\": \"addressLine1\",\n    \"postcode\": \"abcde\",\n    \"city\": \"sheffield\",\n    \"country\": \"UK\"\n  }\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "a2eb4f88-b64e-4e1c-acd3-f47d235f69ad",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/admin/users",
+    "url": "admin/users",
+    "method": "POST",
+    "sortNum": 60000,
+    "created": "2022-11-06T21:19:47.656Z",
+    "modified": "2022-11-06T21:20:18.142Z",
+    "headers": [],
+    "params": [],
+    "auth": {
+      "type": "bearer",
+      "bearer": "05d04171-22ec-4d45-ac26-459acf6919d6",
+      "bearerPrefix": "App"
     },
     "tests": []
   }

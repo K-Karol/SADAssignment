@@ -34,8 +34,9 @@ Below is an example:
 ```shell
 PORT=5000
 DATABASE_URL=mongodb://mongodb:27017/saddb
-SECRET="<YOUR SECRET HERE>"
+SECRET=<YOUR SECRET HERE>
 CORS_ORIGIN=https://localhost
+ADMIN_APIKEY=<API KEY HERE(Hardcoded in Blazor)>
 ```
 
 ### Commands
@@ -89,6 +90,10 @@ This will be removed during production.
 Additionally to access the MongoDb server directly, you can use the docker command `docker exec -it <container name or id> /bin/bash` where the container name should be `mongodb` but you may use the ID found by running `docker ps`. Once you do that, you are using the shell on the container (AKA small VM). Running `mongosh` will open the MongoDb CLI.
 
 You can also use Docker tools on VSCode to get the bash graphically.
+
+## /admin Blazor
+
+I've added a temp Admin Panel built with Blazor that runs on top of WASM. It uses the admin route that uses an API key instead of a user. This panel is used for debugging etc.
 
 ## Thunder Client
 

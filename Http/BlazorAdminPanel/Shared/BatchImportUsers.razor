@@ -1,0 +1,107 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using BlazorDownloadFile
+@inject Services.IAPIService _apiService
+@inject IBlazorDownloadFileService _blazorDownloadFileService
+
+
+
+<div class="card" style="padding: 10px; width: 30rem">
+    <h3>Import users using a JSON file</h3>
+    <InputFile OnChange="@LoadFile" />
+    <p style="display: @(dataIsLoaded ? "initial" : "none")">@msg</p>
+    <button style="display: @(dataIsLoaded ? "initial" : "none")" @onclick=ImportFile>Import data</button>
+    <p style="display: @(error ? "initial" : "none")">@errorMessage</p>
+    <p>@temp</p>
+    <div class="loader" style="display: @(isLoading ? "initial" : "none")"></div>
+</div>
+
+@code {
+    private bool error = false;
+    private string temp = "";
+    private string? errorMessage = null;
+
+    private bool dataIsLoaded = false;
+    private string msg = "";
+    private Models.UserImport? data = null;
+
+    private bool isLoading = false;
+
+    private async Task LoadFile(InputFileChangeEventArgs e)
+    {
+        error = false;
+        errorMessage = null;
+        dataIsLoaded = false;
+        data = null;
+
+        using (var stream = e.File.OpenReadStream())
+        {
+            try
+            {
+                data = await System.Text.Json.JsonSerializer.DeserializeAsync<Models.UserImport>(stream);
+                dataIsLoaded = !(data is null);
+                if (dataIsLoaded)
+                {
+                    dataIsLoaded = !(data!.Users is null);
+                }
+                msg = $"Number of users in file: {(data is null ? "File not loaded" : data!.Users!.Count())}";
+            }
+            catch (Exception exc)
+            {
+                error = true;
+                errorMessage = exc.ToString();
+            }
+        }
+
+        this.StateHasChanged();
+
+    }
+
+    private async Task ImportFile()
+    {
+
+        error = false;
+        errorMessage = null;
+
+        try
+        {
+
+            bool duplidateUsernames = data!.Users!.GroupBy(u => u.username).Any(g => g.Count() > 1);
+            if (duplidateUsernames)
+            {
+                error = true;
+                errorMessage = "File contains duplicate usernames";
+                return;
+            }
+            List<Models.UserImportResult> results = new List<Models.UserImportResult>();
+            isLoading = true;
+            this.StateHasChanged();
+            foreach (var user in data!.Users)
+            {
+                var detail = new Models.UserImportResult() { UserName = user.username };
+                try
+                {
+                    var id = await _apiService.CreateUser(user);
+                    detail.SuccessfullyImported = true;
+                    detail.Id = id;
+                }
+                catch (Exception ex)
+                {
+                    detail.Error = ex.Message;
+                    detail.SuccessfullyImported = false;
+                }
+                results.Add(detail);
+
+            }
+
+            await _blazorDownloadFileService.DownloadFileFromText("results.json", System.Text.Json.JsonSerializer.Serialize(results), System.Text.Encoding.UTF8, "application/octet-stream");
+        }
+        catch (Exception exc)
+        {
+            error = true;
+            errorMessage = exc.ToString();
+        }
+
+        isLoading = false;
+        this.StateHasChanged();
+    }
+}

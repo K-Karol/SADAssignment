@@ -2,7 +2,7 @@
 @inject Services.IAPIService _apiService
 @inject HttpClient _httpClient
 
-<div class="card" style="padding: 10px">
+<div class="card" style="padding: 10px; width: 30rem">
     <h3>Create Admin User</h3>
     <EditForm Model="@adminUserModel" OnValidSubmit="@HandleValidSubmit">
         <DataAnnotationsValidator />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlazorAdminPanel.Models;
+using System;
 using System.Text;
 
 namespace BlazorAdminPanel.Services
@@ -45,7 +46,7 @@ namespace BlazorAdminPanel.Services
                 Method = HttpMethod.Post,
             };
             request.Headers.Add("Authorization", "App 05d04171-22ec-4d45-ac26-459acf6919d6");
-            request.Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
+            request.Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(payload, options: new System.Text.Json.JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull}), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.SendAsync(request);
 
@@ -61,8 +62,58 @@ namespace BlazorAdminPanel.Services
 
                 }
 
-                throw new Exception($"HttpRequest failed with the status code {response.StatusCode}", errorResponse is null ? null : new Exception(errorResponse.Error ?? "N/A"));
+                throw new Exception($"HttpRequest failed with the status code {response.StatusCode} and the error message: {(errorResponse is null ? "N/A" : errorResponse.Error ?? "N/A")}");
             }
+        }
+
+        public async Task<string> CreateUser(UserDetails userDetails)
+        {
+
+            var request = new HttpRequestMessage()
+            {
+                RequestUri = new Uri("api/admin/users", UriKind.Relative),
+                Method = HttpMethod.Post,
+            };
+            request.Headers.Add("Authorization", "App 05d04171-22ec-4d45-ac26-459acf6919d6");
+            request.Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(userDetails, options: new System.Text.Json.JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull}), Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.SendAsync(request);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorResult = await response.Content.ReadAsStringAsync();
+                APIResponse? errorResponse = null;
+                try
+                {
+                    errorResponse = System.Text.Json.JsonSerializer.Deserialize<APIResponse>(errorResult);
+                }
+                catch
+                {
+
+                }
+
+                throw new Exception($"HttpRequest failed with the status code {response.StatusCode} and the error message: {(errorResponse is null ? "N/A" : errorResponse.Error ?? "N/A")}");
+            }
+
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            APIResponse? apiResonse = null;
+            try
+            {
+                apiResonse = System.Text.Json.JsonSerializer.Deserialize<APIResponse>(stringResponse);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to deserialise incoming response");
+            }
+
+            if(apiResonse is null)
+            {
+                throw new Exception($"Failed to deserialise incoming response / null");
+            }
+
+
+            return apiResonse.Response ?? throw new Exception("ID not returned from HTTPS response");
         }
     }
 }
