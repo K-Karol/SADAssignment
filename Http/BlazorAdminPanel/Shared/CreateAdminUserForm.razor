@@ -1,0 +1,69 @@
+﻿@using System.ComponentModel.DataAnnotations
+@inject Services.IAPIService _apiService
+@inject HttpClient _httpClient
+
+<div class="card" style="padding: 10px">
+    <h3>Create Admin User</h3>
+    <EditForm Model="@adminUserModel" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <p>Username</p><InputText id="Username" @bind-Value="adminUserModel.Username" />
+        <br/>
+        <p>Password</p><InputText id="Password" @bind-Value="adminUserModel.Password" />
+        <br/>
+        <p>FirstName</p><InputText id="FirstName" @bind-Value="adminUserModel.FirstName" />
+        <br/>
+        <p>LastName</p><InputText id="LastName" @bind-Value="adminUserModel.LastName" />
+        <br/>
+        <button type="submit">Submit</button>
+        <br/>
+        <p style="display: @(failed ? "initial" : "none")">Failed to create admin user. Exception: @(error ?? "N/A")</p>
+        <p style="display: @(failed ? "initial" : "none")">@(_httpClient.BaseAddress)</p>
+        <p style="display: @(success ? "initial" : "none")">Admin user created</p>
+    </EditForm>
+
+</div>
+
+
+
+
+@code {
+    private bool failed = false;
+
+    private bool success = false;
+
+    private string? error = null;
+
+    public class AdminUserModel
+    {
+        [Required]
+        public string? Username { get; set; }
+        [Required]
+        public string? Password { get; set; }
+        [Required]
+        public string? FirstName { get; set; }
+        [Required]
+        public string? LastName { get; set; }
+    }
+
+    private AdminUserModel adminUserModel = new();
+
+    private async Task HandleValidSubmit()
+    {
+        failed = false;
+        error = null;
+        success = false;
+        try
+        {
+            await _apiService.CreateAdminUser(adminUserModel.Username!, adminUserModel.Password!, adminUserModel.FirstName!, adminUserModel.LastName!);
+            success = true;
+        }
+        catch (Exception e)
+        {
+            failed = true;
+            error = e.ToString();
+        }
+
+    }
+}

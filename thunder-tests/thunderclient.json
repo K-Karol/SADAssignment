@@ -67,18 +67,23 @@
     "_id": "8be4b9ff-8fb2-4136-989b-70b1bed2c9f8",
     "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
     "containerId": "",
-    "name": "/auth/register",
-    "url": "auth/register",
+    "name": "/admin/register",
+    "url": "admin/createAdminUser",
     "method": "POST",
     "sortNum": 5000,
     "created": "2022-11-03T11:08:18.552Z",
-    "modified": "2022-11-03T16:04:53.820Z",
+    "modified": "2022-11-06T13:45:03.296Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"username\" : \"{{username}}\",\n  \"password\" : \"{{password}}\",\n  \"fullname\" : {\n    \"firstname\" : \"{{firstname}}\",\n    \"middlenames\" : \"{{middlenames}}\",\n    \"lastname\" : \"{{lastname}}\"\n  },\n  \"address\" : {\n    \"addressLine1\" : \"test address\",\n    \"postcode\" : \"abcde\",\n    \"city\" : \"sheffield\",\n    \"country\" : \"UK\"\n  }\n}",
+      "raw": "{\n  \"username\" : \"{{username}}\",\n  \"password\" : \"{{password}}\",\n  \"fullname\" : {\n    \"firstname\" : \"Firstname\",\n    \"lastname\" : \"Lastname\"\n  },\n  \"address\" : {\n    \"addressLine1\" : \"test address\",\n    \"postcode\" : \"abcde\",\n    \"city\" : \"sheffield\",\n    \"country\" : \"UK\"\n  }\n}",
       "form": []
+    },
+    "auth": {
+      "type": "bearer",
+      "bearer": "{{apikey}}",
+      "bearerPrefix": "App"
     },
     "tests": []
   },

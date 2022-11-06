@@ -10,6 +10,7 @@ const cors = require("cors");
 var bodyParser = require('body-parser');
 
 const auth_route = require("./routes/auth");
+const admin_route = require("./routes/admin");
 const user_route = require("./routes/users");
 const test_route = require("./routes/test");
 
@@ -34,7 +35,10 @@ app.get("/api", (req, res) => {res.send("Root of the API")})
 
 app.use("/api/auth", auth_route);
 
-app.use("/api/test", test_route)
+app.use("/api/admin", admin_route);
+
+
+app.use("/api/test", test_route);
 
 app.use("/api/users", user_route);
 

@@ -7,12 +7,12 @@ const mongoose = require("mongoose");
 // })
 
 var User = mongoose.model(
-    "users",
+    "User",
     mongoose.Schema(
       {
         username: {type: String, unique: true, required: true},
         password: {type: String, required: true},
-        roles:    [{type: mongoose.Schema.Types.ObjectId, ref: "roles"}],
+        roles:    [{type: mongoose.Schema.Types.ObjectId, ref: "Role"}],
         fullname: {
           firstname: {type: String, required: true},
           middlenames: {type: String, required: false},
