@@ -115,7 +115,7 @@
     "method": "GET",
     "sortNum": 50000,
     "created": "2022-11-06T15:43:42.529Z",
-    "modified": "2022-11-07T12:16:46.989Z",
+    "modified": "2022-11-07T12:25:23.755Z",
     "headers": [],
     "params": [
       {
@@ -129,17 +129,7 @@
         "isPath": false
       }
     ],
-    "tests": [],
-    "preReq": {
-      "runRequests": [
-        {
-          "reqId": "532780b0-c944-465b-a68e-53d4d62e3cb9",
-          "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
-          "triggerCondition": "run-always",
-          "triggerValue": ""
-        }
-      ]
-    }
+    "tests": []
   },
   {
     "_id": "f0790667-bb5b-4660-9aa2-8fccf035801a",
@@ -169,9 +159,14 @@
     "method": "POST",
     "sortNum": 60000,
     "created": "2022-11-06T21:19:47.656Z",
-    "modified": "2022-11-06T21:20:18.142Z",
+    "modified": "2022-11-07T12:26:27.951Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{}",
+      "form": []
+    },
     "auth": {
       "type": "bearer",
       "bearer": "05d04171-22ec-4d45-ac26-459acf6919d6",

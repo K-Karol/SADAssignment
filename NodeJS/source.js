@@ -14,6 +14,10 @@ const admin_route = require("./routes/admin");
 const user_route = require("./routes/users");
 const test_route = require("./routes/test");
 
+const admin_middleware = require("./middleware/admin");
+const auth_middleware = require("./middleware/auth");
+
+
 const {PORT = 5000, CORS_ORIGIN="https://localhost"} = process.env
 
 // const fetchData = require("./fetch-model");
@@ -35,11 +39,11 @@ app.get("/api", (req, res) => {res.send("Root of the API")})
 
 app.use("/api/auth", auth_route);
 
-app.use("/api/admin", admin_route);
+app.use("/api/admin", admin_middleware.authAPIKey , admin_route); //ONLY USE IN DEBUG MODE
 
 
 app.use("/api/test", test_route);
 
-app.use("/api/users", user_route);
+app.use("/api/users", auth_middleware.authenticateRequest, user_route);
 
 app.listen(PORT, () => console.log("Server is up and running"));

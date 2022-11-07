@@ -15,12 +15,12 @@ namespace BlazorAdminPanel.Services
     {
         //private readonly ILogger _logger;
         private readonly HttpClient _httpClient;
-        private readonly string _apikey;
+        private readonly IRuntimeConfigService _runtimeConfigService;
 
-        public APIService(HttpClient httpClient, string apikey)
+        public APIService(HttpClient httpClient, IRuntimeConfigService runtimeConfigService)
         {
             _httpClient = httpClient;
-            _apikey = apikey;
+            _runtimeConfigService = runtimeConfigService;
         }
 
         public async Task CreateAdminUser(string username, string password, string firstName, string lastName)
@@ -45,7 +45,7 @@ namespace BlazorAdminPanel.Services
                 RequestUri = new Uri("api/admin/createAdminUser", UriKind.Relative),
                 Method = HttpMethod.Post,
             };
-            request.Headers.Add("Authorization", "App 05d04171-22ec-4d45-ac26-459acf6919d6");
+            request.Headers.Add("Authorization", $"App {(await _runtimeConfigService.GetRuntimeConfiguration()).APIKey}");
             request.Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(payload, options: new System.Text.Json.JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull}), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.SendAsync(request);
@@ -74,7 +74,7 @@ namespace BlazorAdminPanel.Services
                 RequestUri = new Uri("api/admin/users", UriKind.Relative),
                 Method = HttpMethod.Post,
             };
-            request.Headers.Add("Authorization", "App 05d04171-22ec-4d45-ac26-459acf6919d6");
+            request.Headers.Add("Authorization", $"App {(await _runtimeConfigService.GetRuntimeConfiguration()).APIKey}");
             request.Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(userDetails, options: new System.Text.Json.JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull}), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.SendAsync(request);

@@ -11,13 +11,11 @@
     <p style="display: @(dataIsLoaded ? "initial" : "none")">@msg</p>
     <button style="display: @(dataIsLoaded ? "initial" : "none")" @onclick=ImportFile>Import data</button>
     <p style="display: @(error ? "initial" : "none")">@errorMessage</p>
-    <p>@temp</p>
     <div class="loader" style="display: @(isLoading ? "initial" : "none")"></div>
 </div>
 
 @code {
     private bool error = false;
-    private string temp = "";
     private string? errorMessage = null;
 
     private bool dataIsLoaded = false;

@@ -1,7 +1,49 @@
 ﻿@page "/"
-
+@inject BlazorAdminPanel.Services.IRuntimeConfigService _runtimeConfigService
 <PageTitle>Admin Panel</PageTitle>
 
 <h1>Admin Panel</h1>
 
 <p>Navigate to any tools in the navbar</p>
+<br />
+<br />
+<div class="card cr">
+    <h3>Panel configuration</h3>
+    <EditForm Model="@runtimeModel" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <p>API Key</p><InputText id="APIKey" @bind-Value="runtimeModel.APIKey" />
+        <br/>
+        <button type="submit">Submit changes</button>
+        <div class="loader" style="display: @(isLoading ? "initial" : "none")"></div>
+    </EditForm>
+
+</div>
+
+@code{
+    public class RuntimeModel
+    {
+        public string APIKey { get; set; } = "";
+    }
+
+    private RuntimeModel runtimeModel = new RuntimeModel();
+    private BlazorAdminPanel.Services.RuntimeConfiguration? runtimeConfiguration;
+    private bool isLoading = false;
+    protected override async Task OnInitializedAsync()
+    {
+        isLoading = true;
+        runtimeConfiguration = await _runtimeConfigService.GetRuntimeConfiguration();
+        runtimeModel.APIKey = runtimeConfiguration.APIKey;
+        isLoading = false;
+        await base.OnInitializedAsync();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        isLoading = true;
+        runtimeConfiguration!.APIKey = runtimeModel.APIKey;
+        await _runtimeConfigService.SaveRuntimeConfiguration();
+        isLoading = false;
+    }
+}
