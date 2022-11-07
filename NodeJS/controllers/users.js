@@ -109,16 +109,21 @@ exports.getUsers = async (req, res) => {
     customLabels: {
       totalDocs: "totalResults",
       docs: "users",
-    }
+    },
   };
 
-  aggregate_options.push({$project: {"password" : 0}});
+  aggregate_options.push({ $project: { password: 0 } });
   aggregate_options.push({
-    $lookup: { from: "roles", localField: "roles", foreignField: "_id", as: "roles" }
+    $lookup: {
+      from: "roles",
+      localField: "roles",
+      foreignField: "_id",
+      as: "roles",
+    },
   });
-  aggregate_options.push({$project: {"roles._id" : 0}});
-  aggregate_options.push({$project: {"roles.__v" : 0}});
-  aggregate_options.push({$project: {"__v" : 0}});
+  aggregate_options.push({ $project: { "roles._id": 0 } });
+  aggregate_options.push({ $project: { "roles.__v": 0 } });
+  aggregate_options.push({ $project: { __v: 0 } });
 
   const myAggregate = User.aggregate(aggregate_options);
   User.aggregatePaginate(myAggregate, options)
@@ -131,35 +136,56 @@ exports.getUsers = async (req, res) => {
     });
 };
 
-exports.postUser = async (req, res) => {
-    try {
+exports.getUser = async (req, res) => {
+  try{
 
-        var v = new Validator();
-        v.addSchema(addressSchema, "/Address");
-        v.addSchema(fullnameSchema, "/Fullname");
-        var result = v.validate(req.body, userDetailsSchema);
+    const id = req.params.id;
 
-        if (!result.valid) {
-          res
-            .status(400)
-            .json(
-              respGen.generateResult(
-                false,
-                null,
-                "Request JSON in incorrect format."
-              )
-            );
-          return;
-        }
-
-        req.body.password = await bcrypt.hash(req.body.password, 10);
-        const newUser = new User(req.body);
-        const user = await newUser.save();
-        res.status(200).json(respGen.generateResult(true, newUser._id, null))
-    } catch (error) {
-      res.status(500).json(respGen.generateResult(false, null, error.message));
+    if(!mongoose.isValidObjectId(id)){
+      return res.status(400).json(respGen.generateResult(false, null, "ID is not in the valid format"));
     }
+
+    const user = await User.findById(id, { password: 0 }, {populate: "roles"});
+
+    if (!user) return res.status(401).json(respGen.generateResult(false, null, "User does not exist"));
+
+    res.status(200).json(respGen.generateResult(true, user, null));
+
+  } catch(error){
+    res.status(500).json(respGen.generateResult(false, null, error.message));
+  }
 }
+
+exports.postUser = async (req, res) => {
+  try {
+    var v = new Validator();
+    v.addSchema(addressSchema, "/Address");
+    v.addSchema(fullnameSchema, "/Fullname");
+    var result = v.validate(req.body, userDetailsSchema);
+
+    if (!result.valid) {
+      res
+        .status(400)
+        .json(
+          respGen.generateResult(
+            false,
+            null,
+            "Request JSON in incorrect format."
+          )
+        );
+      return;
+    }
+
+    req.body.password = await bcrypt.hash(req.body.password, 10);
+    const newUser = new User(req.body);
+    const user = await newUser.save();
+    res.status(200).json(respGen.generateResult(true, newUser._id, null));
+  } catch (error) {
+    res.status(500).json(respGen.generateResult(false, null, error.message));
+  }
+};
+
+
 
 // exports.postUserBatched = async (req, res) => {
 //     try {

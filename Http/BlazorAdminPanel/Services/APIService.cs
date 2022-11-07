@@ -104,7 +104,7 @@ namespace BlazorAdminPanel.Services
             }
             catch (Exception ex)
             {
-                throw new Exception($"Failed to deserialise incoming response");
+                throw new Exception($"Failed to deserialise incoming response", ex);
             }
 
             if(apiResonse is null)

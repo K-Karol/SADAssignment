@@ -8,7 +8,7 @@
     "method": "POST",
     "sortNum": 10000,
     "created": "2022-11-03T11:02:16.707Z",
-    "modified": "2022-11-06T15:40:43.290Z",
+    "modified": "2022-11-07T12:08:34.273Z",
     "headers": [],
     "params": [],
     "body": {
@@ -111,20 +111,35 @@
     "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
     "containerId": "",
     "name": "/users/",
-    "url": "users?page=51",
+    "url": "users?page=201&limit=5",
     "method": "GET",
     "sortNum": 50000,
     "created": "2022-11-06T15:43:42.529Z",
-    "modified": "2022-11-06T21:41:32.073Z",
+    "modified": "2022-11-07T12:16:46.989Z",
     "headers": [],
     "params": [
       {
         "name": "page",
-        "value": "51",
+        "value": "201",
+        "isPath": false
+      },
+      {
+        "name": "limit",
+        "value": "5",
         "isPath": false
       }
     ],
-    "tests": []
+    "tests": [],
+    "preReq": {
+      "runRequests": [
+        {
+          "reqId": "532780b0-c944-465b-a68e-53d4d62e3cb9",
+          "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+          "triggerCondition": "run-always",
+          "triggerValue": ""
+        }
+      ]
+    }
   },
   {
     "_id": "f0790667-bb5b-4660-9aa2-8fccf035801a",
@@ -162,6 +177,20 @@
       "bearer": "05d04171-22ec-4d45-ac26-459acf6919d6",
       "bearerPrefix": "App"
     },
+    "tests": []
+  },
+  {
+    "_id": "973491b6-607c-4084-a7e7-dcdfe22658f5",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/users/:id",
+    "url": "users/63681c28f385330464f66e32",
+    "method": "GET",
+    "sortNum": 70000,
+    "created": "2022-11-07T11:09:47.860Z",
+    "modified": "2022-11-07T11:24:18.287Z",
+    "headers": [],
+    "params": [],
     "tests": []
   }
 ]

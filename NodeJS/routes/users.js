@@ -8,6 +8,7 @@ router.post("/register", authMiddleware.authenticateRequest, authMiddleware.chec
 // crud
 
 router.get("/", authMiddleware.authenticateRequest, authMiddleware.checkRoles(["Admin"]), user_controller.getUsers);
+router.get("/:id", authMiddleware.authenticateRequest, authMiddleware.checkRoles(["Admin"]), user_controller.getUser);
 
 //router.post("/", authMiddleware.authenticateRequest, authMiddleware.checkRoles(["Admin"]), user_controller.postUserBatched);
 

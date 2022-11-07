@@ -1,0 +1,11 @@
+.cr{
+    width: 30rem;
+    padding: 10px;
+}
+
+@media screen and (max-width:768px) {
+    .cr{
+        width: 90%;
+        padding: 5px;
+    }
+}

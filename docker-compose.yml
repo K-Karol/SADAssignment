@@ -11,6 +11,9 @@ services:
     restart: always
     depends_on:
       - mongodb
+    command:
+      - node
+      - source.js
   nginx:
     container_name: nginx
     build:
