@@ -70,26 +70,34 @@
                 errorMessage = "File contains duplicate usernames";
                 return;
             }
-            List<Models.UserImportResult> results = new List<Models.UserImportResult>();
             isLoading = true;
             this.StateHasChanged();
+
+            List<Task<Models.UserImportResult>> apiTasks = new List<Task<Models.UserImportResult>>();
+
             foreach (var user in data!.Users)
             {
-                var detail = new Models.UserImportResult() { UserName = user.username };
-                try
+                apiTasks.Add(Task.Run(async () =>
                 {
-                    var id = await _apiService.CreateUser(user);
-                    detail.SuccessfullyImported = true;
-                    detail.Id = id;
-                }
-                catch (Exception ex)
-                {
-                    detail.Error = ex.Message;
-                    detail.SuccessfullyImported = false;
-                }
-                results.Add(detail);
-
+                    var detail = new Models.UserImportResult() { UserName = user.username };
+                    try
+                    {
+                        var id = await _apiService.CreateUser(user);
+                        detail.SuccessfullyImported = true;
+                        detail.Id = id;
+                    }
+                    catch (Exception ex)
+                    {
+                        detail.Error = ex.Message;
+                        detail.SuccessfullyImported = false;
+                    }
+                    return detail;
+                }));
             }
+
+            await Task.WhenAll(apiTasks);
+
+            List<Models.UserImportResult> results = apiTasks.Select(t => t.Result).ToList();
 
             await _blazorDownloadFileService.DownloadFileFromText("results.json", System.Text.Json.JsonSerializer.Serialize(results), System.Text.Encoding.UTF8, "application/octet-stream");
         }

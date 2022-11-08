@@ -36,7 +36,7 @@ PORT=5000
 DATABASE_URL=mongodb://mongodb:27017/saddb
 SECRET=<YOUR SECRET HERE>
 CORS_ORIGIN=https://localhost
-ADMIN_APIKEY=<API KEY HERE(Hardcoded in Blazor)>
+ADMIN_APIKEY=<API KEY HERE>
 ```
 
 ### Commands
