@@ -39,6 +39,10 @@ CORS_ORIGIN=https://localhost
 ADMIN_APIKEY=<API KEY HERE>
 ```
 
+The `PORT`, `DATABASE_URL` and `CORS_ORIGIN` should remain as they are since Docker-Compose is configured that way.
+
+The `SECRET` and `ADMIN_APIKEY` can be literally anything. The `ADMIN_APIKEY` is then entered into the Blazor Admin Panel so the panel can access admin endpoints.
+
 ### Commands
 
 In the root of the repository, run `docker-compose up --build`. This will proceed to pull all images required and start to build all of the containers. Once built, they are ran and the terminal used will start to display all logs from all containers.
@@ -67,7 +71,7 @@ This repository uses **Docker Compose** to build all containers with the correct
 
 ## Nginx configuration
 
-This file can be found in `/Http/nginx.conf` and is used to configure **Nginx**. This includes all of the routing(proxy) and serving of SPA files, as well as setting up SSL. Redirection from Http to Https is also setup. Currently all routes that do not begin with `\api` will route to the SPA and all routes prefixed with `\api` will be routed to the **Node.JS** backend. The SPA will access the API this way (e.g. `https://example.com/api/auth`). CORS is also setup as `https://localhost` for development purposes.
+This file can be found in `/Http/nginx.conf` and is used to configure **Nginx**. This includes all of the routing(proxy) and serving of SPA files, as well as setting up SSL. Redirection from Http to Https is also setup. Currently all routes that do not begin with `\api` will route to the SPA and all routes prefixed with `\api` will be routed to the **Node.JS** backend.Additionally `\admin` routes to the Blazor Admin panel. The SPA will access the API this way (e.g. `https://example.com/api/auth`). CORS is also setup as `https://localhost` for development purposes.
 
 Whilst SSL is setup, it is not a proper configuration and it does not have a password and it is setup with a self-signed certificated. Perfect for development but would need changing for production.
 
@@ -93,8 +97,12 @@ You can also use Docker tools on VSCode to get the bash graphically.
 
 ## /admin Blazor
 
-I've added a temp Admin Panel built with Blazor that runs on top of WASM. It uses the admin route that uses an API key instead of a user. This panel is used for debugging etc.
+I've added a temp Admin Panel built with Blazor that runs on top of WASM. It uses the admin route that uses an API key instead of a user. This panel is used for debugging etc. You enter the `ADMIN_APIKEY` into the configuration bit on the panel and that key will (should) persist between browser sessions.
 
 ## Thunder Client
 
 **VSCode** has this amazing addon called **Thunder Client**. It is used for API testing and I've saved the test files to the repository. I'm setting up a full testing environment using this so API testing will be a breeze. For example, setting your credentials in the `Env` will mean all relevant endpoints in the `SAD` collection will use these credentials such as `/auth/login`. Even better, running the login endpoint, given correct credentials, will save the access token in the environment so all requests will be automatically authorised. This means you can setup a request that runs a series of different requests which all save data to variables so you can do unit testing on the API.
+
+## Postman
+
+Whilst we can use **Thunder Client**, for our actual testing we will probably setup a Postman workspace where we will do all of the tests. Postman allows us to define unit tests per endpoint (as well as save stuff like tokens just like using **Thunder**). And then you can create I believe a project file to run many endpoints in some order and pass data around and use unit tests to verify the run.
