@@ -1,7 +1,7 @@
 require("dotenv").config(); // loading env variables
 const jwt = require("jsonwebtoken");
 const resGen = require("../apiResponse");
-const User = require("../models/user");
+const {User} = require("../models/user");
 
 // auth middleware. Use this during routing to make sure the request is properly authorised.
 const authenticateRequest = async (req, res, next) => {

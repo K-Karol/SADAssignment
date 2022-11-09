@@ -30,4 +30,9 @@ UserSchema.plugin(aggregatePaginate);
 
 var User = mongoose.model("User",UserSchema);
 
-module.exports = User;
+const BaseExcludes = [
+  {"password" : 0}
+]
+
+exports.User = User;
+exports.BaseExcludes = BaseExcludes;

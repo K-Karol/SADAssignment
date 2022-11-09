@@ -111,21 +111,21 @@
     "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
     "containerId": "",
     "name": "/users/",
-    "url": "users?page=201&limit=5",
+    "url": "users?page=1&limit=20",
     "method": "GET",
     "sortNum": 50000,
     "created": "2022-11-06T15:43:42.529Z",
-    "modified": "2022-11-07T12:25:23.755Z",
+    "modified": "2022-11-09T16:44:24.050Z",
     "headers": [],
     "params": [
       {
         "name": "page",
-        "value": "201",
+        "value": "1",
         "isPath": false
       },
       {
         "name": "limit",
-        "value": "5",
+        "value": "20",
         "isPath": false
       }
     ],
@@ -186,6 +186,44 @@
     "modified": "2022-11-07T11:24:18.287Z",
     "headers": [],
     "params": [],
+    "tests": []
+  },
+  {
+    "_id": "f1b78668-0c90-4e85-9d4a-6b5c2856db3e",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/courses/",
+    "url": "courses",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2022-11-09T15:52:55.331Z",
+    "modified": "2022-11-09T16:36:51.544Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"filter\" : {\"yearOfEntry\" : {\"$gte\" : \"2022\"}, \"name\" : \"Computer Science\"}\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "767dcf36-a42b-406f-94c9-0b53ccc5ebfd",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/courses/",
+    "url": "courses",
+    "method": "POST",
+    "sortNum": 90000,
+    "created": "2022-11-09T15:59:17.986Z",
+    "modified": "2022-11-09T16:33:23.872Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\" : \"Sommet Science\",\n  \"yearOfEntry\" : \"2019\",\n  \"courseLeader\" : \"636bcc8e94394694ea97c1a3\",\n  \"modules\" : [],\n  \"students\" : [\"636bcc8e94394694ea97c1a3\"]\n}",
+      "form": []
+    },
     "tests": []
   }
 ]

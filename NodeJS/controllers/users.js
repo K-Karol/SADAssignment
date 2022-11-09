@@ -1,6 +1,7 @@
 "use strict";
 require("dotenv").config();
-const User = require("../models/user");
+//const User = require("../models/user").User;
+const {User, BaseExcludes : UserBaseExcludes} = require("../models/user");
 const Role = require("../models/role");
 const bcrypt = require("bcryptjs"); // import bcrypt to hash passwords
 const respGen = require("../apiResponse");
@@ -112,7 +113,13 @@ exports.getUsers = async (req, res) => {
     },
   };
 
-  aggregate_options.push({ $project: { password: 0 } });
+
+  //aggregate_options.push({ $project : UserBaseExcludes});
+
+  UserBaseExcludes.forEach(element => {
+    aggregate_options.push({ $project : element});
+  });
+
   aggregate_options.push({
     $lookup: {
       from: "roles",
@@ -121,9 +128,9 @@ exports.getUsers = async (req, res) => {
       as: "roles",
     },
   });
-  aggregate_options.push({ $project: { "roles._id": 0 } });
-  aggregate_options.push({ $project: { "roles.__v": 0 } });
-  aggregate_options.push({ $project: { __v: 0 } });
+  // aggregate_options.push({ $project: { "roles._id": 0 } });
+  // aggregate_options.push({ $project: { "roles.__v": 0 } });
+  // aggregate_options.push({ $project: { __v: 0 } });
 
   const myAggregate = User.aggregate(aggregate_options);
   User.aggregatePaginate(myAggregate, options)

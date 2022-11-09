@@ -13,6 +13,7 @@ const auth_route = require("./routes/auth");
 const admin_route = require("./routes/admin");
 const user_route = require("./routes/users");
 const test_route = require("./routes/test");
+const course_route = require("./routes/courses");
 
 const admin_middleware = require("./middleware/admin");
 const auth_middleware = require("./middleware/auth");
@@ -45,5 +46,6 @@ app.use("/api/admin", admin_middleware.authAPIKey , admin_route); //ONLY USE IN 
 app.use("/api/test", test_route);
 
 app.use("/api/users", auth_middleware.authenticateRequest, user_route);
+app.use("/api/courses", auth_middleware.authenticateRequest, course_route);
 
 app.listen(PORT, () => console.log("Server is up and running"));

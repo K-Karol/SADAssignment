@@ -19,7 +19,6 @@
         <button type="submit">Submit</button>
         <br/>
         <p style="display: @(failed ? "initial" : "none")">Failed to create admin user. Exception: @(error ?? "N/A")</p>
-        <p style="display: @(failed ? "initial" : "none")">@(_httpClient.BaseAddress.GetLeftPart(UriPartial.Authority))</p>
         <p style="display: @(success ? "initial" : "none")">Admin user created</p>
     </EditForm>
 

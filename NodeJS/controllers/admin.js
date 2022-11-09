@@ -1,6 +1,6 @@
 "use strict";
 require("dotenv").config();
-const User = require("../models/user");
+const {User} = require("../models/user");
 const Role = require("../models/role")
 const bcrypt = require("bcryptjs"); // import bcrypt to hash passwords
 const jwt = require("jsonwebtoken"); // import jwt to sign tokens
