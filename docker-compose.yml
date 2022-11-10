@@ -1,19 +1,37 @@
 version: "3.9"
 
 services:
-  attendance-node1:
+  # attendance-node1:
+  #   build:
+  #     context: NodeJS\.
+  #     dockerfile: Dockerfile
+  #   container_name: attendance-node1
+  #   expose:
+  #     - "5000"
+  #   restart: always
+  #   depends_on:
+  #     - mongodb
+  #   command:
+  #     - node
+  #     - source.js
+  sad-backend:
     build:
-      context: NodeJS\.
+      context: SADBackend/.
+      target: dev-builder
       dockerfile: Dockerfile
-    container_name: attendance-node1
+    container_name: sad-backend
     expose:
       - "5000"
+    ports:
+      - "9229:9229"
     restart: always
     depends_on:
       - mongodb
-    command:
-      - node
-      - source.js
+      - nginx
+    volumes:
+      - ./SADBackend/src:/app/src
+      - ./SADBackend/nodemon.json:/app/nodemon.json
+
   nginx:
     container_name: nginx
     build:
@@ -34,8 +52,7 @@ services:
       - nginx_certs:/etc/nginx/certs
     restart: always
     depends_on:
-      - 'attendance-node1'
-      - 'mongodb'
+      - mongodb
   mongodb:
     image: mongo:latest
     command: mongod --port 27017
