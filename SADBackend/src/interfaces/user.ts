@@ -1,3 +1,5 @@
+import { ObjectId, Document } from "mongoose";
+
 export interface IFullname{
     firstname: string;
     middlenames?: string;
@@ -21,7 +23,7 @@ export interface IRole{
 export interface IUser{
     username: string;
     password: string;
-    roles: Array<IRole>;
+    roles: IRole[] | ObjectId[];
     fullname: IFullname;
     address: IAddress;
 }

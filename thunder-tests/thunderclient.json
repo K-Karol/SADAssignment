@@ -72,18 +72,18 @@
     "method": "POST",
     "sortNum": 5000,
     "created": "2022-11-03T11:08:18.552Z",
-    "modified": "2022-11-06T13:45:03.296Z",
-    "headers": [],
+    "modified": "2022-11-12T20:07:55.720Z",
+    "headers": [
+      {
+        "name": "X-API-Key",
+        "value": "{{apikey}}"
+      }
+    ],
     "params": [],
     "body": {
       "type": "json",
       "raw": "{\n  \"username\" : \"{{username}}\",\n  \"password\" : \"{{password}}\",\n  \"fullname\" : {\n    \"firstname\" : \"Firstname\",\n    \"lastname\" : \"Lastname\"\n  },\n  \"address\" : {\n    \"addressLine1\" : \"test address\",\n    \"postcode\" : \"abcde\",\n    \"city\" : \"sheffield\",\n    \"country\" : \"UK\"\n  }\n}",
       "form": []
-    },
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{apikey}}",
-      "bearerPrefix": "App"
     },
     "tests": []
   },
@@ -111,21 +111,16 @@
     "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
     "containerId": "",
     "name": "/users/",
-    "url": "users?page=1&limit=20",
+    "url": "users?limit=1",
     "method": "GET",
     "sortNum": 50000,
     "created": "2022-11-06T15:43:42.529Z",
-    "modified": "2022-11-09T16:44:24.050Z",
+    "modified": "2022-11-12T20:27:04.425Z",
     "headers": [],
     "params": [
       {
-        "name": "page",
-        "value": "1",
-        "isPath": false
-      },
-      {
         "name": "limit",
-        "value": "20",
+        "value": "1",
         "isPath": false
       }
     ],
@@ -140,7 +135,7 @@
     "method": "POST",
     "sortNum": 60000,
     "created": "2022-11-06T18:04:29.210Z",
-    "modified": "2022-11-06T18:06:31.227Z",
+    "modified": "2022-11-12T20:41:53.099Z",
     "headers": [],
     "params": [],
     "body": {
@@ -179,11 +174,11 @@
     "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
     "containerId": "",
     "name": "/users/:id",
-    "url": "users/63681c28f385330464f66e32",
+    "url": "users/636fdcd9fd39ae3fea735eda",
     "method": "GET",
     "sortNum": 70000,
     "created": "2022-11-07T11:09:47.860Z",
-    "modified": "2022-11-07T11:24:18.287Z",
+    "modified": "2022-11-12T20:52:25.339Z",
     "headers": [],
     "params": [],
     "tests": []

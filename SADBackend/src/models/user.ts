@@ -1,4 +1,4 @@
-import { Schema, model, connect } from 'mongoose';
+import { Schema, model, connect, AggregatePaginateModel, Document } from 'mongoose';
 import {IAddress, IFullname, IUser} from '../interfaces/user';
 import aggregatePaginate from "mongoose-aggregate-paginate-v2";
 //const mongoosePaginate = require('mongoose-paginate-v2');
@@ -29,8 +29,19 @@ const UserSchema = new Schema<IUser>(
 UserSchema.plugin(aggregatePaginate);
 //UserSchema.plugin(mongoosePaginate);
 
-export const User = model("User",UserSchema);
+interface UserModel<T extends Document> extends AggregatePaginateModel<T> {}
 
-const BaseExcludes = [
+// export const User: UserModel<IUser> = model<IUser>("User",UserSchema) as UserModel<IUser>;
+
+interface IUserPaginate extends IUser, Document{}
+
+export const User = model<IUser>("User",UserSchema);
+export const UserPaginate: UserModel<IUserPaginate> = model<IUserPaginate>("User",UserSchema) as UserModel<IUserPaginate>;
+
+//export const ArtistModel: ArtistModel<IArtist> = model<IArtist>('Artist', ArtistSchema);
+//export const ArtistModel: ArtistModel<IArtist> = model<IArtist>('Artist', ArtistSchema) as ArtistModel<IArtist>;
+//export const User = model("User",UserSchema);
+
+export const BaseExcludes = [
   {"password" : 0}
 ]

@@ -19,14 +19,18 @@ import AdminRoute from './routes/admin';
 
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import UserRoute from './routes/users';
 
+import "reflect-metadata";
+
+// cleanup these imports
 
 dotenv.config();
 
 const log: Logger = new Logger({ name: "Index" });
 
 const app: Express = express();
-const routes: IRoute[] = [new AuthRoute(), new AdminRoute()];
+const routes: IRoute[] = [new AuthRoute(), new AdminRoute(), new UserRoute()];
 //a
 const {PORT = 5000, CORS_ORIGIN="https://localhost"} = process.env
 const db: Database = new Database();
