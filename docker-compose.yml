@@ -31,6 +31,7 @@ services:
     volumes:
       - ./SADBackend/src:/app/src
       - ./SADBackend/nodemon.json:/app/nodemon.json
+      - ./SADBackend/swagger.taml:/app/swagger.json
 
   nginx:
     container_name: nginx

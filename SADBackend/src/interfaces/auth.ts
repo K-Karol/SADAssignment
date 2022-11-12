@@ -7,3 +7,4 @@ export interface IJWTPayload{
 export interface IAuthenticatedRequest extends Request{
     User?: IUser
 }
+
