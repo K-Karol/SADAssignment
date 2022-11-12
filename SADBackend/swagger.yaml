@@ -9,6 +9,8 @@ tags:
   description: auth api
 - name: admin
   description: admin api
+- name: user
+  description: user api
 
 paths:
   /api/auth/login:
@@ -53,7 +55,7 @@ paths:
                   Error:
                     type: object
         400:
-          description: 'Server Error'
+          description: 'Failed request'
           content:
             application/json:
               schema:
@@ -89,6 +91,98 @@ paths:
                     description: User ID
                   Error:
                     type: object
+        400:
+          description: 'Failed request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseAPIResponse'
+  /api/users:
+    get:
+      security:
+        - BearerAuth: []
+      tags:
+        - users
+      summary: "Gets all users incl. pagination"
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: false
+          description: Page number to navigate to
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          required: false
+          description: Amount of records per page
+      responses:
+        200:
+          description: 'Result of query'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Success:
+                    type: boolean
+                  Response:          # <-- image embedded into JSON
+                    type: object
+                    properties:
+                      "users":
+                        type: array
+                      "totalResults":
+                        type: number
+                      "limit":
+                        type: number
+                      "page":
+                        type: number
+                      "totalPages":
+                        type: number
+                      "pagingCounter":
+                        type: number
+                      "hasPrevPage":
+                        type: boolean
+                      "prevPage":
+                        type: boolean
+                      "nextPage":
+                        type: number
+                  Error:
+                    type: object
+  /api/users/{id}:
+    get:
+      security:
+        - BearerAuth: []
+      tags:
+        - users
+      summary: "Gets User by their ID"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: MongoDb ObjectID of the user
+      responses:
+        200:
+          description: 'Result of query'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Success:
+                    type: boolean
+                  Response:          # <-- image embedded into JSON
+                    type: object
+                    description: "User Object"
+                  Error:
+                    type: object
+
+
+
+      
 
 
 components:
