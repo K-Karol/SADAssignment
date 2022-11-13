@@ -1,4 +1,4 @@
-import { Schema, model, connect } from 'mongoose';
+import { Schema, model, connect, AggregatePaginateModel, Document } from 'mongoose';
 import aggregatePaginate from "mongoose-aggregate-paginate-v2";
 import { ICourse } from '../interfaces/course';
 
@@ -18,9 +18,17 @@ const courseSchema = new Schema<ICourse>(
 
 courseSchema.plugin(aggregatePaginate);
 
-export const Course = model(
-    "Course",
-    courseSchema
-  );
+
+
+interface CourseModel<T extends Document> extends AggregatePaginateModel<T> {}
+
+// export const User: UserModel<IUser> = model<IUser>("User",UserSchema) as UserModel<IUser>;
+
+interface ICoursePaginate extends ICourse, Document{}
+
+export const Course = model<ICourse>("Course",courseSchema);
+
+export const CoursePaginate: CourseModel<ICoursePaginate> = model<ICoursePaginate>("Course",courseSchema) as CourseModel<ICoursePaginate>;
+
 
 Course.schema.index({name: 1, yearOfEntry: 1}, {unique: true});

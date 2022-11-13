@@ -1,4 +1,4 @@
-import { ObjectId, Document } from "mongoose";
+import { Document, Types } from "mongoose";
 
 export interface IFullname{
     firstname: string;
@@ -23,7 +23,7 @@ export interface IRole{
 export interface IUser{
     username: string;
     password: string;
-    roles: IRole[] | ObjectId[];
+    roles: IRole[] | Types.ObjectId[];
     fullname: IFullname;
     address: IAddress;
 }

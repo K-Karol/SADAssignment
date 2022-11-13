@@ -76,8 +76,7 @@ export default class UserController {
     UserPaginate.aggregatePaginate(myAggregate, options)
       .then((result) => res.status(200).json(GenerateAPIResult(true, result)))
       .catch((err) => {
-        console.log(err);
-        res.status(500).json(GenerateAPIResult(false, undefined, err));
+        next(new HttpException(500, "Failed to fetch users", undefined, err));
       });
   };
 

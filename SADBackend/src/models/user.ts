@@ -45,3 +45,9 @@ export const UserPaginate: UserModel<IUserPaginate> = model<IUserPaginate>("User
 export const BaseExcludes = [
   {"password" : 0}
 ]
+
+export function GenerateBaseExcludes(rootPath: string){
+  var passwordObj : any = {};
+  passwordObj[rootPath+"password"] = 0;
+  return [passwordObj]
+}

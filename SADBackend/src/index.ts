@@ -22,6 +22,8 @@ import swaggerUi from 'swagger-ui-express';
 import UserRoute from './routes/users';
 
 import "reflect-metadata";
+import CourseController from './controllers/course';
+import CourseRoute from './routes/courses';
 
 // cleanup these imports
 
@@ -30,7 +32,7 @@ dotenv.config();
 const log: Logger = new Logger({ name: "Index" });
 
 const app: Express = express();
-const routes: IRoute[] = [new AuthRoute(), new AdminRoute(), new UserRoute()];
+const routes: IRoute[] = [new AuthRoute(), new AdminRoute(), new UserRoute(), new CourseRoute()];
 //a
 const {PORT = 5000, CORS_ORIGIN="https://localhost"} = process.env
 const db: Database = new Database();
