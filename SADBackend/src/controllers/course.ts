@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import { AggregatePaginateModel, isValidObjectId, Schema, Types } from "mongoose";
-import { GenerateAPIResult, HttpException } from "../helpers";
+import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } from "../helpers";
 import bcrypt from "bcryptjs";
 import { GetCoursesQueryBody, PostCourse } from "../validation/course";
 import { GenerateBaseExcludes as UserGenerateBaseExcludes } from "../models/user";
 import { Course, CoursePaginate } from "../models/course";
 import { ICourse } from "../interfaces/course";
+import { IAuthenticatedRequest } from "../interfaces/auth";
 // import {aggregate} from 'mongoose-aggregate-paginate-v2';
 
 export default class CourseController {
@@ -15,6 +16,10 @@ export default class CourseController {
         next: NextFunction
     ) => {
         var reqQuery: GetCoursesQueryBody = req.body;
+
+        if(reqQuery.filter){
+            GoThroughJSONAndReplaceObjectIDs(reqQuery.filter);
+          }
 
         let aggregate_options = [];
         let page = 1;
@@ -104,5 +109,7 @@ export default class CourseController {
         }
 
 
-    }
+    };
+
+    
 }

@@ -14,8 +14,8 @@ export default class CourseRoute implements IRoute {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, AuthenticateRequest, ValidationMiddleware(GetCoursesQuery, 'query'), ValidationMiddleware(GetCoursesQueryBody, 'body'),  this.courseController.GetCourses);
+    this.router.get(`${this.path}resource/`, AuthenticateRequest, ValidationMiddleware(GetCoursesQuery, 'query'), ValidationMiddleware(GetCoursesQueryBody, 'body'),  this.courseController.GetCourses);
     // this.router.get(`${this.path}:id`, AuthenticateRequest, ValidationMiddleware(GetUserByID, 'params'),  this.userController.GetUser);
-     this.router.post(`${this.path}`, ValidationMiddleware(PostCourse, 'body'), this.courseController.PostCourse);
+     this.router.post(`${this.path}resource/`, ValidationMiddleware(PostCourse, 'body'), this.courseController.PostCourse);
   }
 }

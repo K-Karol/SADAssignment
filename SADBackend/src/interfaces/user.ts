@@ -20,6 +20,8 @@ export interface IRole{
     name: string;
 }
 
+
+
 export interface IUser{
     username: string;
     password: string;
