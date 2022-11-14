@@ -1,6 +1,6 @@
 import { Type } from "class-transformer";
 import { IsNotEmpty, IsOptional, IsString, IsInt, IsBoolean } from "class-validator";
-import { Schema } from "mongoose";
+import { Schema, Types } from "mongoose";
 import "reflect-metadata";
 import { IAddress, IFullname, IRole, IUser } from "../interfaces/user";
 
@@ -59,9 +59,72 @@ export class UserDecorated{
 
 }
 
+export class UserPutRequest{
+    @IsOptional()
+    roles?: string[];
+    @IsOptional()
+    fullname?: FullNameDecorated;
+    @IsOptional()
+    address?: AddressDecorated;
+
+}
+
+class AddressDelta {
+    @IsString()
+    @IsOptional()
+    addressLine1?: string;
+    @IsString()
+    @IsOptional()
+    addressLine2?: string;
+    @IsString()
+    @IsOptional()
+    addressLine3?: string;
+    @IsString()
+    @IsOptional()
+    addressLine4?: string;
+    @IsString()
+    @IsOptional()
+    postcode?: string;
+    @IsString()
+    @IsOptional()
+    city?: string;
+    @IsString()
+    @IsOptional()
+    country?: string;
+}
+
+
+class FullNameDelta{
+    @IsString()
+    @IsOptional()
+    firstname?: string;
+    @IsString()
+    @IsOptional()
+    middlenames?: string;
+    @IsString()
+    @IsOptional()
+    lastname!: string;
+}
+
 export class GetUserByID{
     @IsString()
     @IsNotEmpty()
     id!: string;
 }
 
+
+
+export class GetUsersQueryBody{
+    @IsOptional()
+    @Type(() => Object)
+    filter?: object
+
+    @IsBoolean()
+    @IsOptional()
+    joinCourses?: boolean;
+
+    @IsBoolean()
+    @IsOptional()
+    joinModules?: boolean;
+
+}

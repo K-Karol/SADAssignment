@@ -6,8 +6,8 @@ import {
 } from "../models/user";
 import { AggregatePaginateModel, isValidObjectId } from "mongoose";
 import { IUser } from "../interfaces/user";
-import { GenerateAPIResult, HttpException } from "../helpers";
-import { GetUserByID, UserDecorated } from "../validation/user";
+import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException, RecursiveRemoveUndefinedFields, RemoveUndefinedFieldsRoot } from "../helpers";
+import { GetUserByID, GetUsersQueryBody, UserDecorated, UserPutRequest } from "../validation/user";
 import bcrypt from "bcryptjs";
 // import {aggregate} from 'mongoose-aggregate-paginate-v2';
 
@@ -33,6 +33,16 @@ export default class UserController {
   };
 
   public GetUsers = async (req: Request, res: Response, next: NextFunction) => {
+
+    var reqQuery: GetUsersQueryBody = req.body;
+
+
+    if(reqQuery.filter){
+      GoThroughJSONAndReplaceObjectIDs(reqQuery.filter);
+    }
+    
+
+
     let aggregate_options = [];
 
     var temp = req.query.page;
@@ -71,6 +81,30 @@ export default class UserController {
       },
     });
 
+    if (reqQuery.joinCourses) {
+      aggregate_options.push({
+        $lookup: {
+          from: "courses",
+          let: { "student_id": "$_id" },
+          // pipeline: [
+          //   {"$match": {"students._id" : "$$id"}}
+          // ],
+          pipeline: [
+            {
+              $match: {
+                $expr : {
+                  $in : ["$$student_id", "$students"]
+                }
+              }
+            }],
+          as: "courses"
+        }
+      });
+      aggregate_options.push({$project: {"courses.students" : 0}});
+    };
+
+    if (reqQuery.filter) aggregate_options.push({ $match: reqQuery.filter });
+
     const myAggregate = UserPaginate.aggregate(aggregate_options);
 
     UserPaginate.aggregatePaginate(myAggregate, options)
@@ -102,4 +136,63 @@ export default class UserController {
       next(err);
     }
   };
+
+  public UpdateUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const putRequest: UserPutRequest = req.body;
+      const params: GetUserByID = (req as any)["params"];
+
+      if (!isValidObjectId(params.id)) {
+        throw new HttpException(400, "ID is not in the valid format");
+      }
+
+      if ((putRequest.address) == undefined && (putRequest.fullname == undefined) && (putRequest.roles == undefined)) {
+        throw new HttpException(400, "Put request contains no data to update");
+      }
+      putRequest.roles?.forEach((r) => {
+        if (!isValidObjectId(r)) {
+          throw new HttpException(400, "roles contain invalid ID/s");
+        }
+      });
+
+      var deltaObj = RemoveUndefinedFieldsRoot(putRequest);
+
+      //check if id exists so failure can be 500?
+
+      const updateRes = await User.updateOne({ _id: params.id }, deltaObj);
+
+      if(updateRes.modifiedCount != 1) throw new HttpException(400, "Failed to update");
+
+
+      const newUser = await User.findById(params.id, { password: 0 }, { populate: "roles" });
+      if (!newUser) throw new HttpException(400, "Failed to find user and/or update");
+
+      res.status(200).json(GenerateAPIResult(true, newUser, undefined));
+
+
+    }
+    catch (err) {
+      next(err);
+    }
+  }
+
+  public DeleteUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const params: GetUserByID = (req as any)["params"];
+      if (!isValidObjectId(params.id)) {
+        throw new HttpException(400, "ID is not in the valid format");
+      }
+
+      //check if id exists so failure can be 500?
+
+      const deleteRes = await User.deleteOne({_id: params.id});
+
+      if(deleteRes.deletedCount != 1) throw new HttpException(400, "Failed to delete");
+
+      res.status(200).json(GenerateAPIResult(true, "Deleted", undefined));
+
+    } catch (err) {
+      next(err);
+    }
+  }
 }

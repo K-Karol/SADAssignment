@@ -117,6 +117,21 @@ paths:
             type: integer
           required: false
           description: Amount of records per page
+      requestBody:
+        description: Query options (If you wish to match on an ObjectID, instead of passing just the ID as a string, pass it like so - ObjectID(636fdcd9fd39ae3fea735eda) (Regex is 'ObjectID\\((.+)\\)')
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  description: Mongoose Aggregation '$match'
+                  example:  {"_id" : "ObjectID(636fdcd9fd39ae3fea735eda)"}
+                joinCourses:
+                  type: boolean
+                  description: Whether to join courses to the query
       responses:
         200:
           description: 'Result of query'

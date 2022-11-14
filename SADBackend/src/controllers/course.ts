@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { AggregatePaginateModel, isValidObjectId, Schema, Types } from "mongoose";
-import { GenerateAPIResult, HttpException } from "../helpers";
+import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } from "../helpers";
 import bcrypt from "bcryptjs";
 import { GetCoursesQueryBody, PostCourse } from "../validation/course";
 import { GenerateBaseExcludes as UserGenerateBaseExcludes } from "../models/user";
@@ -15,6 +15,10 @@ export default class CourseController {
         next: NextFunction
     ) => {
         var reqQuery: GetCoursesQueryBody = req.body;
+
+        if(reqQuery.filter){
+            GoThroughJSONAndReplaceObjectIDs(reqQuery.filter);
+          }
 
         let aggregate_options = [];
         let page = 1;

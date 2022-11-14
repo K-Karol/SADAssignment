@@ -111,16 +111,16 @@
     "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
     "containerId": "",
     "name": "/users/",
-    "url": "users?limit=1",
+    "url": "users?limit=20",
     "method": "GET",
     "sortNum": 50000,
     "created": "2022-11-06T15:43:42.529Z",
-    "modified": "2022-11-12T20:27:04.425Z",
+    "modified": "2022-11-13T11:42:18.886Z",
     "headers": [],
     "params": [
       {
         "name": "limit",
-        "value": "1",
+        "value": "20",
         "isPath": false
       }
     ],
@@ -174,11 +174,11 @@
     "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
     "containerId": "",
     "name": "/users/:id",
-    "url": "users/636fdcd9fd39ae3fea735eda",
+    "url": "users/63700829aa6cfe59aee0717f",
     "method": "GET",
     "sortNum": 70000,
     "created": "2022-11-07T11:09:47.860Z",
-    "modified": "2022-11-12T20:52:25.339Z",
+    "modified": "2022-11-13T12:11:53.622Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -192,12 +192,12 @@
     "method": "GET",
     "sortNum": 80000,
     "created": "2022-11-09T15:52:55.331Z",
-    "modified": "2022-11-09T16:36:51.544Z",
+    "modified": "2022-11-14T11:36:23.455Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"filter\" : {\"yearOfEntry\" : {\"$gte\" : \"2022\"}, \"name\" : \"Computer Science\"}\n}",
+      "raw": "{\n  \"joinStudents\" : true\n}",
       "form": []
     },
     "tests": []
@@ -219,6 +219,193 @@
       "raw": "{\n  \"name\" : \"Sommet Science\",\n  \"yearOfEntry\" : \"2019\",\n  \"courseLeader\" : \"636bcc8e94394694ea97c1a3\",\n  \"modules\" : [],\n  \"students\" : [\"636bcc8e94394694ea97c1a3\"]\n}",
       "form": []
     },
+    "tests": []
+  },
+  {
+    "_id": "b63d6b95-e9d0-4f6c-8bb9-d25cc3056152",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/users/:id",
+    "url": "/users/63700829aa6cfe69aee0716f",
+    "method": "PUT",
+    "sortNum": 100000,
+    "created": "2022-11-13T11:41:45.152Z",
+    "modified": "2022-11-13T12:04:00.693Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"roles\" : []\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "623da631-a8c5-4eed-aeb3-8ed9132a0ddc",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "056788e0-bf4d-48e6-94ac-bd7efad53b32",
+    "name": "CreateAdminUser",
+    "url": "admin/createAdminUser",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2022-11-14T11:04:25.941Z",
+    "modified": "2022-11-14T11:08:27.634Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"username\" : \"{{username}}\",\n  \"password\" : \"{{password}}\",\n  \"fullname\" : {\n    \"firstname\" : \"Firstname\",\n    \"lastname\" : \"Lastname\"\n  },\n  \"address\" : {\n    \"addressLine1\" : \"test address\",\n    \"postcode\" : \"abcde\",\n    \"city\" : \"sheffield\",\n    \"country\" : \"UK\"\n  }\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "13f6908a-6721-4c73-928c-fdf192cb926f",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "4f091c27-5959-4501-81ae-df7a2a63b8d2",
+    "name": "Login",
+    "url": "auth/login",
+    "method": "POST",
+    "sortNum": 20000,
+    "created": "2022-11-14T11:10:53.420Z",
+    "modified": "2022-11-14T11:13:31.406Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "json-query",
+        "custom": "json.Success",
+        "action": "equal",
+        "value": "true"
+      },
+      {
+        "type": "set-env-var",
+        "custom": "json.Response.token",
+        "action": "setto",
+        "value": "{{access-token}}"
+      }
+    ]
+  },
+  {
+    "_id": "be1fab32-4b9d-4b47-80dd-816636819676",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
+    "name": "Get Users",
+    "url": "users",
+    "method": "GET",
+    "sortNum": 30000,
+    "created": "2022-11-14T11:14:33.035Z",
+    "modified": "2022-11-14T12:26:18.700Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "limit",
+        "value": "4",
+        "isDisabled": true,
+        "isPath": false
+      },
+      {
+        "name": "page",
+        "value": "2",
+        "isDisabled": true,
+        "isPath": false
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"filter\" : {\"_id\" : \"ObjectID(636fdcd9fd39ae3fea735eda)\"},\n  \"joinCourses\" : true\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "json-query",
+        "custom": "json.Success",
+        "action": "equal",
+        "value": "true"
+      }
+    ]
+  },
+  {
+    "_id": "81597f38-7e35-45cc-be95-3c1ff16cd211",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
+    "name": "Get User",
+    "url": "/users/63700829aa6cfe69aee07163",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2022-11-14T11:15:54.911Z",
+    "modified": "2022-11-14T11:16:18.662Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "baa1aead-38c0-47dc-96b9-7c00982b56a1",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
+    "name": "Create User",
+    "url": "users",
+    "method": "POST",
+    "sortNum": 50000,
+    "created": "2022-11-14T11:16:36.135Z",
+    "modified": "2022-11-14T11:16:56.928Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"username\": \"New Student\",\n  \"password\": \"123\",\n  \"fullname\": {\n    \"firstname\": \"AAA\",\n    \"lastname\": \"BBB\"\n  },\n  \"address\": {\n    \"addressLine1\": \"addressLine1\",\n    \"postcode\": \"abcde\",\n    \"city\": \"sheffield\",\n    \"country\": \"UK\"\n  }\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "f81c477e-95e7-405b-ac35-341b2f89ee6b",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
+    "name": "Update User",
+    "url": "/users/63700829aa6cfe69aee07163",
+    "method": "PUT",
+    "sortNum": 60000,
+    "created": "2022-11-14T11:17:34.973Z",
+    "modified": "2022-11-14T11:18:20.354Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"address\": {\n    \"addressLine1\": \"100 Talmadge Road\",\n    \"postcode\": \"DN22\",\n    \"city\": \"Eaton\",\n    \"country\": \"United Kingdom\"\n  }\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "a112d51e-650e-4f31-8174-7dbde341f9bb",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
+    "name": "Delete User",
+    "url": "/users/63700829aa6cfe69aee07163",
+    "method": "DELETE",
+    "sortNum": 70000,
+    "created": "2022-11-14T11:20:02.424Z",
+    "modified": "2022-11-14T11:20:23.761Z",
+    "headers": [],
+    "params": [],
     "tests": []
   }
 ]
