@@ -220,5 +220,19 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "29aaead7-2993-4d13-8367-113b490c8899",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/session/",
+    "url": "session/",
+    "method": "GET",
+    "sortNum": 100000,
+    "created": "2022-11-14T14:06:25.792Z",
+    "modified": "2022-11-14T14:15:15.779Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

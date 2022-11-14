@@ -14,6 +14,7 @@ const admin_route = require("./routes/admin");
 const user_route = require("./routes/users");
 const test_route = require("./routes/test");
 const course_route = require("./routes/courses");
+const session_route = require("./routes/session");
 
 const admin_middleware = require("./middleware/admin");
 const auth_middleware = require("./middleware/auth");
@@ -47,5 +48,6 @@ app.use("/api/test", test_route);
 
 app.use("/api/users", auth_middleware.authenticateRequest, user_route);
 app.use("/api/courses", auth_middleware.authenticateRequest, course_route);
+app.use("/api/session", auth_middleware.authenticateRequest, session_route);
 
 app.listen(PORT, () => console.log("Server is up and running"));
