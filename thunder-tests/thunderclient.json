@@ -268,12 +268,12 @@
     "method": "POST",
     "sortNum": 20000,
     "created": "2022-11-14T11:10:53.420Z",
-    "modified": "2022-11-14T14:38:20.494Z",
+    "modified": "2022-11-14T19:50:24.877Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"usernamsdfsdfe\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}",
+      "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}",
       "form": []
     },
     "tests": [
@@ -302,16 +302,16 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
     "name": "Get Users",
-    "url": "users/resource?page=3",
+    "url": "users/resource?page=1",
     "method": "GET",
     "sortNum": 30000,
     "created": "2022-11-14T11:14:33.035Z",
-    "modified": "2022-11-14T15:55:34.150Z",
+    "modified": "2022-11-14T20:06:13.417Z",
     "headers": [],
     "params": [
       {
         "name": "page",
-        "value": "3",
+        "value": "1",
         "isPath": false
       }
     ],
@@ -438,9 +438,33 @@
     "method": "GET",
     "sortNum": 100000,
     "created": "2022-11-14T15:56:02.634Z",
-    "modified": "2022-11-14T15:56:50.537Z",
+    "modified": "2022-11-14T16:17:15.011Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"filter\" : {\"startDateTime\" : {\"$gt\" : \"2022-11-13T11:15:00.000Z\"}}\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "7afe237c-4c41-40ee-a7e0-bc3186d1c455",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "83a72f30-0839-4dcb-9768-658d5c585bb0",
+    "name": "Create Course",
+    "url": "courses/resource",
+    "method": "POST",
+    "sortNum": 110000,
+    "created": "2022-11-14T20:04:17.012Z",
+    "modified": "2022-11-14T21:21:28.450Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\" : \"Awesome Science 24\",\n  \"yearOfEntry\" : \"2022\",\n  \"courseLeader\" : \"636fdcd9fd39ae3fea735eda\",\n  \"modules\" : [\"63725e2067ee5783f837251f\"],\n  \"students\" : [\"636fdcd9fd39ae3fea735eda\"]\n}",
+      "form": []
+    },
     "tests": []
   }
 ]

@@ -1,7 +1,11 @@
 import { Type } from "class-transformer";
 import { IsNotEmpty, IsOptional, IsString, IsInt, IsBoolean } from "class-validator";
-import { PipelineStage, Schema } from "mongoose";
+import { Module } from "../models/module";
+import { PipelineStage, Schema, Types } from "mongoose";
 import "reflect-metadata";
+import { Course } from "../models/course";
+import { DoesArrayOfObjectIdExist, DoesObjectIdExist, IsArrayOfMongooseObjectId, IsMongooseObjectId } from "./custom-decorators";
+import { User } from "../models/user";
 
 export class GetCoursesQueryBody{
     @IsOptional()
@@ -26,14 +30,25 @@ export class GetCoursesQuery{
 }
 
 export class PostCourse{
+    @IsNotEmpty()
     @IsString()
     name! : string;
+    @IsNotEmpty()
     @IsString()
     yearOfEntry! : string;
-    @IsString()
-    courseLeader!: string;
     @IsNotEmpty()
-    modules!: string[];
+    @IsMongooseObjectId()
+    @Type(() => Types.ObjectId)
+    @DoesObjectIdExist(User)
+    courseLeader!: Types.ObjectId;
+    @IsNotEmpty()
+    @IsArrayOfMongooseObjectId()
+    @Type(() => Types.ObjectId)
+    @DoesArrayOfObjectIdExist(Module)
+    modules!: Types.ObjectId[];
     @IsOptional()
-    students?: string[];
+    @IsArrayOfMongooseObjectId()
+    @Type(() => Types.ObjectId)
+    @DoesArrayOfObjectIdExist(User)
+    students?: Types.ObjectId[];
 }
