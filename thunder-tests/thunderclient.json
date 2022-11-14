@@ -268,12 +268,12 @@
     "method": "POST",
     "sortNum": 20000,
     "created": "2022-11-14T11:10:53.420Z",
-    "modified": "2022-11-14T11:13:31.406Z",
+    "modified": "2022-11-14T14:38:20.494Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}",
+      "raw": "{\n  \"usernamsdfsdfe\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}",
       "form": []
     },
     "tests": [
@@ -302,31 +302,19 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
     "name": "Get Users",
-    "url": "users",
+    "url": "users/resource?page=3",
     "method": "GET",
     "sortNum": 30000,
     "created": "2022-11-14T11:14:33.035Z",
-    "modified": "2022-11-14T12:26:18.700Z",
+    "modified": "2022-11-14T15:55:34.150Z",
     "headers": [],
     "params": [
       {
-        "name": "limit",
-        "value": "4",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
         "name": "page",
-        "value": "2",
-        "isDisabled": true,
+        "value": "3",
         "isPath": false
       }
     ],
-    "body": {
-      "type": "json",
-      "raw": "{\n  \"filter\" : {\"_id\" : \"ObjectID(636fdcd9fd39ae3fea735eda)\"},\n  \"joinCourses\" : true\n}",
-      "form": []
-    },
     "tests": [
       {
         "type": "res-code",
@@ -404,6 +392,53 @@
     "sortNum": 70000,
     "created": "2022-11-14T11:20:02.424Z",
     "modified": "2022-11-14T11:20:23.761Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "f0a487c2-8986-47c8-b397-fcc63cdb2f42",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
+    "name": "Get Self",
+    "url": "users/self",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2022-11-14T14:50:21.327Z",
+    "modified": "2022-11-14T14:52:43.561Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "6212fc1c-c8bd-42a5-82af-46733e1725ef",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Create Session",
+    "url": "sessions/resource",
+    "method": "POST",
+    "sortNum": 90000,
+    "created": "2022-11-14T15:12:41.871Z",
+    "modified": "2022-11-14T15:26:48.429Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"type\" : \"seminar\",\n  \"module\" : \"63725e2067ee5783f837251f\",\n  \"cohortIdentifier\" : \"first cohort\",\n  \"startDateTime\" : \"2022-11-14T11:15\",\n  \"endDateTime\" : \"2022-11-14T12:15\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "91ad9abe-fcad-4620-bcd2-3fb4830c8986",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Get All sessions for student",
+    "url": "sessions/GetSessionsForStudent/6370082baa6cfe69aee071b1",
+    "method": "GET",
+    "sortNum": 100000,
+    "created": "2022-11-14T15:56:02.634Z",
+    "modified": "2022-11-14T15:56:50.537Z",
     "headers": [],
     "params": [],
     "tests": []

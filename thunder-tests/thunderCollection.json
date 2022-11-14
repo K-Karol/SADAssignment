@@ -60,6 +60,13 @@
         "containerId": "",
         "created": "2022-11-14T11:20:35.746Z",
         "sortNum": 40000
+      },
+      {
+        "_id": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+        "name": "Session",
+        "containerId": "",
+        "created": "2022-11-14T15:12:35.721Z",
+        "sortNum": 50000
       }
     ],
     "settings": {

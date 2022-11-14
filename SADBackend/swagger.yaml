@@ -97,7 +97,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BaseAPIResponse'
-  /api/users:
+  /api/users/resource:
     get:
       security:
         - BearerAuth: []
@@ -165,7 +165,7 @@ paths:
                         type: number
                   Error:
                     type: object
-  /api/users/{id}:
+  /api/users/resource/{id}:
     get:
       security:
         - BearerAuth: []

@@ -6,6 +6,7 @@ import { GetCoursesQueryBody, PostCourse } from "../validation/course";
 import { GenerateBaseExcludes as UserGenerateBaseExcludes } from "../models/user";
 import { Course, CoursePaginate } from "../models/course";
 import { ICourse } from "../interfaces/course";
+import { IAuthenticatedRequest } from "../interfaces/auth";
 // import {aggregate} from 'mongoose-aggregate-paginate-v2';
 
 export default class CourseController {
@@ -108,5 +109,7 @@ export default class CourseController {
         }
 
 
-    }
+    };
+
+    
 }

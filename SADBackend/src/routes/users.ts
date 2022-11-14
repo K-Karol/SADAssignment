@@ -15,10 +15,11 @@ export default class UserRoute implements IRoute {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, AuthenticateRequest, ValidationMiddleware(GetUsersQuery, 'query'), ValidationMiddleware(GetUsersQueryBody, 'body'),  this.userController.GetUsers);
-    this.router.get(`${this.path}:id`, AuthenticateRequest, ValidationMiddleware(GetUserByID, 'params'),  this.userController.GetUser);
-    this.router.post(`${this.path}`, AuthenticateRequest, ValidationMiddleware(UserDecorated, 'body'), this.userController.PostUser);
-    this.router.put(`${this.path}:id`, AuthenticateRequest, ValidationMiddleware(GetUserByID, 'params'), ValidationMiddleware(UserPutRequest, 'body'), this.userController.UpdateUser);
-    this.router.delete(`${this.path}:id`, AuthenticateRequest, ValidationMiddleware(GetUserByID, 'params'),  this.userController.DeleteUser);
+    this.router.get(`${this.path}resource/`, AuthenticateRequest, ValidationMiddleware(GetUsersQuery, 'query'), ValidationMiddleware(GetUsersQueryBody, 'body'),  this.userController.GetUsers);
+    this.router.get(`${this.path}resource/:id`, AuthenticateRequest, ValidationMiddleware(GetUserByID, 'params'),  this.userController.GetUser);
+    this.router.get(`${this.path}self`, AuthenticateRequest, this.userController.GetCurrentUser);
+    this.router.post(`${this.path}resource/`, AuthenticateRequest, ValidationMiddleware(UserDecorated, 'body'), this.userController.PostUser);
+    this.router.put(`${this.path}resource/:id`, AuthenticateRequest, ValidationMiddleware(GetUserByID, 'params'), ValidationMiddleware(UserPutRequest, 'body'), this.userController.UpdateUser);
+    this.router.delete(`${this.path}resource/:id`, AuthenticateRequest, ValidationMiddleware(GetUserByID, 'params'),  this.userController.DeleteUser);
   }
 }

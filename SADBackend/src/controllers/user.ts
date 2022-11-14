@@ -5,10 +5,11 @@ import {
   BaseExcludes as UserBaseExcludes,
 } from "../models/user";
 import { AggregatePaginateModel, isValidObjectId } from "mongoose";
-import { IUser } from "../interfaces/user";
+import { IRole, IUser } from "../interfaces/user";
 import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException, RecursiveRemoveUndefinedFields, RemoveUndefinedFieldsRoot } from "../helpers";
 import { GetUserByID, GetUsersQueryBody, UserDecorated, UserPutRequest } from "../validation/user";
 import bcrypt from "bcryptjs";
+import { IAuthenticatedRequest } from "../interfaces/auth";
 // import {aggregate} from 'mongoose-aggregate-paginate-v2';
 
 export default class UserController {
@@ -37,10 +38,10 @@ export default class UserController {
     var reqQuery: GetUsersQueryBody = req.body;
 
 
-    if(reqQuery.filter){
+    if (reqQuery.filter) {
       GoThroughJSONAndReplaceObjectIDs(reqQuery.filter);
     }
-    
+
 
 
     let aggregate_options = [];
@@ -86,21 +87,18 @@ export default class UserController {
         $lookup: {
           from: "courses",
           let: { "student_id": "$_id" },
-          // pipeline: [
-          //   {"$match": {"students._id" : "$$id"}}
-          // ],
           pipeline: [
             {
               $match: {
-                $expr : {
-                  $in : ["$$student_id", "$students"]
+                $expr: {
+                  $in: ["$$student_id", "$students"]
                 }
               }
             }],
           as: "courses"
         }
       });
-      aggregate_options.push({$project: {"courses.students" : 0}});
+      aggregate_options.push({ $project: { "courses.students": 0 } });
     };
 
     if (reqQuery.filter) aggregate_options.push({ $match: reqQuery.filter });
@@ -161,7 +159,7 @@ export default class UserController {
 
       const updateRes = await User.updateOne({ _id: params.id }, deltaObj);
 
-      if(updateRes.modifiedCount != 1) throw new HttpException(400, "Failed to update");
+      if (updateRes.modifiedCount != 1) throw new HttpException(400, "Failed to update");
 
 
       const newUser = await User.findById(params.id, { password: 0 }, { populate: "roles" });
@@ -174,7 +172,7 @@ export default class UserController {
     catch (err) {
       next(err);
     }
-  }
+  };
 
   public DeleteUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -185,14 +183,19 @@ export default class UserController {
 
       //check if id exists so failure can be 500?
 
-      const deleteRes = await User.deleteOne({_id: params.id});
+      const deleteRes = await User.deleteOne({ _id: params.id });
 
-      if(deleteRes.deletedCount != 1) throw new HttpException(400, "Failed to delete");
+      if (deleteRes.deletedCount != 1) throw new HttpException(400, "Failed to delete");
 
       res.status(200).json(GenerateAPIResult(true, "Deleted", undefined));
 
     } catch (err) {
       next(err);
     }
-  }
+  };
+
+  public GetCurrentUser = async (req: IAuthenticatedRequest, res: Response, next: NextFunction) => {
+    var returnObj = { username: req.User!.username, roles: req.User!.roles.map((r) => (r as IRole).name), fullname : req.User!.fullname, address : req.User!.address};
+    res.status(200).json(GenerateAPIResult(true, returnObj));
+  };
 }
