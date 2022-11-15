@@ -1,16 +1,14 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { Button } from '@mui/material'
-import { Link } from 'react-router-dom';
 // Will pretty this up with Material in SAD-005 commit.
-export default function RegistrationForm()
+// Remove email validation as no longer needed.
+// Replace with validation for usernames
+// Fix boxes being different sizes
+export default function LoginForm()
 {
     return (
         <div>
-        <Link to="/">
-            <Button variant ="contained"> Home</Button>
-        </Link>
-        <h2>Please enter your username and password to access the attendance system.</h2>
-        <Formik
+        <h2>Please enter your organisation username and password to access the attendance system.</h2>
+         <Formik
           initialValues={{ email: '', password: '' }}
           validate={values => {
             const errors = {};
@@ -23,18 +21,21 @@ export default function RegistrationForm()
             }
             return errors;
           }}
+          // prev set alert to values: however we don't want to display that info
+          // the user can see their username but not their password - we don't want them to see sensitive information
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
+              alert(JSON.stringify("Login successful", null, 2));
               setSubmitting(false);
             }, 400);
           }}
         >
           {({ isSubmitting }) => (
             <Form>
-              <Field type="email" name="email" />
+              <Field type="text" name="email" />
               <ErrorMessage name="email" component="div" />
               <Field type="password" name="password" />
+              {/* style this - password style is what's separating them */}
               <ErrorMessage name="password" component="div" />
               <button type="submit" disabled={isSubmitting}>
                 Login

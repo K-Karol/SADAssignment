@@ -1,0 +1,8 @@
+.chartRoot {
+    background-color: "white";
+    width: 620;
+    height: 240;
+    border-color: "1px solid rgba(0,0,0,0.15)";
+    padding: 6;
+    transition: "box-shadow 0.3s ease-in-out";
+}
