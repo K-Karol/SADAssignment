@@ -72,18 +72,18 @@
     "method": "POST",
     "sortNum": 5000,
     "created": "2022-11-03T11:08:18.552Z",
-    "modified": "2022-11-06T13:45:03.296Z",
-    "headers": [],
+    "modified": "2022-11-12T20:07:55.720Z",
+    "headers": [
+      {
+        "name": "X-API-Key",
+        "value": "{{apikey}}"
+      }
+    ],
     "params": [],
     "body": {
       "type": "json",
       "raw": "{\n  \"username\" : \"{{username}}\",\n  \"password\" : \"{{password}}\",\n  \"fullname\" : {\n    \"firstname\" : \"Firstname\",\n    \"lastname\" : \"Lastname\"\n  },\n  \"address\" : {\n    \"addressLine1\" : \"test address\",\n    \"postcode\" : \"abcde\",\n    \"city\" : \"sheffield\",\n    \"country\" : \"UK\"\n  }\n}",
       "form": []
-    },
-    "auth": {
-      "type": "bearer",
-      "bearer": "{{apikey}}",
-      "bearerPrefix": "App"
     },
     "tests": []
   },
@@ -111,21 +111,16 @@
     "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
     "containerId": "",
     "name": "/users/",
-    "url": "users?page=201&limit=5",
+    "url": "users?limit=20",
     "method": "GET",
     "sortNum": 50000,
     "created": "2022-11-06T15:43:42.529Z",
-    "modified": "2022-11-07T12:25:23.755Z",
+    "modified": "2022-11-13T11:42:18.886Z",
     "headers": [],
     "params": [
       {
-        "name": "page",
-        "value": "201",
-        "isPath": false
-      },
-      {
         "name": "limit",
-        "value": "5",
+        "value": "20",
         "isPath": false
       }
     ],
@@ -140,7 +135,7 @@
     "method": "POST",
     "sortNum": 60000,
     "created": "2022-11-06T18:04:29.210Z",
-    "modified": "2022-11-06T18:06:31.227Z",
+    "modified": "2022-11-12T20:41:53.099Z",
     "headers": [],
     "params": [],
     "body": {
@@ -179,13 +174,297 @@
     "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
     "containerId": "",
     "name": "/users/:id",
-    "url": "users/63681c28f385330464f66e32",
+    "url": "users/63700829aa6cfe59aee0717f",
     "method": "GET",
     "sortNum": 70000,
     "created": "2022-11-07T11:09:47.860Z",
-    "modified": "2022-11-07T11:24:18.287Z",
+    "modified": "2022-11-13T12:11:53.622Z",
     "headers": [],
     "params": [],
+    "tests": []
+  },
+  {
+    "_id": "f1b78668-0c90-4e85-9d4a-6b5c2856db3e",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/courses/",
+    "url": "courses",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2022-11-09T15:52:55.331Z",
+    "modified": "2022-11-14T11:36:23.455Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"joinStudents\" : true\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "767dcf36-a42b-406f-94c9-0b53ccc5ebfd",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/courses/",
+    "url": "courses",
+    "method": "POST",
+    "sortNum": 90000,
+    "created": "2022-11-09T15:59:17.986Z",
+    "modified": "2022-11-09T16:33:23.872Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\" : \"Sommet Science\",\n  \"yearOfEntry\" : \"2019\",\n  \"courseLeader\" : \"636bcc8e94394694ea97c1a3\",\n  \"modules\" : [],\n  \"students\" : [\"636bcc8e94394694ea97c1a3\"]\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "b63d6b95-e9d0-4f6c-8bb9-d25cc3056152",
+    "colId": "b45c4eff-0e44-47c9-9571-7f92cfe915f4",
+    "containerId": "",
+    "name": "/users/:id",
+    "url": "/users/63700829aa6cfe69aee0716f",
+    "method": "PUT",
+    "sortNum": 100000,
+    "created": "2022-11-13T11:41:45.152Z",
+    "modified": "2022-11-13T12:04:00.693Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"roles\" : []\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "623da631-a8c5-4eed-aeb3-8ed9132a0ddc",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "056788e0-bf4d-48e6-94ac-bd7efad53b32",
+    "name": "CreateAdminUser",
+    "url": "admin/createAdminUser",
+    "method": "POST",
+    "sortNum": 10000,
+    "created": "2022-11-14T11:04:25.941Z",
+    "modified": "2022-11-14T11:08:27.634Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"username\" : \"{{username}}\",\n  \"password\" : \"{{password}}\",\n  \"fullname\" : {\n    \"firstname\" : \"Firstname\",\n    \"lastname\" : \"Lastname\"\n  },\n  \"address\" : {\n    \"addressLine1\" : \"test address\",\n    \"postcode\" : \"abcde\",\n    \"city\" : \"sheffield\",\n    \"country\" : \"UK\"\n  }\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "13f6908a-6721-4c73-928c-fdf192cb926f",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "4f091c27-5959-4501-81ae-df7a2a63b8d2",
+    "name": "Login",
+    "url": "auth/login",
+    "method": "POST",
+    "sortNum": 20000,
+    "created": "2022-11-14T11:10:53.420Z",
+    "modified": "2022-11-14T19:50:24.877Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}",
+      "form": []
+    },
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "json-query",
+        "custom": "json.Success",
+        "action": "equal",
+        "value": "true"
+      },
+      {
+        "type": "set-env-var",
+        "custom": "json.Response.token",
+        "action": "setto",
+        "value": "{{access-token}}"
+      }
+    ]
+  },
+  {
+    "_id": "be1fab32-4b9d-4b47-80dd-816636819676",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
+    "name": "Get Users",
+    "url": "users/resource?page=1",
+    "method": "GET",
+    "sortNum": 30000,
+    "created": "2022-11-14T11:14:33.035Z",
+    "modified": "2022-11-14T20:06:13.417Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "page",
+        "value": "1",
+        "isPath": false
+      }
+    ],
+    "tests": [
+      {
+        "type": "res-code",
+        "custom": "",
+        "action": "equal",
+        "value": "200"
+      },
+      {
+        "type": "json-query",
+        "custom": "json.Success",
+        "action": "equal",
+        "value": "true"
+      }
+    ]
+  },
+  {
+    "_id": "81597f38-7e35-45cc-be95-3c1ff16cd211",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
+    "name": "Get User",
+    "url": "/users/63700829aa6cfe69aee07163",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2022-11-14T11:15:54.911Z",
+    "modified": "2022-11-14T11:16:18.662Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "baa1aead-38c0-47dc-96b9-7c00982b56a1",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
+    "name": "Create User",
+    "url": "users",
+    "method": "POST",
+    "sortNum": 50000,
+    "created": "2022-11-14T11:16:36.135Z",
+    "modified": "2022-11-14T11:16:56.928Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"username\": \"New Student\",\n  \"password\": \"123\",\n  \"fullname\": {\n    \"firstname\": \"AAA\",\n    \"lastname\": \"BBB\"\n  },\n  \"address\": {\n    \"addressLine1\": \"addressLine1\",\n    \"postcode\": \"abcde\",\n    \"city\": \"sheffield\",\n    \"country\": \"UK\"\n  }\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "f81c477e-95e7-405b-ac35-341b2f89ee6b",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
+    "name": "Update User",
+    "url": "/users/63700829aa6cfe69aee07163",
+    "method": "PUT",
+    "sortNum": 60000,
+    "created": "2022-11-14T11:17:34.973Z",
+    "modified": "2022-11-14T11:18:20.354Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"address\": {\n    \"addressLine1\": \"100 Talmadge Road\",\n    \"postcode\": \"DN22\",\n    \"city\": \"Eaton\",\n    \"country\": \"United Kingdom\"\n  }\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "a112d51e-650e-4f31-8174-7dbde341f9bb",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
+    "name": "Delete User",
+    "url": "/users/63700829aa6cfe69aee07163",
+    "method": "DELETE",
+    "sortNum": 70000,
+    "created": "2022-11-14T11:20:02.424Z",
+    "modified": "2022-11-14T11:20:23.761Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "f0a487c2-8986-47c8-b397-fcc63cdb2f42",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
+    "name": "Get Self",
+    "url": "users/self",
+    "method": "GET",
+    "sortNum": 80000,
+    "created": "2022-11-14T14:50:21.327Z",
+    "modified": "2022-11-14T14:52:43.561Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "6212fc1c-c8bd-42a5-82af-46733e1725ef",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Create Session",
+    "url": "sessions/resource",
+    "method": "POST",
+    "sortNum": 90000,
+    "created": "2022-11-14T15:12:41.871Z",
+    "modified": "2022-11-14T15:26:48.429Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"type\" : \"seminar\",\n  \"module\" : \"63725e2067ee5783f837251f\",\n  \"cohortIdentifier\" : \"first cohort\",\n  \"startDateTime\" : \"2022-11-14T11:15\",\n  \"endDateTime\" : \"2022-11-14T12:15\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "91ad9abe-fcad-4620-bcd2-3fb4830c8986",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Get All sessions for student",
+    "url": "sessions/GetSessionsForStudent/6370082baa6cfe69aee071b1",
+    "method": "GET",
+    "sortNum": 100000,
+    "created": "2022-11-14T15:56:02.634Z",
+    "modified": "2022-11-14T16:17:15.011Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"filter\" : {\"startDateTime\" : {\"$gt\" : \"2022-11-13T11:15:00.000Z\"}}\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "7afe237c-4c41-40ee-a7e0-bc3186d1c455",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "83a72f30-0839-4dcb-9768-658d5c585bb0",
+    "name": "Create Course",
+    "url": "courses/resource",
+    "method": "POST",
+    "sortNum": 110000,
+    "created": "2022-11-14T20:04:17.012Z",
+    "modified": "2022-11-14T21:21:28.450Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\" : \"Awesome Science 24\",\n  \"yearOfEntry\" : \"2022\",\n  \"courseLeader\" : \"636fdcd9fd39ae3fea735eda\",\n  \"modules\" : [\"63725e2067ee5783f837251f\"],\n  \"students\" : [\"636fdcd9fd39ae3fea735eda\"]\n}",
+      "form": []
+    },
     "tests": []
   }
 ]

@@ -45,7 +45,7 @@ namespace BlazorAdminPanel.Services
                 RequestUri = new Uri("api/admin/createAdminUser", UriKind.Relative),
                 Method = HttpMethod.Post,
             };
-            request.Headers.Add("Authorization", $"App {(await _runtimeConfigService.GetRuntimeConfiguration()).APIKey}");
+            request.Headers.Add("X-API-Key", $"{(await _runtimeConfigService.GetRuntimeConfiguration()).APIKey}");
             request.Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(payload, options: new System.Text.Json.JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull}), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.SendAsync(request);
@@ -74,7 +74,7 @@ namespace BlazorAdminPanel.Services
                 RequestUri = new Uri("api/admin/users", UriKind.Relative),
                 Method = HttpMethod.Post,
             };
-            request.Headers.Add("Authorization", $"App {(await _runtimeConfigService.GetRuntimeConfiguration()).APIKey}");
+           request.Headers.Add("X-API-Key", $"{(await _runtimeConfigService.GetRuntimeConfiguration()).APIKey}");
             request.Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(userDetails, options: new System.Text.Json.JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull}), Encoding.UTF8, "application/json");
 
             var response = await _httpClient.SendAsync(request);
