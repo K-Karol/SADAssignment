@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import AuthController from '../controllers/auth';
 import { IRoute } from '../interfaces/routes';
-import AuthenticateRequest from '../middleware/auth';
 import ValidationMiddleware from '../middleware/validate';
 import { LoginRequest, RegisterRequest } from '../validation/auth';
 export default  class AuthRoute implements IRoute {

@@ -78,28 +78,13 @@ export default class CourseController {
         var courseToPost: PostCourse = req.body;
 
         try {
-            if(!isValidObjectId(courseToPost.courseLeader)){
-                throw new HttpException(400, "courseLeader has an invalid ID");
-            }
-            courseToPost.modules.forEach((el) => {
-                if(!isValidObjectId(el)){
-                    throw new HttpException(400, "modules contain invalid ID/s");
-                }
-            });
-            courseToPost.students?.forEach((el) => {
-                if(!isValidObjectId(el)){
-                    throw new HttpException(400, "students contain invalid ID/s");
-                }
-            });
-
             const courseParsed: ICourse = {
                 name : courseToPost.name,
                 yearOfEntry: courseToPost.yearOfEntry,
-                courseLeader : new Types.ObjectId(courseToPost.courseLeader),
-                modules : courseToPost.modules.map((m) => new Types.ObjectId(m)),
-                students : courseToPost.students ? courseToPost.students.map((s) => new Types.ObjectId(s)) : []
+                courseLeader : courseToPost.courseLeader,
+                modules : courseToPost.modules,
+                students : courseToPost.students ? courseToPost.students : []
             };
-
             const newCourse = new Course(courseParsed);
             const course = await newCourse.save();
             res.status(200).json(GenerateAPIResult(true, newCourse._id, undefined));
@@ -107,9 +92,5 @@ export default class CourseController {
         } catch (err) {
             next(err);
         }
-
-
     };
-
-    
 }

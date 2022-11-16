@@ -1,8 +1,9 @@
 import { Type } from "class-transformer";
-import { IsNotEmpty, IsOptional, IsString, IsInt, IsBoolean } from "class-validator";
+import { IsNotEmpty, IsOptional, IsString, IsInt, IsBoolean, IsArray } from "class-validator";
 import { Schema, Types } from "mongoose";
 import "reflect-metadata";
 import { IAddress, IFullname, IRole, IUser } from "../interfaces/user";
+import { IsArrayOfMongooseObjectId, IsMongooseObjectId } from "./custom-decorators";
 
 export class GetUsersQuery{
     @IsInt()
@@ -61,7 +62,9 @@ export class UserDecorated{
 
 export class UserPutRequest{
     @IsOptional()
-    roles?: string[];
+    @IsArrayOfMongooseObjectId()
+    @Type(() => Types.ObjectId)
+    roles?: Types.ObjectId[];
     @IsOptional()
     fullname?: FullNameDecorated;
     @IsOptional()
@@ -107,9 +110,10 @@ class FullNameDelta{
 }
 
 export class GetUserByID{
-    @IsString()
     @IsNotEmpty()
-    id!: string;
+    @IsMongooseObjectId()
+    @Type(() => Types.ObjectId)
+    id!: Types.ObjectId;
 }
 
 

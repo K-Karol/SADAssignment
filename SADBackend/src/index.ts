@@ -6,7 +6,6 @@ import cors from 'cors';
 import bodyParse from 'body-parser'
 
 import ErrorHandler from './middleware/error';
-import AuthenticateRequest from './middleware/auth';
 import {IAuthenticatedRequest} from './interfaces/auth';
 import {GenerateAPIResult} from './helpers';
 import compression from 'compression';
