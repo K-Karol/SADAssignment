@@ -457,12 +457,59 @@
     "method": "POST",
     "sortNum": 110000,
     "created": "2022-11-14T20:04:17.012Z",
-    "modified": "2022-11-14T21:21:28.450Z",
+    "modified": "2022-11-16T17:40:25.616Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\" : \"Awesome Science 24\",\n  \"yearOfEntry\" : \"2022\",\n  \"courseLeader\" : \"636fdcd9fd39ae3fea735eda\",\n  \"modules\" : [\"63725e2067ee5783f837251f\"],\n  \"students\" : [\"636fdcd9fd39ae3fea735eda\"]\n}",
+      "raw": "{\n  \"name\" : \"Awesome Science 24\",\n  \"yearOfEntry\" : \"2022\",\n  \"courseLeader\" : \"636e720ce404fad7cacacf91\",\n  \"modules\" : [\"63725e2067ee5783f837251f\"],\n  \"students\" : [\"636fdcd9fd39ae3fea735eda\"]\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "f89afb19-3640-4079-b0e7-6d77e6f31fdd",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "83a72f30-0839-4dcb-9768-658d5c585bb0",
+    "name": "Delete Course",
+    "url": "courses/resource/637521979e90e1ca627093e2",
+    "method": "DELETE",
+    "sortNum": 120000,
+    "created": "2022-11-16T17:34:29.008Z",
+    "modified": "2022-11-16T17:45:14.981Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "f14453a4-7db5-4f8c-b7b9-3d500d629269",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "83a72f30-0839-4dcb-9768-658d5c585bb0",
+    "name": "Get Course",
+    "url": "courses/resource/6375335ddffff79afabf266d",
+    "method": "GET",
+    "sortNum": 115000,
+    "created": "2022-11-16T18:59:38.126Z",
+    "modified": "2022-11-16T19:06:13.690Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "8f229d22-3d2e-4c7f-a6a6-73f40716318d",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "83a72f30-0839-4dcb-9768-658d5c585bb0",
+    "name": "Update Course",
+    "url": "courses/resource/6375335ddffff79afabf266d",
+    "method": "PUT",
+    "sortNum": 117500,
+    "created": "2022-11-16T19:06:02.904Z",
+    "modified": "2022-11-16T19:38:43.141Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\" : \"Awesome Science 26\",\n  \"yearOfEntry\" : \"2023\",\n  \"courseLeader\" : \"636e720ce404fad7cacacf91\",\n  \"modules\" : [\"63725e2067ee5783f837251f\"],\n  \"students\" : [\"636fdcd9fd39ae3fea735eda\"]\n}",
       "form": []
     },
     "tests": []

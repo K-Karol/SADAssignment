@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { AggregatePaginateModel, isValidObjectId, Schema, Types } from "mongoose";
-import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } from "../helpers";
+import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException, RemoveUndefinedFieldsRoot } from "../helpers";
 import bcrypt from "bcryptjs";
-import { GetCoursesQueryBody, PostCourse } from "../validation/course";
+import { CoursePutRequest, GetCourseByID, GetCoursesQueryBody, PostCourse } from "../validation/course";
 import { GenerateBaseExcludes as UserGenerateBaseExcludes } from "../models/user";
 import { Course, CoursePaginate } from "../models/course";
 import { ICourse } from "../interfaces/course";
@@ -92,5 +92,67 @@ export default class CourseController {
         } catch (err) {
             next(err);
         }
+    };
+
+    public GetCourse = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          var params: GetCourseByID = (req as any)["params"];
+    
+          const course = await Course.findById(
+            params.id,
+          );
+    
+          if (!course) throw new HttpException(400, "Course not found");
+    
+          res.status(200).json(GenerateAPIResult(true, course, undefined));
+    
+        } catch (err) {
+          next(err);
+        }
+      };
+
+      public UpdateCourse = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          const putRequest: CoursePutRequest = req.body;
+          const params: GetCourseByID = (req as any)["params"];
+    
+          if ((putRequest.name) == undefined && (putRequest.yearOfEntry == undefined) && (putRequest.courseLeader == undefined) && (putRequest.modules == undefined) && (putRequest.students == undefined)) {
+            throw new HttpException(400, "Put request contains no data to update");
+          }
+    
+          var deltaObj = RemoveUndefinedFieldsRoot(putRequest);
+    
+          //check if id exists so failure can be 500?
+    
+          const updateRes = await Course.updateOne({ _id: params.id }, deltaObj);
+    
+          if (updateRes.modifiedCount != 1) throw new HttpException(400, "Failed to update");
+    
+    
+          const newCourse= await Course.findById(params.id);
+          if (!newCourse) throw new HttpException(400, "Failed to find Course and/or update");
+    
+          res.status(200).json(GenerateAPIResult(true, newCourse, undefined));
+    
+    
+        }
+        catch (err) {
+          next(err);
+        }
+      };
+
+      public DeleteCourse = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const params: GetCourseByID = (req as any)["params"];
+      
+            const deleteRes = await Course.deleteOne({ _id: params.id });
+      
+            if (deleteRes.deletedCount != 1) throw new HttpException(400, "Failed to delete");
+      
+            res.status(200).json(GenerateAPIResult(true, "Deleted", undefined));
+      
+          } catch (err) {
+            next(err);
+          }
     };
 }

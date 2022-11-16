@@ -6,6 +6,7 @@ import "reflect-metadata";
 import { Course } from "../models/course";
 import { DoesArrayOfObjectIdExist, DoesObjectIdExist, IsArrayOfMongooseObjectId, IsMongooseObjectId } from "./custom-decorators";
 import { User } from "../models/user";
+import { ICourse } from "../interfaces/course";
 
 export class GetCoursesQueryBody{
     @IsOptional()
@@ -52,3 +53,33 @@ export class PostCourse{
     @DoesArrayOfObjectIdExist(User)
     students?: Types.ObjectId[];
 }
+
+export class GetCourseByID{
+    @IsNotEmpty()
+    @IsMongooseObjectId()
+    @Type(() => Types.ObjectId)
+    @DoesObjectIdExist(Course)
+    id!: Types.ObjectId;
+}
+
+export class CoursePutRequest{
+    @IsString()
+    @IsOptional()
+    name?: string;
+    @IsString()
+    @IsOptional()
+    yearOfEntry?: string;
+    @IsOptional()
+    @IsMongooseObjectId()
+    @Type(() => Types.ObjectId)
+    courseLeader?: Types.ObjectId;
+    @IsOptional()
+    @IsArrayOfMongooseObjectId()
+    @Type(() => Types.ObjectId)
+    modules?: Types.ObjectId[];
+    @IsOptional()
+    @IsArrayOfMongooseObjectId()
+    @Type(() => Types.ObjectId)
+    students?: Types.ObjectId[];
+}
+
