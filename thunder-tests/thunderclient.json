@@ -567,5 +567,19 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "101d5487-ba9e-4336-9d70-ffb42d7e7bbc",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "b9826620-6ad2-41cd-902b-e67e5bb17341",
+    "name": "Register Student Attendance",
+    "url": "activeSessions/RecordStudentAttendance/1rtA5K97",
+    "method": "POST",
+    "sortNum": 170000,
+    "created": "2022-11-16T22:04:26.924Z",
+    "modified": "2022-11-16T22:07:10.874Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]
