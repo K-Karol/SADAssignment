@@ -1,6 +1,6 @@
 import { ResponsiveLine } from '@nivo/line';
 import data from './data.json';
-import Dropdown from 'react-dropdown';
+// import Dropdown from 'react-dropdown';
 // import styles from './ViewAttendanceLine.css'
 //         data={data} and import for when needed. Placeholder for now?
 // get the individual student select working

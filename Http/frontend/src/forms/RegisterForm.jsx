@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import styled from "@emotion/styled";
 import "./styles.css";
 import "./styles-custom.css";
+import { Grid } from "@mui/material";
 
 
 // fix this up as it's just the Formik example at the minute
@@ -81,7 +82,7 @@ const MyTextInput = ({ label, ...props }) => {
   const RegisterForm = () => {
     return (
       <>
-        <h1>Sign up here!</h1>
+      <h1>Sign up here!</h1>
         <Formik
           initialValues={{
             firstName: "",

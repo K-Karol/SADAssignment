@@ -33,6 +33,7 @@ const randomCode = makecode(8);
 // this will obviously be alphanumeric and possibly generated server-side
 // either way it's calm
 // style={{ fontSize: "9rem", color: 'blue'}}
+// Grid it for full responsiveness
 
 const GenerateCode = () => {
     const [isShown, setIsShown] = useState(false);
@@ -45,13 +46,8 @@ const GenerateCode = () => {
     return (
         <div className="GenerateCode">
             <h1> Generate your random code here.</h1>
-            {/* <Button variant ="contained" onClick={() => {
-                        alert('Your code is ' + randomCode);
-                    }}
-            > Generate Code</Button> */}
             <Button color="secondary" variant ="contained" onClick={handleClick}
             > Generate Code</Button>
-            {/* <h1> {randomCode}</h1> */}
             {isShown && (
                 <div className="shadowBox">
                     <h1 style={{ fontSize: "9rem"}} className={styles.rainbow_text_animated}>{randomCode}</h1>
