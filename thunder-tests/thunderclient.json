@@ -419,12 +419,12 @@
     "method": "POST",
     "sortNum": 90000,
     "created": "2022-11-14T15:12:41.871Z",
-    "modified": "2022-11-14T15:26:48.429Z",
+    "modified": "2022-11-15T18:30:11.310Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"type\" : \"seminar\",\n  \"module\" : \"63725e2067ee5783f837251f\",\n  \"cohortIdentifier\" : \"first cohort\",\n  \"startDateTime\" : \"2022-11-14T11:15\",\n  \"endDateTime\" : \"2022-11-14T12:15\"\n}",
+      "raw": "{\n  \"type\" : \"seminar\",\n  \"module\" : \"63725e2067ee5783f837251f\",\n  \"cohortIdentifier\" : \"second cohort\",\n  \"startDateTime\" : \"2022-09-21T11:30\",\n  \"endDateTime\" : \"2022-09-21T13:30\"\n}",
       "form": []
     },
     "tests": []
@@ -442,5 +442,17 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "a554b736-9363-4049-81fb-bbae78a53083",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Get All Attendence For Session",
+    "url": "",
+    "method": "GET",
+    "sortNum": 110000,
+    "created": "2022-11-15T18:05:58.257Z",
+    "modified": "2022-11-15T18:05:58.258Z",
+    "headers": []
   }
 ]
