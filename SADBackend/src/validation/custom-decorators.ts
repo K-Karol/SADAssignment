@@ -63,7 +63,7 @@ export function DoesArrayOfObjectIdExist(model: Model<any>, validationOptions?: 
       options: validationOptions,
       constraints: [model],
       validator: {
-        async validate(value: Types.ObjectId[], args: ValidationArguments) {
+        async validate(value: string[], args: ValidationArguments) {
           const model = args.constraints[0];
           
           return (await Promise.all(value.map(async (v) => (await model.findOne({_id : value})) != undefined))).every((v) => v);

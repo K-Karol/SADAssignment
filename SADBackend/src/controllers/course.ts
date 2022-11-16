@@ -2,11 +2,12 @@ import { Request, Response, NextFunction } from "express";
 import { AggregatePaginateModel, isValidObjectId, Schema, Types } from "mongoose";
 import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } from "../helpers";
 import bcrypt from "bcryptjs";
-import { GetCoursesQueryBody, PostCourse } from "../validation/course";
+import { GetCoursesQueryBody, PostCourse_ControllerStage, PostCourse_ValidationStage } from "../validation/course";
 import { GenerateBaseExcludes as UserGenerateBaseExcludes } from "../models/user";
 import { Course, CoursePaginate } from "../models/course";
 import { ICourse } from "../interfaces/course";
 import { IAuthenticatedRequest } from "../interfaces/auth";
+import { plainToInstance } from "class-transformer";
 // import {aggregate} from 'mongoose-aggregate-paginate-v2';
 
 export default class CourseController {
@@ -59,6 +60,17 @@ export default class CourseController {
             aggregate_options.push({ $project: { "students.roles": 0 } });
         }
 
+        if(reqQuery.joinModules){
+            aggregate_options.push({
+                $lookup: {
+                    from: "modules",
+                    localField: "modules",
+                    foreignField: "_id",
+                    as: "modules",
+                },
+            });
+        }
+
         if (reqQuery.filter) aggregate_options.push({ $match: reqQuery.filter });
 
 
@@ -75,7 +87,7 @@ export default class CourseController {
     };
 
     public PostCourse = async (req: Request, res: Response, next: NextFunction) => {
-        var courseToPost: PostCourse = req.body;
+        var courseToPost: PostCourse_ControllerStage = plainToInstance(PostCourse_ControllerStage, req.body, {});
 
         try {
             const courseParsed: ICourse = {

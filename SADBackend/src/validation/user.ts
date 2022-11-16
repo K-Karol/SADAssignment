@@ -1,9 +1,10 @@
-import { Type } from "class-transformer";
+import { Transform, TransformInstanceToInstance, Type } from "class-transformer";
 import { IsNotEmpty, IsOptional, IsString, IsInt, IsBoolean, IsArray } from "class-validator";
 import { Schema, Types } from "mongoose";
 import "reflect-metadata";
 import { IAddress, IFullname, IRole, IUser } from "../interfaces/user";
-import { IsArrayOfMongooseObjectId, IsMongooseObjectId } from "./custom-decorators";
+import Role from "../models/role";
+import { DoesArrayOfObjectIdExist, IsArrayOfMongooseObjectId, IsMongooseObjectId } from "./custom-decorators";
 
 export class GetUsersQuery{
     @IsInt()
@@ -60,11 +61,20 @@ export class UserDecorated{
 
 }
 
-export class UserPutRequest{
-    @IsOptional()
-    @IsArrayOfMongooseObjectId()
-    @Type(() => Types.ObjectId)
+
+export class UserPutRequest_ControllerStage{
+    @Transform(({value}) => (value as Array<string>).map((v) => new Types.ObjectId(v)))
     roles?: Types.ObjectId[];
+    fullname?: FullNameDecorated;
+    address?: AddressDecorated;
+
+}
+
+export class UserPutRequest_ValidationStage{
+    @DoesArrayOfObjectIdExist(Role)
+    @IsArrayOfMongooseObjectId()
+    @IsOptional()
+    roles?: string[];
     @IsOptional()
     fullname?: FullNameDecorated;
     @IsOptional()
@@ -109,12 +119,18 @@ class FullNameDelta{
     lastname!: string;
 }
 
-export class GetUserByID{
+export class GetUserByID_ValidationStage{
     @IsNotEmpty()
     @IsMongooseObjectId()
-    @Type(() => Types.ObjectId)
+    id!: string;
+}
+
+
+export class GetUserByID_ControllerStage{
+    @Transform(({value}) => new Types.ObjectId(value))
     id!: Types.ObjectId;
 }
+
 
 
 

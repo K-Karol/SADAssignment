@@ -1,7 +1,7 @@
-import { Type } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 import { IsNotEmpty, IsOptional, IsString, IsInt, IsBoolean } from "class-validator";
 import { Module } from "../models/module";
-import { PipelineStage, Schema, Types } from "mongoose";
+import { BooleanSchemaDefinition, PipelineStage, Schema, Types } from "mongoose";
 import "reflect-metadata";
 import { Course } from "../models/course";
 import { DoesArrayOfObjectIdExist, DoesObjectIdExist, IsArrayOfMongooseObjectId, IsMongooseObjectId } from "./custom-decorators";
@@ -16,6 +16,9 @@ export class GetCoursesQueryBody{
     @IsOptional()
     joinStudents?: boolean;
 
+    @IsBoolean()
+    @IsOptional()
+    joinModules?: boolean;
 }
 
 export class GetCoursesQuery{
@@ -29,26 +32,34 @@ export class GetCoursesQuery{
     limit?: number;
 }
 
-export class PostCourse{
+export class PostCourse_ControllerStage{
+    name! : string;
+    yearOfEntry! : string;
+    @Transform(({value}) => new Types.ObjectId(value))
+    courseLeader!: Types.ObjectId;
+    @Transform(({value}) => (value as Array<string>).map((v) => new Types.ObjectId(v)))
+    modules!: Types.ObjectId[];
+    @Transform(({value}) => (value as Array<string>).map((v) => new Types.ObjectId(v)))
+    students?: Types.ObjectId[];
+}
+
+export class PostCourse_ValidationStage{
     @IsNotEmpty()
     @IsString()
     name! : string;
     @IsNotEmpty()
     @IsString()
     yearOfEntry! : string;
-    @IsNotEmpty()
-    @IsMongooseObjectId()
-    @Type(() => Types.ObjectId)
     @DoesObjectIdExist(User)
-    courseLeader!: Types.ObjectId;
+    @IsMongooseObjectId()
     @IsNotEmpty()
-    @IsArrayOfMongooseObjectId()
-    @Type(() => Types.ObjectId)
+    courseLeader!: string;
     @DoesArrayOfObjectIdExist(Module)
-    modules!: Types.ObjectId[];
-    @IsOptional()
     @IsArrayOfMongooseObjectId()
-    @Type(() => Types.ObjectId)
+    @IsNotEmpty()
+    modules!: string[];
     @DoesArrayOfObjectIdExist(User)
-    students?: Types.ObjectId[];
+    @IsArrayOfMongooseObjectId()
+    @IsOptional()
+    students?: string[];
 }

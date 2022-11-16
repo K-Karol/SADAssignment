@@ -7,9 +7,10 @@ import {
 import { AggregatePaginateModel, isValidObjectId } from "mongoose";
 import { IRole, IUser } from "../interfaces/user";
 import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException, RecursiveRemoveUndefinedFields, RemoveUndefinedFieldsRoot } from "../helpers";
-import { GetUserByID, GetUsersQueryBody, UserDecorated, UserPutRequest } from "../validation/user";
+import { GetUserByID_ControllerStage, GetUsersQueryBody, UserDecorated, UserPutRequest_ControllerStage, UserPutRequest_ValidationStage } from "../validation/user";
 import bcrypt from "bcryptjs";
 import { IAuthenticatedRequest } from "../interfaces/auth";
+import { instanceToInstance, plainToInstance } from "class-transformer";
 // import {aggregate} from 'mongoose-aggregate-paginate-v2';
 
 export default class UserController {
@@ -114,11 +115,13 @@ export default class UserController {
 
   public GetUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      var params: GetUserByID = (req as any)["params"];
+      //var params: GetUserByID_Stage2 = (req as any)["params"];
+      
+      var params: GetUserByID_ControllerStage = plainToInstance(GetUserByID_ControllerStage, (req as any)["params"], {});
 
-      if (!isValidObjectId(params.id)) {
-        throw new HttpException(400, "ID is not in the valid format");
-      }
+      // if (!isValidObjectId(params.id)) {
+      //   throw new HttpException(400, "ID is not in the valid format");
+      // }
 
       const user = await User.findById(
         params.id,
@@ -137,22 +140,12 @@ export default class UserController {
 
   public UpdateUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const putRequest: UserPutRequest = req.body;
-      const params: GetUserByID = (req as any)["params"];
-
-      if (!isValidObjectId(params.id)) {
-        throw new HttpException(400, "ID is not in the valid format");
-      }
+      const putRequest: UserPutRequest_ControllerStage = plainToInstance(UserPutRequest_ControllerStage, req.body, {});
+      const params: GetUserByID_ControllerStage = plainToInstance(GetUserByID_ControllerStage, (req as any)["params"], {});
 
       if ((putRequest.address) == undefined && (putRequest.fullname == undefined) && (putRequest.roles == undefined)) {
         throw new HttpException(400, "Put request contains no data to update");
       }
-      putRequest.roles?.forEach((r) => {
-        if (!isValidObjectId(r)) {
-          throw new HttpException(400, "roles contain invalid ID/s");
-        }
-      });
-
       var deltaObj = RemoveUndefinedFieldsRoot(putRequest);
 
       //check if id exists so failure can be 500?
@@ -176,7 +169,7 @@ export default class UserController {
 
   public DeleteUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const params: GetUserByID = (req as any)["params"];
+      const params: GetUserByID_ControllerStage = (req as any)["params"];
       if (!isValidObjectId(params.id)) {
         throw new HttpException(400, "ID is not in the valid format");
       }

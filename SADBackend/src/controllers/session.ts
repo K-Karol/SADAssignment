@@ -4,21 +4,18 @@ import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } fr
 import bcrypt from "bcryptjs";
 import { GenerateBaseExcludes as UserGenerateBaseExcludes } from "../models/user";
 import { IAuthenticatedRequest } from "../interfaces/auth";
-import { GetSessionForStudentBody, GetSessionForStudentParams, GetSessionsQuery, SessionPostRequest } from "../validation/session";
+import { GetSessionForStudentBody, GetSessionForStudentParams, GetSessionsQuery, SessionPostRequest_Stage2 } from "../validation/session";
 import { Module } from "../models/module";
 import { ICohortWithAttendance, ISession } from "../interfaces/session";
 import { Session, SessionPaginate } from "../models/session";
+import { plainToInstance } from "class-transformer";
 // import {aggregate} from 'mongoose-aggregate-paginate-v2';
 
 export default class SessionController {
 
     public PostSession = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            var postRequest: SessionPostRequest = req.body;
-
-            if (!isValidObjectId(postRequest.module)) {
-                throw new HttpException(400, "module is not a valid ObjectId");
-            }
+            var postRequest: SessionPostRequest_Stage2 = plainToInstance(SessionPostRequest_Stage2, req.body, {});
 
             var module = await Module.findById(postRequest.module);
 

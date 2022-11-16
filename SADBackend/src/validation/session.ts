@@ -1,18 +1,19 @@
-import { Type } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 import { IsNotEmpty, IsOptional, IsString, IsInt, IsBoolean, IsIn, IsDate, IsISO8601 } from "class-validator";
 import { Schema, Types } from "mongoose";
 import "reflect-metadata";
-import { IsArrayOfMongooseObjectId, IsMongooseObjectId } from "./custom-decorators";
+import { Module } from "../models/module";
+import { DoesObjectIdExist, IsArrayOfMongooseObjectId, IsMongooseObjectId } from "./custom-decorators";
 
-export class SessionPostRequest{
+export class SessionPostRequest_Stage1{
     @IsNotEmpty()
     @IsString()
     @IsIn(["lecture", "seminar"])
     type!: string;
-    @IsNotEmpty()
+    @DoesObjectIdExist(Module)
     @IsMongooseObjectId()
-    @Type(() => Types.ObjectId)
-    module!: Types.ObjectId;
+    @IsNotEmpty()
+    module!: string;
     @IsString()
     @IsNotEmpty()
     cohortIdentifier!: string;
@@ -23,6 +24,16 @@ export class SessionPostRequest{
     @IsISO8601()
     endDateTime!: Date;
 }
+
+export class SessionPostRequest_Stage2{
+    type!: string;
+    @Transform(({value}) => new Types.ObjectId(value))
+    module!: Types.ObjectId;
+    cohortIdentifier!: string;
+    startDateTime!: Date;
+    endDateTime!: Date;
+}
+
 
 export class GetSessionForStudentParams{
     @IsNotEmpty()
