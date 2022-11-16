@@ -4,7 +4,7 @@ import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } fr
 import bcrypt from "bcryptjs";
 import { GenerateBaseExcludes as UserGenerateBaseExcludes } from "../models/user";
 import { IAuthenticatedRequest } from "../interfaces/auth";
-import { GetSessionForStudentBody, GetSessionForStudentParams, GetSessionsQuery, SessionPostRequest } from "../validation/session";
+import { GetSessionForStudentBody, GetSessionForStudentParams, GetAttendenceForSessionParams, SessionPostRequest } from "../validation/session";
 import { Module } from "../models/module";
 import { ICohortWithAttendance, ISession } from "../interfaces/session";
 import { Session, SessionPaginate } from "../models/session";
@@ -112,5 +112,85 @@ export default class SessionController {
         } catch (err) {
             next(err);
         }
+    }
+
+    public GetSessionAttendence = async (req: Request, res: Response, next: NextFunction) => {
+    try{ //get the attendence for all students in a session
+      var params: GetAttendenceForSessionParams = (req as any)["params"];
+
+      if (!isValidObjectId(params.sessionID)) { //does the session exist
+          throw new HttpException(400, "sessionID is not in the valid format");
+      }
+
+      var queryBody: GetSessionForStudentBody = req.body; //get the filter info
+
+      if (queryBody.filter) { //conver the filter object ID's to vaild format
+          GoThroughJSONAndReplaceObjectIDs(queryBody.filter);
+      }
+
+      let aggregate_options = [];
+      //var temp = req.query.page;
+
+      let page = 1;
+      let limit = 20;
+
+      if (req.query.page) { //number of pages
+          page = parseInt(req.query.page as string);
+      }
+
+      if (req.query.limit) { //number of reaults per page
+          limit = parseInt(req.query.limit as string);
+      }
+
+      const options = {
+          page,
+          limit,
+          collation: { locale: "en" },
+          customLabels: {
+              totalDocs: "totalResults",
+              docs: "sessions",
+          },
+      };
+
+      aggregate_options.push( //?
+          {
+              $match : {
+                  $expr: {
+                      $in: [new Types.ObjectId('6370082baa6cfe69aee071b1'), "$_id"]
+                    }
+              }
+          }
+      );
+
+      if (queryBody.filter) aggregate_options.push({ $match: queryBody.filter }); //add the filter to the options is a filter was requested
+
+      const myAggregate = SessionPaginate.aggregate(aggregate_options);
+
+      SessionPaginate.aggregatePaginate(myAggregate, options) //convert to the session model? I think
+          .then((result) => res.status(200).json(GenerateAPIResult(true, result)))
+          .catch((err) => {
+              next(new HttpException(500, "Failed to fetch users", undefined, err));
+          });
+      
+      } catch (err) {
+        next(err);
+      }
+    }
+
+    //following two methods may be better as user controller methods rather than session methods
+    public GetUserAttendence = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      
+      } catch (err) {
+        next(err);
+      }
+    }
+
+    public PatchUserAttendence = async (req: Request, res: Response, next: NextFunction) => {
+      try {
+      
+      } catch (err) {
+        next(err);
+      }
     }
 }
