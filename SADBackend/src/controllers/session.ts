@@ -4,7 +4,7 @@ import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } fr
 import bcrypt from "bcryptjs";
 import { GenerateBaseExcludes as UserGenerateBaseExcludes } from "../models/user";
 import { IAuthenticatedRequest } from "../interfaces/auth";
-import { GetSessionForStudentBody, GetSessionForStudentParams, GetSessionsQuery, SessionPostRequest_Stage2 } from "../validation/session";
+import { GetSessionForStudentBody, GetSessionForStudentParams_ControllerStage, GetSessionForStudentParams_ValidationStage, GetSessionsQuery, SessionPostRequest_ControllerStage } from "../validation/session";
 import { Module } from "../models/module";
 import { ICohortWithAttendance, ISession } from "../interfaces/session";
 import { Session, SessionPaginate } from "../models/session";
@@ -15,7 +15,7 @@ export default class SessionController {
 
     public PostSession = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            var postRequest: SessionPostRequest_Stage2 = plainToInstance(SessionPostRequest_Stage2, req.body, {});
+            var postRequest: SessionPostRequest_ControllerStage = plainToInstance(SessionPostRequest_ControllerStage, req.body, {});
 
             var module = await Module.findById(postRequest.module);
 
@@ -50,7 +50,7 @@ export default class SessionController {
 
     public GetAllSessionsForStudent = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            var params: GetSessionForStudentParams = (req as any)["params"];
+            var params: GetSessionForStudentParams_ControllerStage = plainToInstance(GetSessionForStudentParams_ControllerStage, (req as any)["params"], {});
             var queryBody: GetSessionForStudentBody = req.body;
 
             if (!isValidObjectId(params.studentID)) {
@@ -88,13 +88,30 @@ export default class SessionController {
 
             aggregate_options.push(
                 {
-                    $match : {
+                    $match: {
                         $expr: {
-                            $in: [new Types.ObjectId('6370082baa6cfe69aee071b1'), "$cohort.students.student"]
-                          }
+                            $in: [params.studentID, "$cohort.students.student"]
+                        }
                     }
+                }, {
+                $unwind: {
+                    path: "$cohort.students"
                 }
+            },
+                {
+                    $match: {
+                        "cohort.students.student": params.studentID
+                    }
+                },
+                {
+                    $set: {
+                        "cohort.student": "$cohort.students.student"
+                    }
+                },
+                { $unset: 'cohort.students' }
             );
+
+            //remove irrelevant students
 
             if (queryBody.filter) aggregate_options.push({ $match: queryBody.filter });
 

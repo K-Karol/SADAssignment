@@ -130,6 +130,10 @@ export default class UserController {
 
     if (reqQuery.filter) aggregate_options.push({ $match: reqQuery.filter });
 
+    // if(!isAdmin){
+    //   //get only users who are part of the current staff member's course or module?
+    // }
+
     const myAggregate = UserPaginate.aggregate(aggregate_options);
 
     UserPaginate.aggregatePaginate(myAggregate, options)

@@ -3,6 +3,7 @@ import { IsNotEmpty, IsOptional, IsString, IsInt, IsBoolean, IsIn, IsDate, IsISO
 import { Schema, Types } from "mongoose";
 import "reflect-metadata";
 import { Module } from "../models/module";
+import { User } from "../models/user";
 import { DoesObjectIdExist, IsArrayOfMongooseObjectId, IsMongooseObjectId } from "./custom-decorators";
 
 export class SessionPostRequest_Stage1{
@@ -25,7 +26,7 @@ export class SessionPostRequest_Stage1{
     endDateTime!: Date;
 }
 
-export class SessionPostRequest_Stage2{
+export class SessionPostRequest_ControllerStage{
     type!: string;
     @Transform(({value}) => new Types.ObjectId(value))
     module!: Types.ObjectId;
@@ -34,12 +35,17 @@ export class SessionPostRequest_Stage2{
     endDateTime!: Date;
 }
 
-
-export class GetSessionForStudentParams{
-    @IsNotEmpty()
-    @IsMongooseObjectId()
-    @Type(() => Types.ObjectId)
+export class GetSessionForStudentParams_ControllerStage{
+    @Transform(({value}) => new Types.ObjectId(value))
     studentID!: Types.ObjectId
+}
+
+
+export class GetSessionForStudentParams_ValidationStage{
+    @DoesObjectIdExist(User)
+    @IsMongooseObjectId()
+    @IsNotEmpty()
+    studentID!: string
 }
 
 export class GetSessionForStudentBody{
