@@ -1,9 +1,15 @@
 import { Stack } from '@mui/material';
 import React, {useState, useEffect} from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import DBPage from './components/DBPage.jsx';
-import Main from './components/Main.jsx';
-import RegistrationForm from './components/RegistrationForm.jsx';
+import DBPage from './pages/DBPage.jsx';
+import Main from './pages/Main.jsx';
+import NavMenu from './components/NavMenu.jsx';
+import LoginForm from './forms/LoginForm';
+import EditAttendance from './forms/EditAttendance.jsx';
+import GenerateCode from './pages/GenerateCode/GenerateCode.jsx';
+import ViewAttendance from './pages/VisualiseAttendance/ViewAttendance.jsx';
+import GenerateReport from './pages/GenerateReport.jsx';
+import RegisterForm from './forms/RegisterForm.jsx';
 // import SideMenu from './components/SideMenu.jsx';
 
 function App() {
@@ -32,17 +38,21 @@ function App() {
   return (
     <BrowserRouter>
         <div className="App">
-          {/* <SideMenu/> */}
-          <Stack direction="column" spacing={2} 
+          <NavMenu/>
+          {/* <Stack direction="column" spacing={2} 
           justifyContent="center"
           alignItems="center"
           >
-            <h1>Running "/api" gets you: '{message}'</h1>
-          </Stack>
+          </Stack> */}
           <Routes>
             <Route exact path="/" element={<Main/>} />
-            <Route path='/register' element={<RegistrationForm/>} />
+            <Route path='/login' element={<LoginForm/>} />
+            <Route path='/register' element={<RegisterForm/>} />
             <Route path='/databaseTest' element={<DBPage/>} />
+            <Route path='/editAttendance' element={<EditAttendance/>}/>
+            <Route path='/generateCode' element={<GenerateCode/>}/>
+            <Route path='/viewAttendance' element={<ViewAttendance/>}/>   
+            <Route path='/generateReport' element={<GenerateReport/>}/>
           </Routes>
         </div>
     </BrowserRouter>
