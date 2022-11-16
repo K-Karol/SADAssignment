@@ -15,8 +15,8 @@ export default class UserRoute implements IRoute {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}resource/`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(GetUsersQuery, 'query'), ValidationMiddleware(GetUsersQueryBody, 'body'),  this.userController.GetUsers);
-    this.router.get(`${this.path}resource/:id`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(GetUserByID_ValidationStage, 'params'),  this.userController.GetUser);
+    this.router.get(`${this.path}resource/`, AuthenticateRequest, AuthoriseByRoles(["Admin", "Staff"]), ValidationMiddleware(GetUsersQuery, 'query'), ValidationMiddleware(GetUsersQueryBody, 'body'),  this.userController.GetUsers);
+    this.router.get(`${this.path}resource/:id`, AuthenticateRequest, AuthoriseByRoles(["Admin", "Staff"]), ValidationMiddleware(GetUserByID_ValidationStage, 'params'),  this.userController.GetUser);
     this.router.get(`${this.path}self`, AuthenticateRequest, this.userController.GetCurrentUser);
     this.router.post(`${this.path}resource/`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(UserDecorated, 'body'), this.userController.PostUser);
     this.router.put(`${this.path}resource/:id`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(GetUserByID_ValidationStage, 'params'), ValidationMiddleware(UserPutRequest_ValidationStage, 'body'), this.userController.UpdateUser);

@@ -302,19 +302,24 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
     "name": "Get Users",
-    "url": "users/resource?page=1",
+    "url": "users/resource?page=21",
     "method": "GET",
     "sortNum": 30000,
     "created": "2022-11-14T11:14:33.035Z",
-    "modified": "2022-11-16T19:51:59.140Z",
+    "modified": "2022-11-16T20:44:37.633Z",
     "headers": [],
     "params": [
       {
         "name": "page",
-        "value": "1",
+        "value": "21",
         "isPath": false
       }
     ],
+    "body": {
+      "type": "json",
+      "raw": "{\n}",
+      "form": []
+    },
     "tests": [
       {
         "type": "res-code",
@@ -353,12 +358,12 @@
     "method": "POST",
     "sortNum": 50000,
     "created": "2022-11-14T11:16:36.135Z",
-    "modified": "2022-11-16T16:34:13.956Z",
+    "modified": "2022-11-16T20:22:28.824Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"username\": \"New Student\",\n  \"password\": \"123\",\n  \"fullname\": {\n    \"firstname\": \"AAA\",\n    \"lastname\": \"BBB\"\n  },\n  \"address\": {\n    \"addressLine1\": \"addressLine1\",\n    \"postcode\": \"abcde\",\n    \"city\": \"sheffield\",\n    \"country\": \"UK\"\n  }\n}",
+      "raw": "{\n  \"username\": \"awesomeStaff\",\n  \"password\": \"123\",\n  \"roles\" : [\"Staff\"],\n  \"fullname\": {\n    \"firstname\": \"Staff\",\n    \"lastname\": \"Member\"\n  },\n  \"address\": {\n    \"addressLine1\": \"addressLine1\",\n    \"postcode\": \"abcde\",\n    \"city\": \"sheffield\",\n    \"country\": \"UK\"\n  }\n}",
       "form": []
     },
     "tests": []
@@ -457,12 +462,12 @@
     "method": "POST",
     "sortNum": 110000,
     "created": "2022-11-14T20:04:17.012Z",
-    "modified": "2022-11-16T19:52:03.257Z",
+    "modified": "2022-11-16T20:45:35.631Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\" : \"English Literature\",\n  \"yearOfEntry\" : \"2022\",\n  \"courseLeader\" : \"6374e1be45f2d92a9b42f80f\",\n  \"modules\" : [\"637533e9fa78e8cb01f8e159\",\"637538a93a381e0ace1db219\"],\n  \"students\" : [\"637537fb6e74842534423fd9\", \"637537fb6e74842534423fdb\"]\n}",
+      "raw": "{\n  \"name\" : \"Computer Science\",\n  \"yearOfEntry\" : \"2022\",\n  \"courseLeader\" : \"637546a5e29602143922d0da\",\n  \"modules\" : [\"637533e9fa78e8cb01f8e159\",\"637538a93a381e0ace1db219\"],\n  \"students\" : [\"637537f46e74842534423f11\", \"637537f46e74842534423f13\"]\n  \n}",
       "form": []
     },
     "tests": []
@@ -525,14 +530,28 @@
     "method": "GET",
     "sortNum": 140000,
     "created": "2022-11-16T19:54:00.152Z",
-    "modified": "2022-11-16T19:55:25.998Z",
+    "modified": "2022-11-16T20:26:58.190Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"joinStudents\" : true,\n  \"joinModules\" : true\n}",
+      "raw": "{\n  \"joinStudents\" : true\n}",
       "form": []
     },
+    "tests": []
+  },
+  {
+    "_id": "5cc19c34-7af0-41b5-9e91-ddde8a5d5506",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "83a72f30-0839-4dcb-9768-658d5c585bb0",
+    "name": "Get My Courses",
+    "url": "courses/GetMyCourses",
+    "method": "GET",
+    "sortNum": 150000,
+    "created": "2022-11-16T20:48:38.902Z",
+    "modified": "2022-11-16T20:48:45.650Z",
+    "headers": [],
+    "params": [],
     "tests": []
   }
 ]

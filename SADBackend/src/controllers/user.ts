@@ -3,6 +3,7 @@ import {
   User,
   UserPaginate,
   BaseExcludes as UserBaseExcludes,
+  GenerateBaseExcludes,
 } from "../models/user";
 import { AggregatePaginateModel, isValidObjectId } from "mongoose";
 import { IRole, IUser } from "../interfaces/user";
@@ -11,6 +12,7 @@ import { GetUserByID_ControllerStage, GetUsersQueryBody, UserDecorated, UserPutR
 import bcrypt from "bcryptjs";
 import { IAuthenticatedRequest } from "../interfaces/auth";
 import { instanceToInstance, plainToInstance } from "class-transformer";
+import Role from "../models/role";
 // import {aggregate} from 'mongoose-aggregate-paginate-v2';
 
 export default class UserController {
@@ -19,12 +21,25 @@ export default class UserController {
 
     try {
       postRequest.password = await bcrypt.hash(req.body.password, 10);
+
+      var rolesToInsert: IRole[] = [];
+
+      if(postRequest.roles){
+        rolesToInsert = await Promise.all(postRequest.roles!.map(async (sr) => {
+          const r = await Role.findOne({name: sr})
+          if(!r){
+            throw new HttpException(400, "One or more roles supplied do not exist");
+          }
+          return (r as IRole);
+        }));
+      }
+
       const userParsed: IUser = {
         username: postRequest.username,
         password: postRequest.password,
         address: postRequest.address,
         fullname: postRequest.fullname,
-        roles: [],
+        roles: rolesToInsert,
       };
       const newUser = new User(userParsed);
       const user = await newUser.save();
@@ -34,7 +49,7 @@ export default class UserController {
     }
   };
 
-  public GetUsers = async (req: Request, res: Response, next: NextFunction) => {
+  public GetUsers = async (req: IAuthenticatedRequest, res: Response, next: NextFunction) => {
 
     var reqQuery: GetUsersQueryBody = req.body;
 
@@ -70,18 +85,29 @@ export default class UserController {
       },
     };
 
-    UserBaseExcludes.forEach((element) => {
+
+    const excludeExceptions: string[] = [];
+
+    const isAdmin = ((req.User! as IUser).roles! as IRole[]).find((r) => r.name == "Admin");
+
+    if(isAdmin){
+      excludeExceptions.push("roles");
+      excludeExceptions.push("address");
+    }
+
+    GenerateBaseExcludes("", excludeExceptions).forEach((element) => {
       aggregate_options.push({ $project: element });
     });
 
-    aggregate_options.push({
-      $lookup: {
-        from: "roles",
-        localField: "roles",
-        foreignField: "_id",
-        as: "roles",
-      },
-    });
+    if(isAdmin)
+      aggregate_options.push({
+        $lookup: {
+          from: "roles",
+          localField: "roles",
+          foreignField: "_id",
+          as: "roles",
+        },
+      });
 
     if (reqQuery.joinCourses) {
       aggregate_options.push({
@@ -188,7 +214,7 @@ export default class UserController {
   };
 
   public GetCurrentUser = async (req: IAuthenticatedRequest, res: Response, next: NextFunction) => {
-    var returnObj = { username: req.User!.username, roles: req.User!.roles.map((r) => (r as IRole).name), fullname : req.User!.fullname, address : req.User!.address};
+    var returnObj = { username: (req.User! as IUser).username, roles: (req.User! as IUser).roles.map((r) => (r as IRole).name), fullname : (req.User! as IUser).fullname, address : (req.User! as IUser).address};
     res.status(200).json(GenerateAPIResult(true, returnObj));
   };
 }

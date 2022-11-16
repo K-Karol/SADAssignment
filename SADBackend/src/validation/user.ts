@@ -1,5 +1,5 @@
 import { Transform, TransformInstanceToInstance, Type } from "class-transformer";
-import { IsNotEmpty, IsOptional, IsString, IsInt, IsBoolean, IsArray } from "class-validator";
+import { IsNotEmpty, IsOptional, IsString, IsInt, IsBoolean, IsArray, isNotEmpty, isArray } from "class-validator";
 import { Schema, Types } from "mongoose";
 import "reflect-metadata";
 import { IAddress, IFullname, IRole, IUser } from "../interfaces/user";
@@ -54,6 +54,9 @@ export class UserDecorated{
     username!: string;
     @IsString()
     password!: string;
+    @IsArray()
+    @IsOptional()
+    roles? : string[];
     @IsNotEmpty()
     fullname!: FullNameDecorated;
     @IsNotEmpty()

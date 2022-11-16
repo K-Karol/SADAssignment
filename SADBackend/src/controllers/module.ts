@@ -148,4 +148,8 @@ export default class ModuleController {
             next(err);
         }
     }
+
+    // public GetModule = async (req: Request, res: Response, next: NextFunction) => {
+
+    // }
 }
