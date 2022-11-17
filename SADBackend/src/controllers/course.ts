@@ -2,11 +2,12 @@ import { Request, Response, NextFunction } from "express";
 import { AggregatePaginateModel, isValidObjectId, Schema, Types } from "mongoose";
 import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException, RemoveUndefinedFieldsRoot } from "../helpers";
 import bcrypt from "bcryptjs";
-import { CoursePutRequest, GetCourseByID, GetCoursesQueryBody, PostCourse } from "../validation/course";
+import { CoursePutRequest_ControllerStage, GetCourseByID_ControllerStage, GetCourseByID_ValidationStage, GetCoursesQueryBody, PostCourse } from "../validation/course";
 import { GenerateBaseExcludes as UserGenerateBaseExcludes } from "../models/user";
 import { Course, CoursePaginate } from "../models/course";
 import { ICourse } from "../interfaces/course";
 import { IAuthenticatedRequest } from "../interfaces/auth";
+import { plainToInstance } from "class-transformer";
 // import {aggregate} from 'mongoose-aggregate-paginate-v2';
 
 export default class CourseController {
@@ -96,7 +97,7 @@ export default class CourseController {
 
     public GetCourse = async (req: Request, res: Response, next: NextFunction) => {
         try {
-          var params: GetCourseByID = (req as any)["params"];
+          var params: GetCourseByID_ControllerStage = plainToInstance(GetCourseByID_ControllerStage, (req as any)["params"], {});
     
           const course = await Course.findById(
             params.id,
@@ -113,8 +114,8 @@ export default class CourseController {
 
       public UpdateCourse = async (req: Request, res: Response, next: NextFunction) => {
         try {
-          const putRequest: CoursePutRequest = req.body;
-          const params: GetCourseByID = (req as any)["params"];
+          const putRequest: CoursePutRequest_ControllerStage = plainToInstance(CoursePutRequest_ControllerStage, req.body, {});
+          const params: GetCourseByID_ControllerStage = plainToInstance(GetCourseByID_ControllerStage, (req as any)["params"], {});
     
           if ((putRequest.name) == undefined && (putRequest.yearOfEntry == undefined) && (putRequest.courseLeader == undefined) && (putRequest.modules == undefined) && (putRequest.students == undefined)) {
             throw new HttpException(400, "Put request contains no data to update");
@@ -143,7 +144,7 @@ export default class CourseController {
 
       public DeleteCourse = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const params: GetCourseByID = (req as any)["params"];
+            const params: GetCourseByID_ControllerStage = plainToInstance(GetCourseByID_ControllerStage, (req as any)["params"], {});
       
             const deleteRes = await Course.deleteOne({ _id: params.id });
       
