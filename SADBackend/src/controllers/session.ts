@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import mongoose, { AggregatePaginateModel, isValidObjectId, Schema, Types } from "mongoose";
 import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } from "../helpers";
-import { GetSessionForStudentBody, GetSessionForStudentParams, GetAttendenceForSessionParams, SessionPostRequest, GetAttendenceForStudentParams_ControllerStage } from "../validation/session";
+import { GetSessionForStudentBody, GetSessionForStudentParams, GetAttendenceForSessionParams, SessionPostRequest, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody } from "../validation/session";
 import { Module } from "../models/module";
 import { ICohortWithAttendance, ISession, IStudentWithAttendance } from "../interfaces/session";
 import { Session, SessionPaginate } from "../models/session";
@@ -235,13 +235,13 @@ export default class SessionController {
         params.sessionID
       ); //find the session by ID
 
-        if(!session){
-          throw new HttpException(500, "Session was not found after validation stage");
-        }
+      if (!session) {
+        throw new HttpException(500, "Session was not found after validation stage");
+      }
 
       var attendanceForUser = session!.cohort.students.find((s) => (s.student as Types.ObjectId).equals(params.studentID));
 
-      if(!attendanceForUser){
+      if (!attendanceForUser) {
         throw new HttpException(400, "User's attendance was not found for this session");
       }
 
@@ -254,6 +254,28 @@ export default class SessionController {
 
   public PatchUserAttendence = async (req: Request, res: Response, next: NextFunction) => {
     try {
+      var params: GetAttendenceForStudentParams_ControllerStage = plainToInstance(GetAttendenceForStudentParams_ControllerStage, (req as any)["params"], {});
+      var newattendance: UpdateStudentAttendanceBody = req.body;
+
+      const session = await Session.findById(
+        params.sessionID
+      ); //find the session by ID
+
+      if (!session) {
+        throw new HttpException(500, "Session was not found after validation stage");
+      }
+
+      var attendanceForUser = session!.cohort.students.find((s) => (s.student as Types.ObjectId).equals(params.studentID));
+
+      if (!attendanceForUser) {
+        throw new HttpException(400, "User's attendance was not found for this session");
+      }
+
+      attendanceForUser.attendance = newattendance.attendance;
+
+      await session.save();
+
+      res.status(200).json(GenerateAPIResult(true, attendanceForUser));
 
     } catch (err) {
       next(err);

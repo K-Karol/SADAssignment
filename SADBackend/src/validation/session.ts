@@ -84,3 +84,10 @@ export class GetSessionsQuery{
     @Type(() => Number)
     limit?: number;
 }
+
+export class UpdateStudentAttendanceBody{
+  @IsIn(["full", "not", "late"])
+  @IsString()
+  @IsNotEmpty()
+  attendance!: string;
+}
