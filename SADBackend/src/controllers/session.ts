@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import mongoose, { AggregatePaginateModel, isValidObjectId, Schema, Types } from "mongoose";
 import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } from "../helpers";
-import { GetSessionForStudentBody, GetSessionForStudentParams_ControllerStage, GetSessionForStudentParams_ValidationStage, GetSessionsQuery, SessionPostRequest_ControllerStage, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody } from "../validation/session";
+import { GetSessionForStudentBody, GetSessionForStudentParams_ControllerStage, GetSessionForStudentParams_ValidationStage, GetSessionsQuery, SessionPostRequest_ControllerStage, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody, GetAttendenceForSessionParams } from "../validation/session";
 import { Module } from "../models/module";
 import { ICohortWithAttendance, ISession, IStudentWithAttendance } from "../interfaces/session";
 import { Session, SessionPaginate } from "../models/session";
