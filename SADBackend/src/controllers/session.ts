@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import mongoose, { AggregatePaginateModel, isValidObjectId, Schema, Types } from "mongoose";
+import mongoose, { AggregatePaginateModel, isValidObjectId, model, Schema, Types } from "mongoose";
 import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } from "../helpers";
 import { GetSessionForStudentBody, GetSessionForStudentParams, GetAttendenceForSessionParams, SessionPostRequest, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody } from "../validation/session";
 import { Module } from "../models/module";
@@ -7,6 +7,7 @@ import { ICohortWithAttendance, ISession, IStudentWithAttendance } from "../inte
 import { Session, SessionPaginate } from "../models/session";
 import { GetUserByID } from "../validation/user";
 import { plainToInstance } from "class-transformer";
+import { User } from "../models/user";
 // import {aggregate} from 'mongoose-aggregate-paginate-v2';
 
 export default class SessionController {
@@ -121,115 +122,12 @@ export default class SessionController {
         throw new HttpException(500, "Session was not found after validation stage");
       }
 
-      // var sessions = await Session.aggregate([
-      //   {
-      //     $match: { "_id": new mongoose.Types.ObjectId(params.sessionID) }
-      //   },
-      //   {
-      //     $lookup: {
-      //       from: "users",
-      //       let: { "student": "$cohort." },
-      //       localField: "cohort.students.student",
-      //       foreignField: "_id",
-      //       as: "cohort.students.student",
-      //     }
-      //   },
-      // ]);
-
-      var attendanceList = session!.cohort.students
+      var attendanceList = await Promise.all(session!.cohort.students.map(async (s) => {
+        var ur = await User.findById(s.student);
+        return {id : s.student, username: ur?.username, fullname: ur?.fullname, attendance: s.attendance};
+      }));
 
       res.status(200).json(GenerateAPIResult(true, attendanceList));
-
-      //const session = await Session.findById(params.sessionID, {"cohort.students.student.password" : 0, "cohort.students.student.address" : 0, "cohort.students.student.roles" : 0}, {populate : "cohort.students.student"});
-
-      // const sessions = await Session.aggregate([
-      //   {
-      //     $match : {"_id" : params.sessionID}
-      //   },
-      //   {
-      //     $lookup: {
-      //         from: "users",
-      //         localField: "cohort.students.student",
-      //         foreignField: "_id",
-      //         as: "student",
-      //     }
-      //   },
-      //   {
-      //     "$project" : {"cohort.students.student.password" : 0}
-      //   },
-      //   {
-      //     "$project" : {"cohort.students.student.address" : 0}
-      //   },
-      //   {
-      //     "$project" : {"cohort.students.student.roles" : 0}
-      //   }
-      // ]);
-
-      // var nO = new mongoose.Types.ObjectId("6374eceadb31e5f26ef6e6e2");
-      // var tmp = params.sessionID as mongoose.Types.ObjectId;
-
-
-      // var students = session?.cohort.students;
-
-      // var idk = students?.map((s) => {var n = {student: s.student, attendance: s.attendance}; return n;});
-
-      // var queryBody: GetSessionForStudentBody = req.body; //get the filter info
-
-      // if (queryBody.filter) { //conver the filter object ID's to vaild format
-      //     GoThroughJSONAndReplaceObjectIDs(queryBody.filter);
-      // }
-
-      // let aggregate_options = [];
-      // //var temp = req.query.page;
-
-      // let page = 1;
-      // let limit = 20;
-
-      // if (req.query.page) { //number of pages
-      //     page = parseInt(req.query.page as string);
-      // }
-
-      // if (req.query.limit) { //number of reaults per page
-      //     limit = parseInt(req.query.limit as string);
-      // }
-
-      // const options = {
-      //     page,
-      //     limit,
-      //     collation: { locale: "en" },
-      //     customLabels: {
-      //         totalDocs: "totalResults",
-      //         docs: "sessions",
-      //     },
-      // };
-
-      // // aggregate_options.push( //?
-      // //     {
-      // //         $match : {
-      // //             $expr: {
-      // //                 $in: [params.sessionID, "$_id"]
-      // //               }
-      // //         }
-      // //     }
-      // // );
-
-
-      // // aggregate_options.push( //?
-      // //     {
-      // //         $match : {"_id" : params.sessionID}
-      // //     }
-      // // );
-
-
-      // if (queryBody.filter) aggregate_options.push({ $match: queryBody.filter }); //add the filter to the options is a filter was requested
-
-      // const myAggregate = SessionPaginate.aggregate(aggregate_options);
-
-      // SessionPaginate.aggregatePaginate(myAggregate, options) //convert to the session model? I think
-      //     .then((result) => res.status(200).json(GenerateAPIResult(true, result)))
-      //     .catch((err) => {
-      //         next(new HttpException(500, "Failed to fetch sessions", undefined, err));
-      //     });
 
     } catch (err) {
       next(err);
@@ -255,7 +153,9 @@ export default class SessionController {
         throw new HttpException(400, "User's attendance was not found for this session");
       }
 
-      res.status(200).json(GenerateAPIResult(true, attendanceForUser));
+      var ur = await User.findById(attendanceForUser?.student);
+      //return {id : attendanceForUser.student, username: ur?.username, fullname: ur?.fullname, attendance: attendanceForUser.attendance};
+      res.status(200).json(GenerateAPIResult(true, {id : attendanceForUser.student, username: ur?.username, fullname: ur?.fullname, attendance: attendanceForUser.attendance}));
 
     } catch (err) {
       next(err);
