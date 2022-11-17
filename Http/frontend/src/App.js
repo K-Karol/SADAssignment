@@ -1,4 +1,3 @@
-import { Stack } from '@mui/material';
 import React, {useState, useEffect} from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DBPage from './pages/DBPage.jsx';
@@ -10,16 +9,23 @@ import GenerateCode from './pages/GenerateCode/GenerateCode.jsx';
 import ViewAttendance from './pages/VisualiseAttendance/ViewAttendance.jsx';
 import GenerateReport from './pages/GenerateReport.jsx';
 import RegisterForm from './forms/RegisterForm.jsx';
+import useToken from './components/useToken';
 // import SideMenu from './components/SideMenu.jsx';
 
-function App() {
-  const [message, setMessage] = useState('');
 
-  useEffect(() => {
+function App() {
+  // const [message, setMessage] = useState('');
+  const { token, setToken } = useToken();
+/*   useEffect(() => {
     fetch(`${window.location.origin}/api`)
         .then((res) => res.text())
         .then((text) => {setMessage(text); console.log(text); });
-  }, []);
+  }, []); */
+
+
+  if(!token) {
+    return <LoginForm setToken={setToken} />
+  }
 
   // call DB method would go here, fetching from localhost/DB route
 
