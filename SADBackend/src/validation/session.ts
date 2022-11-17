@@ -1,25 +1,30 @@
-import { Type } from "class-transformer";
+import { Type, Transform } from "class-transformer";
 import { IsNotEmpty, IsOptional, IsString, IsInt, IsIn, IsDate, IsISO8601 } from "class-validator";
+import { Types } from "mongoose";
 import "reflect-metadata";
-import { IsArrayOfMongooseObjectId, IsMongooseObjectId } from "./custom-decorators";
+import { Module } from "../models/module";
+import { Session } from "../models/session";
+import { User } from "../models/user";
+import { DoesObjectIdExist, IsArrayOfMongooseObjectId, IsMongooseObjectId } from "./custom-decorators";
 
 export class SessionPostRequest{
-    @IsNotEmpty()
-    @IsString()
     @IsIn(["lecture", "seminar"])
-    type!: string;
+    @IsString()
     @IsNotEmpty()
-    @IsMongooseObjectId()
+    type!: string;
+    @DoesObjectIdExist(Module)
     @Type(() => Types.ObjectId)
+    @IsMongooseObjectId()
+    @IsNotEmpty()
     module!: Types.ObjectId;
     @IsString()
     @IsNotEmpty()
     cohortIdentifier!: string;
-    @IsNotEmpty()
     @IsISO8601()
+    @IsNotEmpty()
     startDateTime!: Date;
-    @IsNotEmpty()
     @IsISO8601()
+    @IsNotEmpty()
     endDateTime!: Date;
 }
 
@@ -31,18 +36,37 @@ export class GetSessionForStudentParams{
 }
 
 export class GetAttendenceForSessionParams{
-    @IsNotEmpty()
-    @IsString()
-    sessionID!: string
+    @DoesObjectIdExist(Session)
+    @IsMongooseObjectId()
+    sessionID!: string;
 }
 
-export class GetAttendenceForStudentParams{
+// export class GetAttendenceForSessionParams{
+//   @IsNotEmpty()
+//   @IsMongooseObjectId()
+//   @Transform(({value}) => new Types.ObjectId(value))
+//   @DoesObjectIdExist(Session)
+//   @Type(() => Types.ObjectId)
+//   sessionID!: Types.ObjectId;
+// }
+
+
+export class GetAttendenceForStudentParams_ControllerStage{
+  @Transform(({value}) => new Types.ObjectId(value))
+  sessionID!: Types.ObjectId;
+  @Transform(({value}) => new Types.ObjectId(value))
+  studentID!: Types.ObjectId;
+}
+
+
+export class GetAttendenceForStudentParams_ValidationStage{
+    @DoesObjectIdExist(Session)
+    @IsMongooseObjectId()
+    sessionID!: string;
+    @DoesObjectIdExist(User)
     @IsNotEmpty()
-    @IsString()
-    sessionID!: string
-    @IsNotEmpty()
-    @IsString()
-    studentID!: string
+    @IsMongooseObjectId()
+    studentID!: string;;
 }
 
 export class GetSessionForStudentBody{
