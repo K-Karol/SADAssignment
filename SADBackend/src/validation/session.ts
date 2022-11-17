@@ -3,6 +3,7 @@ import { IsNotEmpty, IsOptional, IsString, IsInt, IsBoolean, IsIn, IsDate, IsISO
 import { Schema, Types } from "mongoose";
 import "reflect-metadata";
 import { Module } from "../models/module";
+import { Session } from "../models/session";
 import { User } from "../models/user";
 import { DoesObjectIdExist, IsArrayOfMongooseObjectId, IsMongooseObjectId } from "./custom-decorators";
 
@@ -10,6 +11,8 @@ export class SessionPostRequest_Stage1{
     @IsNotEmpty()
     @IsString()
     @IsIn(["lecture", "seminar"])
+    @IsString()
+    @IsNotEmpty()
     type!: string;
     @DoesObjectIdExist(Module)
     @IsMongooseObjectId()
@@ -18,11 +21,11 @@ export class SessionPostRequest_Stage1{
     @IsString()
     @IsNotEmpty()
     cohortIdentifier!: string;
-    @IsNotEmpty()
     @IsISO8601()
+    @IsNotEmpty()
     startDateTime!: Date;
-    @IsNotEmpty()
     @IsISO8601()
+    @IsNotEmpty()
     endDateTime!: Date;
 }
 
@@ -48,6 +51,32 @@ export class GetSessionForStudentParams_ValidationStage{
     studentID!: string
 }
 
+export class GetAttendenceForSessionParams{
+    @DoesObjectIdExist(Session)
+    @IsMongooseObjectId()
+    sessionID!: string;
+}
+
+
+
+export class GetAttendenceForStudentParams_ControllerStage{
+  @Transform(({value}) => new Types.ObjectId(value))
+  sessionID!: Types.ObjectId;
+  @Transform(({value}) => new Types.ObjectId(value))
+  studentID!: Types.ObjectId;
+}
+
+
+export class GetAttendenceForStudentParams_ValidationStage{
+    @DoesObjectIdExist(Session)
+    @IsMongooseObjectId()
+    sessionID!: string;
+    @DoesObjectIdExist(User)
+    @IsNotEmpty()
+    @IsMongooseObjectId()
+    studentID!: string;;
+}
+
 export class GetSessionForStudentBody{
     @IsOptional()
     @Type(() => Object)
@@ -62,4 +91,11 @@ export class GetSessionsQuery{
     @IsOptional()
     @Type(() => Number)
     limit?: number;
+}
+
+export class UpdateStudentAttendanceBody{
+  @IsIn(["full", "not", "late"])
+  @IsString()
+  @IsNotEmpty()
+  attendance!: string;
 }

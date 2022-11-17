@@ -43,7 +43,7 @@ export function DoesObjectIdExist(model: Model<any>, validationOptions?: Validat
       options: validationOptions,
       constraints: [model],
       validator: {
-        async validate(value: Types.ObjectId, args: ValidationArguments) {
+        async validate(value: string, args: ValidationArguments) {
           const model = args.constraints[0];
           var foundDoc = await model.findOne({_id : value});
           return foundDoc != undefined; // you can return a Promise<boolean> here as well, if you want to make async validation
