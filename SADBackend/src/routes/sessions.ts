@@ -17,7 +17,7 @@ export default class SessionRoute implements IRoute {
   private initializeRoutes() {
     this.router.post(`${this.path}resource/`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(SessionPostRequest, 'body'), this.sessionController.PostSession);
     this.router.get(`${this.path}GetSessionsForStudent/:studentID`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(GetSessionForStudentParams, 'params'), ValidationMiddleware(GetSessionsQuery, 'query'), ValidationMiddleware(GetSessionForStudentBody, 'body'), this.sessionController.GetAllSessionsForStudent);
-    this.router.get(`${this.path}GetSessionAttendence/:sessionID`, AuthenticateRequest, ValidationMiddleware(GetAttendenceForSessionParams, 'params'), ValidationMiddleware(GetSessionsQuery, 'query'), ValidationMiddleware(GetSessionForStudentBody, 'body'), this.sessionController.GetSessionAttendence);
+    this.router.get(`${this.path}GetSessionAttendence/:sessionID`, AuthenticateRequest, ValidationMiddleware(GetAttendenceForSessionParams, 'params'),  this.sessionController.GetSessionAttendence);
     this.router.get(`${this.path}GetUserAttendence/:sessionID/:studentID`, AuthenticateRequest, ValidationMiddleware(GetAttendenceForStudentParams_ValidationStage, 'params'), this.sessionController.GetUserAttendence);
     this.router.patch(`${this.path}PatchUserAttendence/:sessionID/:studentID`, AuthenticateRequest, ValidationMiddleware(GetAttendenceForStudentParams_ValidationStage, 'params'), ValidationMiddleware(UpdateStudentAttendanceBody, 'body'), this.sessionController.PatchUserAttendence);
 

@@ -113,22 +113,32 @@ export default class SessionController {
     try { //get the attendence for all students in a session
       var params: GetAttendenceForSessionParams = (req as any)["params"];
 
-      var sessions = await Session.aggregate([
-        {
-          $match: { "_id": new mongoose.Types.ObjectId(params.sessionID) }
-        },
-        {
-          $lookup: {
-            from: "users",
-            let: { "student": "$cohort." },
-            localField: "cohort.students.student",
-            foreignField: "_id",
-            as: "cohort.students.student",
-          }
-        },
-      ]);
+      const session = await Session.findById(
+        params.sessionID
+      ); //find the session by ID
 
-      var results = sessions;
+      if (!session) { //should never be an issue
+        throw new HttpException(500, "Session was not found after validation stage");
+      }
+
+      // var sessions = await Session.aggregate([
+      //   {
+      //     $match: { "_id": new mongoose.Types.ObjectId(params.sessionID) }
+      //   },
+      //   {
+      //     $lookup: {
+      //       from: "users",
+      //       let: { "student": "$cohort." },
+      //       localField: "cohort.students.student",
+      //       foreignField: "_id",
+      //       as: "cohort.students.student",
+      //     }
+      //   },
+      // ]);
+
+      var attendanceList = session!.cohort.students
+
+      res.status(200).json(GenerateAPIResult(true, attendanceList));
 
       //const session = await Session.findById(params.sessionID, {"cohort.students.student.password" : 0, "cohort.students.student.address" : 0, "cohort.students.student.roles" : 0}, {populate : "cohort.students.student"});
 

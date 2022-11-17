@@ -476,7 +476,7 @@
     "method": "GET",
     "sortNum": 110000,
     "created": "2022-11-15T18:05:58.257Z",
-    "modified": "2022-11-16T14:38:27.985Z",
+    "modified": "2022-11-17T15:29:02.620Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -504,12 +504,12 @@
     "method": "PATCH",
     "sortNum": 130000,
     "created": "2022-11-17T14:59:55.928Z",
-    "modified": "2022-11-17T15:13:37.336Z",
+    "modified": "2022-11-17T15:29:17.414Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"attendance\" : \"not\"\n}",
+      "raw": "{\n  \"attendance\" : \"late\"\n}",
       "form": []
     },
     "tests": []
