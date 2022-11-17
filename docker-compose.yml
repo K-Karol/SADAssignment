@@ -1,19 +1,6 @@
 version: "3.9"
 
 services:
-  # attendance-node1:
-  #   build:
-  #     context: NodeJS\.
-  #     dockerfile: Dockerfile
-  #   container_name: attendance-node1
-  #   expose:
-  #     - "5000"
-  #   restart: always
-  #   depends_on:
-  #     - mongodb
-  #   command:
-  #     - node
-  #     - source.js
   sad-backend:
     build:
       context: SADBackend/.
@@ -36,7 +23,7 @@ services:
   nginx:
     container_name: nginx
     build:
-      context: .\Http
+      context: Http/.
       dockerfile: Dockerfile
     ports:
       - target: 80

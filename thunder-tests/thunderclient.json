@@ -302,19 +302,24 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
     "name": "Get Users",
-    "url": "users/resource?page=1",
+    "url": "users/resource?page=21",
     "method": "GET",
     "sortNum": 30000,
     "created": "2022-11-14T11:14:33.035Z",
-    "modified": "2022-11-14T20:06:13.417Z",
+    "modified": "2022-11-16T20:44:37.633Z",
     "headers": [],
     "params": [
       {
         "name": "page",
-        "value": "1",
+        "value": "21",
         "isPath": false
       }
     ],
+    "body": {
+      "type": "json",
+      "raw": "{\n}",
+      "form": []
+    },
     "tests": [
       {
         "type": "res-code",
@@ -335,11 +340,11 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
     "name": "Get User",
-    "url": "users/resource/6aavc",
+    "url": "users/resource/6374e1be45f2d92a9b42f80f",
     "method": "GET",
     "sortNum": 40000,
     "created": "2022-11-14T11:15:54.911Z",
-    "modified": "2022-11-16T13:36:30.523Z",
+    "modified": "2022-11-16T21:51:40.028Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -349,16 +354,16 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
     "name": "Create User",
-    "url": "users",
+    "url": "users/resource",
     "method": "POST",
     "sortNum": 50000,
     "created": "2022-11-14T11:16:36.135Z",
-    "modified": "2022-11-14T11:16:56.928Z",
+    "modified": "2022-11-16T21:44:48.561Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"username\": \"New Student\",\n  \"password\": \"123\",\n  \"fullname\": {\n    \"firstname\": \"AAA\",\n    \"lastname\": \"BBB\"\n  },\n  \"address\": {\n    \"addressLine1\": \"addressLine1\",\n    \"postcode\": \"abcde\",\n    \"city\": \"sheffield\",\n    \"country\": \"UK\"\n  }\n}",
+      "raw": "{\n  \"username\": \"awesomeStaff2\",\n  \"password\": \"123\",\n  \"roles\" : [\"Staff\"],\n  \"fullname\": {\n    \"firstname\": \"Staff\",\n    \"lastname\": \"Member\"\n  },\n  \"address\": {\n    \"addressLine1\": \"addressLine1\",\n    \"postcode\": \"abcde\",\n    \"city\": \"sheffield\",\n    \"country\": \"UK\"\n  }\n}",
       "form": []
     },
     "tests": []
@@ -419,12 +424,12 @@
     "method": "POST",
     "sortNum": 90000,
     "created": "2022-11-14T15:12:41.871Z",
-    "modified": "2022-11-16T13:40:38.763Z",
+    "modified": "2022-11-16T21:47:20.221Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"type\" : \"seminar\",\n  \"module\" : \"6374e5fa0466431dcce95b8d\",\n  \"cohortIdentifier\" : \"first\",\n  \"startDateTime\" : \"2022-09-21T11:30\",\n  \"endDateTime\" : \"2022-09-21T13:30\"\n}",
+      "raw": "{\n  \"type\" : \"seminar\",\n  \"module\" : \"637533e9fa78e8cb01f8e159\",\n  \"cohortIdentifier\" : \"group 1\",\n  \"startDateTime\" : \"2022-11-14T11:15\",\n  \"endDateTime\" : \"2022-11-14T12:15\"\n}",
       "form": []
     },
     "tests": []
@@ -434,16 +439,16 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
     "name": "Get All sessions for student",
-    "url": "sessions/GetSessionsForStudent/6370082baa6cfe69aee071b1",
+    "url": "sessions/GetSessionsForStudent/6374e1be45f2d92a9b42f80f",
     "method": "GET",
     "sortNum": 100000,
     "created": "2022-11-14T15:56:02.634Z",
-    "modified": "2022-11-14T16:17:15.011Z",
+    "modified": "2022-11-16T20:59:15.729Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"filter\" : {\"startDateTime\" : {\"$gt\" : \"2022-11-13T11:15:00.000Z\"}}\n}",
+      "raw": "{\n\n}",
       "form": []
     },
     "tests": []
@@ -457,14 +462,124 @@
     "method": "POST",
     "sortNum": 110000,
     "created": "2022-11-14T20:04:17.012Z",
-    "modified": "2022-11-14T21:21:28.450Z",
+    "modified": "2022-11-16T20:45:35.631Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\" : \"Awesome Science 24\",\n  \"yearOfEntry\" : \"2022\",\n  \"courseLeader\" : \"636fdcd9fd39ae3fea735eda\",\n  \"modules\" : [\"63725e2067ee5783f837251f\"],\n  \"students\" : [\"636fdcd9fd39ae3fea735eda\"]\n}",
+      "raw": "{\n  \"name\" : \"Computer Science\",\n  \"yearOfEntry\" : \"2022\",\n  \"courseLeader\" : \"637546a5e29602143922d0da\",\n  \"modules\" : [\"637533e9fa78e8cb01f8e159\",\"637538a93a381e0ace1db219\"],\n  \"students\" : [\"637537f46e74842534423f11\", \"637537f46e74842534423f13\"]\n  \n}",
       "form": []
     },
+    "tests": []
+  },
+  {
+    "_id": "00a739c8-dc79-4b1a-bf07-a80197317ff6",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "870408ec-c098-4f3c-85c1-7bf856026fb5",
+    "name": "Create Module",
+    "url": "modules/resource",
+    "method": "POST",
+    "sortNum": 120000,
+    "created": "2022-11-16T18:50:17.266Z",
+    "modified": "2022-11-16T19:23:21.042Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\" : \"FOPL\",\n  \"year\" : \"2022\",\n  \"semester\" : \"SEM1\",\n  \"students\" : [\"637537d96e74842534423c0d\", \"637537da6e74842534423c19\", \"637537da6e74842534423c1b\", \"637537da6e74842534423c1d\"],\n  \"cohorts\" : [\n    {\n      \"identifier\" : \"group 1\",\n      \"students\" : [\"637537d96e74842534423c0d\", \"637537da6e74842534423c19\"]\n    },\n    {\n      \"identifier\" : \"group 2\",\n      \"students\" : [\"637537da6e74842534423c1b\", \"637537da6e74842534423c1d\"]\n    }\n  ],\n  \"moduleLeader\" : \"6374e1be45f2d92a9b42f80f\",\n  \"instructors\" : [\"6374e1be45f2d92a9b42f80f\"]\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "b6bef16a-04f5-4708-b6a9-8e9b416e10b4",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "870408ec-c098-4f3c-85c1-7bf856026fb5",
+    "name": "Get Modules",
+    "url": "modules/resource?page=1&limit=20",
+    "method": "GET",
+    "sortNum": 130000,
+    "created": "2022-11-16T19:37:02.922Z",
+    "modified": "2022-11-16T19:53:36.422Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "page",
+        "value": "1",
+        "isPath": false
+      },
+      {
+        "name": "limit",
+        "value": "20",
+        "isPath": false
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"joinStudents\" : true\n\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "7bb167be-2719-4361-9124-c3e2f9f3705f",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "83a72f30-0839-4dcb-9768-658d5c585bb0",
+    "name": "Get Courses",
+    "url": "courses/resource",
+    "method": "GET",
+    "sortNum": 140000,
+    "created": "2022-11-16T19:54:00.152Z",
+    "modified": "2022-11-16T20:26:58.190Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"joinStudents\" : true\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "5cc19c34-7af0-41b5-9e91-ddde8a5d5506",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "83a72f30-0839-4dcb-9768-658d5c585bb0",
+    "name": "Get My Courses",
+    "url": "courses/GetMyCourses",
+    "method": "GET",
+    "sortNum": 150000,
+    "created": "2022-11-16T20:48:38.902Z",
+    "modified": "2022-11-16T20:48:45.650Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "55eaf9be-48d8-4b8d-ac69-d770763f9060",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "b9826620-6ad2-41cd-902b-e67e5bb17341",
+    "name": "Generate New Active Session",
+    "url": "activeSessions/GenerateNewActiveSession/63755a86805d8829ead0a764",
+    "method": "POST",
+    "sortNum": 160000,
+    "created": "2022-11-16T21:44:05.873Z",
+    "modified": "2022-11-16T21:48:33.790Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "101d5487-ba9e-4336-9d70-ffb42d7e7bbc",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "b9826620-6ad2-41cd-902b-e67e5bb17341",
+    "name": "Register Student Attendance",
+    "url": "activeSessions/RecordStudentAttendance/1rtA5K97",
+    "method": "POST",
+    "sortNum": 170000,
+    "created": "2022-11-16T22:04:26.924Z",
+    "modified": "2022-11-16T22:07:10.874Z",
+    "headers": [],
+    "params": [],
     "tests": []
   },
   {

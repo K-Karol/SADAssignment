@@ -1,21 +1,20 @@
 import { Request, Response, NextFunction } from "express";
 import mongoose, { AggregatePaginateModel, isValidObjectId, Schema, Types } from "mongoose";
 import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } from "../helpers";
-import { GetSessionForStudentBody, GetSessionForStudentParams, GetAttendenceForSessionParams, SessionPostRequest, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody } from "../validation/session";
+import { GetSessionForStudentBody, GetSessionForStudentParams_ControllerStage, GetSessionForStudentParams_ValidationStage, GetSessionsQuery, SessionPostRequest_ControllerStage, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody } from "../validation/session";
 import { Module } from "../models/module";
 import { ICohortWithAttendance, ISession, IStudentWithAttendance } from "../interfaces/session";
 import { Session, SessionPaginate } from "../models/session";
-import { GetUserByID } from "../validation/user";
 import { plainToInstance } from "class-transformer";
 // import {aggregate} from 'mongoose-aggregate-paginate-v2';
 
 export default class SessionController {
 
-  public PostSession = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      var postRequest: SessionPostRequest = req.body;
+    public PostSession = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            var postRequest: SessionPostRequest_ControllerStage = plainToInstance(SessionPostRequest_ControllerStage, req.body, {});
 
-      var module = await Module.findById(postRequest.module);
+            var module = await Module.findById(postRequest.module);
 
       if (!module) {
         throw new HttpException(400, "Module cannot be found");
@@ -46,10 +45,10 @@ export default class SessionController {
     }
   }
 
-  public GetAllSessionsForStudent = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      var params: GetSessionForStudentParams = (req as any)["params"];
-      var queryBody: GetSessionForStudentBody = req.body;
+    public GetAllSessionsForStudent = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            var params: GetSessionForStudentParams_ControllerStage = plainToInstance(GetSessionForStudentParams_ControllerStage, (req as any)["params"], {});
+            var queryBody: GetSessionForStudentBody = req.body;
 
       if (!isValidObjectId(params.studentID)) {
         throw new HttpException(400, "studentID is not in the valid format");
@@ -84,17 +83,34 @@ export default class SessionController {
         },
       };
 
-      aggregate_options.push(
-        {
-          $match: {
-            $expr: {
-              $in: [new Types.ObjectId('6370082baa6cfe69aee071b1'), "$cohort.students.student"]
-            }
-          }
-        }
-      );
+            aggregate_options.push(
+                {
+                    $match: {
+                        $expr: {
+                            $in: [params.studentID, "$cohort.students.student"]
+                        }
+                    }
+                }, {
+                $unwind: {
+                    path: "$cohort.students"
+                }
+            },
+                {
+                    $match: {
+                        "cohort.students.student": params.studentID
+                    }
+                },
+                {
+                    $set: {
+                        "cohort.student": "$cohort.students.student"
+                    }
+                },
+                { $unset: 'cohort.students' }
+            );
 
-      if (queryBody.filter) aggregate_options.push({ $match: queryBody.filter });
+            //remove irrelevant students
+
+            if (queryBody.filter) aggregate_options.push({ $match: queryBody.filter });
 
       const myAggregate = SessionPaginate.aggregate(aggregate_options);
 
