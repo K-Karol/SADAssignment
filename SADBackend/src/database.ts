@@ -33,6 +33,7 @@ export default class Database{
       }
 
       await Role.create({name: "Admin"});
+      await Role.create({name: "Staff"});
 
     })
   }

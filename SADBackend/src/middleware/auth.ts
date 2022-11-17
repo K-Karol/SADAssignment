@@ -3,7 +3,7 @@ import { NextFunction, Response, Request, RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
 import { GenerateAPIResult, HttpException } from '../helpers';
 import { IJWTPayload, IAuthenticatedRequest } from '../interfaces/auth';
-import { IRole } from '../interfaces/user';
+import { IRole, IUser } from '../interfaces/user';
 import { User } from "../models/user";
 export const AuthenticateRequest = async (req: IAuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
@@ -53,8 +53,8 @@ export const AuthoriseByRoles = (
   ): RequestHandler => {
     return (req : IAuthenticatedRequest, res: Response, next: NextFunction) => {
         try{
-            if(!req.User!.roles.some((r) => roles.includes((r as IRole).name))){
-                throw new HttpException(403, "You are forbidden from accessing this resource", undefined, new Error(`${req.User!.username} attempted to access ${req.originalUrl} which requires the following roles: ${roles}`))
+            if(!(req.User! as IUser).roles.some((r) => roles.includes((r as IRole).name))){
+                throw new HttpException(403, "You are forbidden from accessing this resource", undefined, new Error(`${(req.User! as IUser).username} attempted to access ${req.originalUrl} which requires the following roles: ${roles}`))
             };
             next();
         } catch(err){

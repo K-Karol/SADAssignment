@@ -3,7 +3,7 @@ import CourseController from '../controllers/course';
 import { IRoute } from '../interfaces/routes';
 import {AuthenticateRequest, AuthoriseByRoles} from '../middleware/auth';
  import ValidationMiddleware from '../middleware/validate';
-import { GetCoursesQuery, GetCoursesQueryBody, PostCourse } from '../validation/course';
+import { CoursePutRequest_ValidationStage, GetCourseByID_ValidationStage, GetCoursesQuery, GetCoursesQueryBody, PostCourse_ValidationStage } from '../validation/course';
 export default class CourseRoute implements IRoute {
   public path = '/courses/';
   public router = Router();
@@ -14,8 +14,13 @@ export default class CourseRoute implements IRoute {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}resource/`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(GetCoursesQuery, 'query'), ValidationMiddleware(GetCoursesQueryBody, 'body'),  this.courseController.GetCourses);
+    this.router.get(`${this.path}resource/`, AuthenticateRequest, AuthoriseByRoles(["Admin", "Staff"]), ValidationMiddleware(GetCoursesQuery, 'query'), ValidationMiddleware(GetCoursesQueryBody, 'body'),  this.courseController.GetCourses);
+    this.router.get(`${this.path}GetMyCourses`, AuthenticateRequest, AuthoriseByRoles(["Admin", "Staff"]), ValidationMiddleware(GetCoursesQuery, 'query'), ValidationMiddleware(GetCoursesQueryBody, 'body'),  this.courseController.GetMyCourses)
     // this.router.get(`${this.path}:id`, AuthenticateRequest, ValidationMiddleware(GetUserByID, 'params'),  this.userController.GetUser);
-     this.router.post(`${this.path}resource/`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(PostCourse, 'body'), this.courseController.PostCourse);
+    this.router.post(`${this.path}resource/`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(PostCourse_ValidationStage, 'body'), this.courseController.PostCourse);
+    this.router.get(`${this.path}resource/:id`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(GetCourseByID_ValidationStage, 'params'),  this.courseController.GetCourse);
+    this.router.put(`${this.path}resource/:id`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(GetCourseByID_ValidationStage, 'params'), ValidationMiddleware(CoursePutRequest_ValidationStage, 'body'), this.courseController.UpdateCourse);
+    this.router.delete(`${this.path}resource/:id`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(GetCourseByID_ValidationStage, 'params'),  this.courseController.DeleteCourse);
+
   }
 }

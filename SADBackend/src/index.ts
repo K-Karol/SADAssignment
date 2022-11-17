@@ -24,6 +24,9 @@ import "reflect-metadata";
 import CourseController from './controllers/course';
 import CourseRoute from './routes/courses';
 import SessionRoute from './routes/sessions';
+import ModuleRoute from './routes/modules';
+import ActiveSessionController from './controllers/active_session';
+import ActiveSessionRoute from './routes/active_session';
 
 // cleanup these imports
 
@@ -32,7 +35,7 @@ dotenv.config();
 const log: Logger = new Logger({ name: "Index" });
 
 const app: Express = express();
-const routes: IRoute[] = [new AuthRoute(), new AdminRoute(), new UserRoute(), new CourseRoute(), new SessionRoute()];
+const routes: IRoute[] = [new AuthRoute(), new AdminRoute(), new UserRoute(), new CourseRoute(), new SessionRoute(), new ModuleRoute(), new ActiveSessionRoute()];
 //a
 const {PORT = 5000, CORS_ORIGIN="https://localhost"} = process.env
 const db: Database = new Database();
