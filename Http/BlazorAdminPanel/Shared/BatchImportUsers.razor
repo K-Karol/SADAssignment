@@ -99,7 +99,7 @@
 
             List<Models.UserImportResult> results = apiTasks.Select(t => t.Result).ToList();
 
-            await _blazorDownloadFileService.DownloadFileFromText("results.json", System.Text.Json.JsonSerializer.Serialize(results), System.Text.Encoding.UTF8, "application/octet-stream");
+            await _blazorDownloadFileService.DownloadFileFromText("user_import_result.json", System.Text.Json.JsonSerializer.Serialize(results), System.Text.Encoding.UTF8, "application/octet-stream");
         }
         catch (Exception exc)
         {

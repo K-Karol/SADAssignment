@@ -1,0 +1,57 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using BlazorDownloadFile
+
+<h3>BatchImportModulesAndCourses</h3>
+
+<div class="card cr">
+    <h3>Import Modules and Courses using JSON Files</h3>    
+    <p>Batch student import result file: </p> <InputFile OnChange="@LoadBatchResultFile" />
+    <p style="display: @(isUserBatchLoaded ? "initial" : "none")">Users loaded and parsed: (@(importedUsers is null ? "N/A" : importedUsers!.Count))</p>
+    @*<button style="display: @(dataIsLoaded ? "initial" : "none")" @onclick=ImportFile>Import data</button>
+    <p style="display: @(error ? "initial" : "none")">@errorMessage</p>*@
+    <div class="loader" style="display: @(isLoading ? "initial" : "none")"></div>
+    <p style="display: @(error ? "initial" : "none")">@errorMessage</p>
+</div>
+
+@code {
+    private bool error = false;
+    private string? errorMessage = null;
+    private Dictionary<string, string>? importedUsers = new Dictionary<string, string>();
+    private Models.UserImportResult[]? userBatchData = null;
+    private bool isUserBatchLoaded = false;
+    private bool isLoading = false;
+    private async Task LoadBatchResultFile(InputFileChangeEventArgs e)
+    {
+        error = false;
+        errorMessage = null;
+        isUserBatchLoaded = false;
+        userBatchData = null;
+        importedUsers = null;
+
+        using (var stream = e.File.OpenReadStream())
+        {
+            try
+            {
+                userBatchData = await System.Text.Json.JsonSerializer.DeserializeAsync<Models.UserImportResult[]>(stream);
+                if(userBatchData is null){
+                    throw new Exception("Data was not loaded");
+                }
+
+                importedUsers = userBatchData.ToDictionary((s) => s.UserName, (s) => s.Id);
+
+                isUserBatchLoaded = true;
+
+                if(importedUsers.Count < 1){
+                    throw new Exception("No users were imported");
+                }
+            }
+            catch (Exception exc)
+            {
+                error = true;
+                errorMessage = exc.ToString();
+            }
+
+            this.StateHasChanged();
+        }
+    }
+}
