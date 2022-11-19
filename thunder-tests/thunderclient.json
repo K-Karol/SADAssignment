@@ -306,7 +306,7 @@
     "method": "GET",
     "sortNum": 30000,
     "created": "2022-11-14T11:14:33.035Z",
-    "modified": "2022-11-17T15:28:05.873Z",
+    "modified": "2022-11-19T16:48:14.500Z",
     "headers": [],
     "params": [
       {
@@ -318,7 +318,7 @@
     ],
     "body": {
       "type": "json",
-      "raw": "{\n  \"filter\" : {\"address.city\" : \"Kingston\"},\n  \"joinCourses\" : true\n}",
+      "raw": "{\n  \"filter\" : {\"username\" : \"2asdasd\"},\n  \"joinCourses\" : true\n}",
       "form": []
     },
     "tests": [
