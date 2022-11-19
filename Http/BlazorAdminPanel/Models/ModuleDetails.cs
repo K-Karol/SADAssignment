@@ -9,6 +9,12 @@
 
     public class ModuleImport
     {
+        public ModuleDetails[] Modules { get; set; }
+    }
+
+    public class ModuleDetails
+    {
+        public string identifier { get; set; }
         public string name { get; set; }
         public string year { get; set; }
         public string semester { get; set; }
@@ -18,3 +24,4 @@
         public string[] instructors { get; set; }
     }
 }
+    
