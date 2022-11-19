@@ -48,6 +48,8 @@ var corsOptions = {
   origin: CORS_ORIGIN
 };
 app.use(cors(corsOptions));
+
+
 app.use(express.urlencoded({ extended: true }));
 app.use(compression())
 

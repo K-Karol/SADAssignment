@@ -1,0 +1,361 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using BlazorAdminPanel.Models;
+@using BlazorDownloadFile
+@using System.Runtime.Serialization;
+@inject Services.IAPIService _apiService
+
+<h3>Batch Import Modules And Courses</h3>
+
+<div class="card cr">
+    <h4>Import Modules and Courses using JSON Files</h4>
+    <br />
+    <div>
+        <h5>Supply student batch import result file for username - ID mapping </h5>
+        <InputFile OnChange="@LoadStudentBatchResultFile" />
+        <br />
+        <p style="display: @(isStudentBatchLoaded ? "initial" : "none")">Users loaded and parsed: (@(importedStudents is null ? "N/A" : importedStudents!.Count))</p>
+    </div>
+    <div>
+        <h5>Supply staff batch import result file for username - ID mapping </h5>
+        <InputFile OnChange="@LoadStaffBatchResultFile" />
+        <br />
+        <p style="display: @(isStaffBatchLoaded ? "initial" : "none")">Users loaded and parsed: (@(importedStaff is null ? "N/A" : importedStaff!.Count))</p>
+    </div>
+    <br />
+    <div style="display: @(isStudentBatchLoaded && isStaffBatchLoaded ? "initial" : "none")">
+        <h5>Supply JSON file consisting of Modules</h5>
+        <InputFile OnChange="@LoadModulesFile" />
+        <br />
+        <p style="display: @(isModulesLoaded ? "initial" : "none")">Modules loaded and parsed: (@(importModules is null ? "N/A" : importModules!.Count))</p>
+    </div>
+    <div style="display: @(isModulesLoaded ? "initial" : "none")">
+        <h5>Supply JSON file consisting of Courses</h5>
+        <InputFile OnChange="@LoadCoursesFile" />
+        <br />
+        <p style="display: @(isCoursesLoaded ? "initial" : "none")">Courses loaded and parsed: (@(importCourses is null ? "N/A" : importCourses!.Count))</p>
+    </div>
+    <button style="display: @(isCoursesLoaded ? "initial" : "none")" @onclick=BeginImport>Import data</button>
+    <div class="loader" style="display: @(isLoading ? "initial" : "none")"></div>
+    <p style="display: @(error ? "initial" : "none")">@errorMessage</p>
+</div>
+
+@code {
+
+    private bool error = false;
+    private string? errorMessage = null;
+
+    private Dictionary<string, string>? importedStudents = new Dictionary<string, string>();
+
+    private Dictionary<string, string>? importedStaff = new Dictionary<string, string>();
+
+    private Dictionary<string, ModuleProcessed> importModules = new Dictionary<string, ModuleProcessed>();
+    private Models.ModuleDetails[]? moduleImport = null;
+
+    private Dictionary<string, CourseProcessed> importCourses = new Dictionary<string, CourseProcessed>();
+    private Models.CourseDetails[]? courseImport = null;
+
+    private bool isStudentBatchLoaded = false;
+    private bool isStaffBatchLoaded = false;
+    private bool isModulesLoaded = false;
+    private bool isCoursesLoaded = false;
+    private bool isLoading = false;
+    private async Task LoadStudentBatchResultFile(InputFileChangeEventArgs e)
+    {
+        error = false;
+        errorMessage = null;
+        isStudentBatchLoaded = false;
+        importedStudents = new Dictionary<string, string>();
+
+        using (var stream = e.File.OpenReadStream())
+        {
+            try
+            {
+
+                await foreach (var item in System.Text.Json.JsonSerializer.DeserializeAsyncEnumerable<Models.UserImportResult>(stream))
+                {
+                    importedStudents.Add(item!.UserName, item!.Id);
+                }
+
+                isStudentBatchLoaded = true;
+
+                if (importedStudents.Count < 1)
+                {
+                    throw new Exception("No users were imported");
+                }
+            }
+            catch (Exception exc)
+            {
+                error = true;
+                errorMessage = exc.ToString();
+            }
+
+            this.StateHasChanged();
+        }
+    }
+
+    private async Task LoadStaffBatchResultFile(InputFileChangeEventArgs e)
+    {
+        error = false;
+        errorMessage = null;
+        isStaffBatchLoaded = false;
+        importedStaff = new Dictionary<string, string>();
+
+        using (var stream = e.File.OpenReadStream())
+        {
+            try
+            {
+
+                await foreach (var item in System.Text.Json.JsonSerializer.DeserializeAsyncEnumerable<Models.UserImportResult>(stream))
+                {
+                    importedStaff.Add(item!.UserName, item!.Id);
+                }
+
+                isStaffBatchLoaded = true;
+
+                if (importedStaff.Count < 1)
+                {
+                    throw new Exception("No users were imported");
+                }
+            }
+            catch (Exception exc)
+            {
+                error = true;
+                errorMessage = exc.ToString();
+            }
+
+            this.StateHasChanged();
+        }
+    }
+
+    private async Task LoadModulesFile(InputFileChangeEventArgs e)
+    {
+        error = false;
+        errorMessage = null;
+        isModulesLoaded = false;
+        moduleImport = null;
+        importModules = new Dictionary<string, ModuleProcessed>();
+        using (var stream = e.File.OpenReadStream())
+        {
+            try
+            {
+
+                moduleImport = (await System.Text.Json.JsonSerializer.DeserializeAsync<Models.ModuleImport>(stream))?.Modules ?? null;
+
+                if(moduleImport is null)
+                {
+                    throw new Exception("Failed to load modules");
+                }
+
+                foreach (var item  in moduleImport)
+                {
+                    var processedModule = new ModuleProcessed()
+                        {
+                            Name = item!.name,
+                            Cohorts = item!.cohorts,
+                            Semester = item!.semester,
+                            Year = item!.year
+                        };
+                    var listOfStudents = new List<string>();
+                    foreach(var user in item.students)
+                    {
+                        if (importedStudents is null || importedStudents.Count < 1)
+                        {
+                            throw new Exception("Users were not loaded and/or processed correctly");
+                        }
+
+                        if (importedStudents.TryGetValue(user, out string? userID)){
+                            listOfStudents.Add(userID!);
+                        }
+                        else
+                        {
+                            throw new Exception($"Cannot find the ID for the user: '{user}'");
+                        }
+                    }
+
+                    foreach(var cohort in processedModule.Cohorts)
+                    {
+                        var tmpList = new List<string>();
+                        foreach(var user in cohort.students)
+                        {
+                            if (importedStudents!.TryGetValue(user, out string? userID))
+                            {
+                                tmpList.Add(userID!);
+                            }
+                            else
+                            {
+                                throw new Exception($"Cannot find the ID for the user: '{user}'");
+                            }
+                        }
+                        cohort.students = tmpList.ToArray();
+                    }
+
+                    processedModule.Students = listOfStudents.ToArray();
+                    if(importedStaff!.TryGetValue(item.moduleLeader, out string? modLeadId))
+                    {
+                        processedModule.ModuleLeader = modLeadId;
+                    }
+                    else
+                    {
+                        throw new Exception($"Could not find ID for the module leader: '{item.moduleLeader}'");
+                    }
+                    var listOfInstructors = new List<string>();
+                    foreach(var user in item.instructors)
+                    {
+                        if (importedStaff is null || importedStaff.Count < 1)
+                        {
+                            throw new Exception("Staff were not loaded and/or processed correctly");
+                        }
+
+                        if (importedStaff.TryGetValue(user, out string? userID))
+                        {
+                            listOfInstructors.Add(userID!);
+                        }
+                        else
+                        {
+                            throw new Exception($"Cannot find the ID for the user: '{user}'");
+                        }
+                    }
+
+
+                    processedModule.Instructors = listOfInstructors.ToArray();
+                    importModules.Add(item.identifier, processedModule);
+
+                }
+                isModulesLoaded = true;
+
+                if (importModules.Count < 1)
+                {
+                    throw new Exception("No modules were imported");
+                }
+            }
+            catch (Exception exc)
+            {
+                error = true;
+                errorMessage = exc.ToString();
+            }
+
+            this.StateHasChanged();
+        }
+    }
+
+    private async Task LoadCoursesFile(InputFileChangeEventArgs e)
+    {
+        error = false;
+        errorMessage = null;
+        isCoursesLoaded = false;
+        courseImport = null;
+        importCourses = new Dictionary<string, CourseProcessed>();
+        using (var stream = e.File.OpenReadStream())
+        {
+            try
+            {
+
+                courseImport = (await System.Text.Json.JsonSerializer.DeserializeAsync<Models.CourseImport>(stream))?.Courses ?? null;
+
+                if (courseImport is null)
+                {
+                    throw new Exception("Failed to load courses");
+                }
+
+                foreach (var item in courseImport)
+                {
+                    var processedCourse = new CourseProcessed()
+                        {
+                            Name = item!.name,
+                            YearOfEntry = item!.yearOfEntry
+                        };
+                    var listOfStudents = new List<string>();
+                    foreach (var user in item.students)
+                    {
+                        if (importedStudents is null || importedStudents.Count < 1)
+                        {
+                            throw new Exception("Users were not loaded and/or processed correctly");
+                        }
+
+                        if (importedStudents.TryGetValue(user, out string? userID))
+                        {
+                            listOfStudents.Add(userID!);
+                        }
+                        else
+                        {
+                            throw new Exception($"Cannot find the ID for the user: '{user}'");
+                        }
+                    }
+                    processedCourse.Students = listOfStudents.ToArray();
+                    if (importedStaff!.TryGetValue(item.courseLeader, out string? courseLeadID))
+                    {
+                        processedCourse.CourseLeader = courseLeadID;
+                    }
+                    else
+                    {
+                        throw new Exception($"Could not find ID for the course leader: '{item.courseLeader}'");
+                    }
+                    var listOfModules = new List<ModuleProcessed>();
+                    foreach (var mod in item.modules)
+                    {
+                        if (importModules is null || importModules.Count < 1)
+                        {
+                            throw new Exception("Modules were not loaded and/or processed correctly");
+                        }
+
+                        if (importModules.TryGetValue(mod, out ModuleProcessed? modP))
+                        {
+                            listOfModules.Add(modP);
+                        }
+                        else
+                        {
+                            throw new Exception($"Cannot find the ID for the module: '{mod}'");
+                        }
+                    }
+
+
+                    processedCourse.ModulesProcessed = listOfModules.ToArray();
+                    importCourses.Add(item.identifier, processedCourse);
+
+                }
+                isCoursesLoaded = true;
+
+                if (importCourses.Count < 1)
+                {
+                    throw new Exception("No courses were imported");
+                }
+            }
+            catch (Exception exc)
+            {
+                error = true;
+                errorMessage = exc.ToString();
+            }
+
+            this.StateHasChanged();
+        }
+    }
+
+    private async Task BeginImport()
+    {
+        //First we need to import all modules, assign the ids to the module objects, and import courses.
+
+        error = false;
+        errorMessage = null;
+        isLoading = true;
+        this.StateHasChanged();
+        try
+        {
+            foreach(var module in importModules.Values)
+            {
+                module.ObjectId = await _apiService.CreateModule(module);
+            }
+
+            foreach(var course in importCourses.Values)
+            {
+                course.ObjectId = await _apiService.CreateCourse(course);
+            }
+        }
+        catch (Exception exc)
+        {
+            error = true;
+            errorMessage = exc.ToString();
+        }
+        isLoading = false;
+        this.StateHasChanged();
+    }
+}

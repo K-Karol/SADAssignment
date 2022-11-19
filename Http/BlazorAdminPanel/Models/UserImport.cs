@@ -11,6 +11,7 @@
         public string password { get; set; }
         public Fullname fullname { get; set; }
         public Address address { get; set; }
+        public string[] roles { get; set; }
     }
 
     public class Fullname
