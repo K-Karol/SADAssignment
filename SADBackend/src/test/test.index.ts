@@ -11,7 +11,6 @@ describe('backend root', () => {
         chai.request(app)
             .get('/api')
             .end((err, res) => {
-              debugger
                 res.should.have.status(200);
             });
     });

@@ -7,7 +7,7 @@
     "build": "npx tsc",
     "start": "npm run build && node dist/index.js",
     "dev": "nodemon src/index.ts --legacy-watch",
-    "test": "mocha --inspect-brk -r ts-node/register 'src/**/*.ts'"
+    "test": "mocha --inspect=0.0.0.0:9229 -r ts-node/register 'src/**/*.ts'"
   },
   "keywords": [],
   "author": "",

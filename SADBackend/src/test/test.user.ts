@@ -24,14 +24,13 @@ before(function () {
   describe('Get the auth token', () =>{
     it('Find, admin bearer token', (done) =>{
       chai.request(app)
-      .get('/api/auth/login')
+      .post('/api/auth/login')
       .type('json')
       .send({
         "username" : "Danny",
         "password" : "123"
       })
       .end((err, res) => { 
-      debugger 
         expect(res.body).to.be.a('object');
         //try{
         console.log(res + " --- " + res.type);
