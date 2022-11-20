@@ -358,12 +358,12 @@
     "method": "POST",
     "sortNum": 50000,
     "created": "2022-11-14T11:16:36.135Z",
-    "modified": "2022-11-16T21:44:48.561Z",
+    "modified": "2022-11-18T11:24:44.463Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"username\": \"awesomeStaff2\",\n  \"password\": \"123\",\n  \"roles\" : [\"Staff\"],\n  \"fullname\": {\n    \"firstname\": \"Staff\",\n    \"lastname\": \"Member\"\n  },\n  \"address\": {\n    \"addressLine1\": \"addressLine1\",\n    \"postcode\": \"abcde\",\n    \"city\": \"sheffield\",\n    \"country\": \"UK\"\n  }\n}",
+      "raw": "{\n  \"username\": \"awesomeStaff3\",\n  \"password\": \"123\",\n  \"roles\" : [\"Staff\"],\n  \"fullname\": {\n    \"firstname\": \"Staff\",\n    \"lastname\": \"Member\"\n  },\n  \"address\": {\n    \"addressLine1\": \"addressLine1\",\n    \"postcode\": \"abcde\",\n    \"city\": \"sheffield\",\n    \"country\": \"UK\"\n  }\n}",
       "form": []
     },
     "tests": []
@@ -439,11 +439,11 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
     "name": "Get All sessions for student",
-    "url": "sessions/GetSessionsForStudent/6374e1be45f2d92a9b42f80f",
+    "url": "sessions/GetSessionsForStudent/636cf6dce79b126d6d2989bd",
     "method": "GET",
     "sortNum": 100000,
     "created": "2022-11-14T15:56:02.634Z",
-    "modified": "2022-11-16T20:59:15.729Z",
+    "modified": "2022-11-17T16:40:04.956Z",
     "headers": [],
     "params": [],
     "body": {
@@ -470,6 +470,34 @@
       "raw": "{\n  \"name\" : \"Computer Science\",\n  \"yearOfEntry\" : \"2022\",\n  \"courseLeader\" : \"637546a5e29602143922d0da\",\n  \"modules\" : [\"637533e9fa78e8cb01f8e159\",\"637538a93a381e0ace1db219\"],\n  \"students\" : [\"637537f46e74842534423f11\", \"637537f46e74842534423f13\"]\n  \n}",
       "form": []
     },
+    "tests": []
+  },
+  {
+    "_id": "a554b736-9363-4049-81fb-bbae78a53083",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Get All Attendence For Session",
+    "url": "sessions/GetSessionAttendence/6374eceadb31e5f26ef6e6e2",
+    "method": "GET",
+    "sortNum": 110000,
+    "created": "2022-11-15T18:05:58.257Z",
+    "modified": "2022-11-17T15:29:02.620Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "76b6ebfc-2f4f-4fc1-8d92-3276816b8453",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Get User Attendence",
+    "url": "sessions/GetUserAttendence/6374eceadb31e5f26ef6e6e2/636cf6dce79b126d6d2989bd",
+    "method": "GET",
+    "sortNum": 120000,
+    "created": "2022-11-16T18:33:42.323Z",
+    "modified": "2022-11-16T18:46:46.241Z",
+    "headers": [],
+    "params": [],
     "tests": []
   },
   {
@@ -583,34 +611,6 @@
     "tests": []
   },
   {
-    "_id": "a554b736-9363-4049-81fb-bbae78a53083",
-    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
-    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
-    "name": "Get All Attendence For Session",
-    "url": "sessions/GetSessionAttendence/6374eceadb31e5f26ef6e6e2",
-    "method": "GET",
-    "sortNum": 110000,
-    "created": "2022-11-15T18:05:58.257Z",
-    "modified": "2022-11-17T15:29:02.620Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "76b6ebfc-2f4f-4fc1-8d92-3276816b8453",
-    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
-    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
-    "name": "Get User Attendence",
-    "url": "sessions/GetUserAttendence/6374eceadb31e5f26ef6e6e2/636cf6dce79b126d6d2989bd",
-    "method": "GET",
-    "sortNum": 120000,
-    "created": "2022-11-16T18:33:42.323Z",
-    "modified": "2022-11-16T18:46:46.241Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
     "_id": "b2381a04-6967-4e05-af5b-6acaba303b44",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
@@ -619,12 +619,12 @@
     "method": "PATCH",
     "sortNum": 130000,
     "created": "2022-11-17T14:59:55.928Z",
-    "modified": "2022-11-17T15:29:17.414Z",
+    "modified": "2022-11-17T16:39:28.160Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"attendance\" : \"late\"\n}",
+      "raw": "{\n  \"attendance\" : \"full\"\n}",
       "form": []
     },
     "tests": []
