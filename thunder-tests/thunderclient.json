@@ -358,12 +358,12 @@
     "method": "POST",
     "sortNum": 50000,
     "created": "2022-11-14T11:16:36.135Z",
-    "modified": "2022-11-18T11:24:44.463Z",
+    "modified": "2022-11-23T10:56:21.458Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"username\": \"awesomeStaff3\",\n  \"password\": \"123\",\n  \"roles\" : [\"Staff\"],\n  \"fullname\": {\n    \"firstname\": \"Staff\",\n    \"lastname\": \"Member\"\n  },\n  \"address\": {\n    \"addressLine1\": \"addressLine1\",\n    \"postcode\": \"abcde\",\n    \"city\": \"sheffield\",\n    \"country\": \"UK\"\n  }\n}",
+      "raw": "{\n  \"username\": \"awesomeStaff5\",\n  \"password\": \"123\",\n  \"roles\" : [\"Staff\"],\n  \"fullname\": {\n    \"firstname\": \"Staff\",\n    \"lastname\": \"Member\"\n  },\n  \"address\": {\n    \"addressLine1\": \"addressLine1\",\n    \"postcode\": \"abcde\",\n    \"city\": \"sheffield\",\n    \"country\": \"UK\"\n  }\n}",
       "form": []
     },
     "tests": []
@@ -373,11 +373,11 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
     "name": "Update User",
-    "url": "/users/63700829aa6cfe69aee07163",
+    "url": "users/resource/6377759ec20dd85de6dc09d1",
     "method": "PUT",
     "sortNum": 60000,
     "created": "2022-11-14T11:17:34.973Z",
-    "modified": "2022-11-14T11:18:20.354Z",
+    "modified": "2022-11-23T11:05:17.729Z",
     "headers": [],
     "params": [],
     "body": {
@@ -392,11 +392,11 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
     "name": "Delete User",
-    "url": "/users/63700829aa6cfe69aee07163",
+    "url": "users/resource/637dfc554bbb5e7d31966930",
     "method": "DELETE",
     "sortNum": 70000,
     "created": "2022-11-14T11:20:02.424Z",
-    "modified": "2022-11-14T11:20:23.761Z",
+    "modified": "2022-11-23T10:58:56.046Z",
     "headers": [],
     "params": [],
     "tests": []

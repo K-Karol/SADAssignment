@@ -69,13 +69,39 @@ describe('Test Users', () => {
       });
   });
 
+  it('Update a Staff', (done) => {
+    chai.request(app)
+      .put(`/api/users/resource/${tutorid}`) //rout path
+      .set({ "Authorization": `Bearer ${bearertoken}` }) // pass the login token from before method
+      .type('json')
+      .send({ //change the tutor address
+        "address": {
+          "addressLine1": "100 Talmadge Road",
+          "postcode": "DN22",
+          "city": "Eaton",
+          "country": "United Kingdom"
+        }
+      })
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property("Success").equal(true);
+        res.body.should.have.property("Response").property("address").eql({ //deep equals(have same value's but not same object)
+            "addressLine1": "100 Talmadge Road",
+            "postcode": "DN22",
+            "city": "Eaton",
+            "country": "United Kingdom"
+        });
+        done(); //end point
+      });
+  });
+
   it('Delete a Staff', (done) => {
     chai.request(app)
-      .post(`/users/resource/${tutorid}`) //rout path
+      .delete(`/api/users/resource/${tutorid}`) //rout path
       .set({ "Authorization": `Bearer ${bearertoken}` }) // pass the login token from before method
       .end((err, res) => {
         res.should.have.status(200);
-        res.body.should.have.property("Success").equal("true");
+        res.body.should.have.property("Success").equal(true);
         done(); //end point
       });
   });
