@@ -731,5 +731,19 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "fbfdbce9-40db-4b04-988a-38663e63edd2",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "870408ec-c098-4f3c-85c1-7bf856026fb5",
+    "name": "Get Module",
+    "url": "modules/resource/637e5edd0745e72469a92d3e",
+    "method": "GET",
+    "sortNum": 240000,
+    "created": "2022-11-23T18:00:13.269Z",
+    "modified": "2022-11-23T18:02:30.079Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]
