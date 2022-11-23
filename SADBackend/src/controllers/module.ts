@@ -149,6 +149,23 @@ export default class ModuleController {
         }
     };
 
+    public GetModule = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          var params: GetModuleByID_ControllerStage = plainToInstance(GetModuleByID_ControllerStage, (req as any)["params"], {});
+    
+          const module = await Module.findById(
+            params.id,
+          );
+    
+          if (!module) throw new HttpException(400, "Module not found");
+    
+          res.status(200).json(GenerateAPIResult(true, module, undefined));
+    
+        } catch (err) {
+          next(err);
+        }
+      };
+
     public UpdateModule = async (req: Request, res: Response, next: NextFunction) => {
         try {
           const putRequest: ModulePutRequest_ControllerStage = plainToInstance(ModulePutRequest_ControllerStage, req.body, {});
