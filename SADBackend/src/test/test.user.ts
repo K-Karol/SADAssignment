@@ -8,7 +8,9 @@ import { stringify } from "querystring";
 
 chai.use(chaiHttp);
 chai.should();
+
 var bearertoken: string;
+
 describe("Users", () => {
   before(function (done) { //don't put tests in here else the before will not be called first causing issues (same with describe and it)
     /*{
