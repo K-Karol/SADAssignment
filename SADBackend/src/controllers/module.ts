@@ -6,7 +6,7 @@ import { GenerateBaseExcludes as UserGenerateBaseExcludes } from "../models/user
 import { Course, CoursePaginate } from "../models/course";
 import { ICourse } from "../interfaces/course";
 import { IAuthenticatedRequest } from "../interfaces/auth";
-import { GetModulesQueryBody, PostModuleRequest_ControllerStage } from "../validation/module";
+import { GetModuleByID_ControllerStage, GetModulesQueryBody, PostModuleRequest_ControllerStage } from "../validation/module";
 import { plainToInstance } from "class-transformer";
 import { ICohort, IModule } from "../interfaces/module";
 import { Module, ModulePaginate } from "../models/module";
@@ -147,7 +147,22 @@ export default class ModuleController {
         catch (err) {
             next(err);
         }
-    }
+    };
+
+    public DeleteModule = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const params: GetModuleByID_ControllerStage = plainToInstance(GetModuleByID_ControllerStage, (req as any)["params"], {});
+      
+            const deleteRes = await Module.deleteOne({ _id: params.id });
+      
+            if (deleteRes.deletedCount != 1) throw new HttpException(400, "Failed to delete");
+      
+            res.status(200).json(GenerateAPIResult(true, "Deleted", undefined));
+      
+          } catch (err) {
+            next(err);
+          }
+    };
 
     // public GetModule = async (req: Request, res: Response, next: NextFunction) => {
 

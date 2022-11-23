@@ -4,7 +4,7 @@ import UserController from '../controllers/user';
 import { IRoute } from '../interfaces/routes';
 import {AuthenticateRequest, AuthoriseByRoles} from '../middleware/auth';
  import ValidationMiddleware from '../middleware/validate';
-import { GetSessionForStudentBody, GetSessionForStudentParams_ValidationStage, GetAttendenceForSessionParams, GetAttendenceForStudentParams_ValidationStage, GetSessionsQuery, SessionPostRequest_Stage1, UpdateStudentAttendanceBody } from '../validation/session';
+import { GetSessionForStudentBody, GetSessionForStudentParams_ValidationStage, GetAttendenceForSessionParams, GetAttendenceForStudentParams_ValidationStage, GetSessionsQuery, SessionPostRequest_Stage1, UpdateStudentAttendanceBody, GetSessionsQueryBody } from '../validation/session';
 export default class SessionRoute implements IRoute {
   public path = '/sessions/';
   public router = Router();
@@ -21,5 +21,11 @@ export default class SessionRoute implements IRoute {
     this.router.get(`${this.path}GetUserAttendence/:sessionID/:studentID`, AuthenticateRequest, ValidationMiddleware(GetAttendenceForStudentParams_ValidationStage, 'params'), this.sessionController.GetUserAttendence);
     this.router.patch(`${this.path}PatchUserAttendence/:sessionID/:studentID`, AuthenticateRequest, ValidationMiddleware(GetAttendenceForStudentParams_ValidationStage, 'params'), ValidationMiddleware(UpdateStudentAttendanceBody, 'body'), this.sessionController.PatchUserAttendence);
     this.router.delete(`${this.path}DeleteSession/:sessionID`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(GetAttendenceForSessionParams, 'params'),  this.sessionController.DeleteSession);
+
+    this.router.get(`${this.path}resource/`, AuthenticateRequest, AuthoriseByRoles(["Admin", "Staff"]), ValidationMiddleware(GetSessionsQuery, 'query'), ValidationMiddleware(GetSessionsQueryBody, 'body'), this.sessionController.GetSessions);
+
+    // this.router.get(`${this.path}resource/`, AuthenticateRequest, ValidationMiddleware(GetUsersQuery, 'query'), ValidationMiddleware(GetUsersQueryBody, 'body'),  this.userController.GetUsers);
+    // this.router.get(`${this.path}resource/:id`, AuthenticateRequest, ValidationMiddleware(GetUserByID, 'params'),  this.userController.GetUser);
+    // this.router.get(`${this.path}self`, AuthenticateRequest, this.userController.GetCurrentUser);
   }
 }

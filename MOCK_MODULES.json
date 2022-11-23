@@ -1,0 +1,349 @@
+{
+  "Modules": [
+    {
+      "identifier": "24ac7636-bc50-4499-96a3-ca91129d23f4",
+      "name": "Foundations of Algorithms",
+      "year": "2022",
+      "semester": "SEM1",
+      "students": [
+        "phurry0",
+        "kbreakspear1",
+        "aspering2",
+        "ahounihan3",
+        "cjakubczyk4",
+        "hbassano5",
+        "vmyall6",
+        "fbouchard7",
+        "wmacilriach8",
+        "farons9",
+        "wmccrystala",
+        "tcanelasb",
+        "clafayec",
+        "dplewmand",
+        "arenshelle",
+        "raldcornef",
+        "mmacteggartg",
+        "rmcgettiganh",
+        "cnorgani",
+        "chaggethj"
+      ],
+      "cohorts": [
+        {
+          "identifier": "All",
+          "students": [
+            "phurry0",
+            "kbreakspear1",
+            "aspering2",
+            "ahounihan3",
+            "cjakubczyk4",
+            "hbassano5",
+            "vmyall6",
+            "fbouchard7",
+            "wmacilriach8",
+            "farons9",
+            "wmccrystala",
+            "tcanelasb",
+            "clafayec",
+            "dplewmand",
+            "arenshelle",
+            "raldcornef",
+            "mmacteggartg",
+            "rmcgettiganh",
+            "cnorgani",
+            "chaggethj"
+          ]
+        },
+        {
+          "identifier": "Group 1",
+          "students": [
+            "phurry0",
+            "kbreakspear1",
+            "aspering2",
+            "ahounihan3",
+            "cjakubczyk4",
+            "hbassano5",
+            "vmyall6",
+            "fbouchard7",
+            "wmacilriach8",
+            "farons9"
+          ]
+        },
+        {
+          "identifier": "Group 2",
+          "students": [
+            "wmccrystala",
+            "tcanelasb",
+            "clafayec",
+            "dplewmand",
+            "arenshelle",
+            "raldcornef",
+            "mmacteggartg",
+            "rmcgettiganh",
+            "cnorgani",
+            "chaggethj"
+          ]
+        }
+      ],
+      "moduleLeader" : "jstandering0",
+      "instructors" : ["afirebrace1", "pwadlow2"]
+    },
+    {
+      "identifier": "d813a175-cd97-4016-8e31-217c725f4a18",
+      "name": "Introduction to Programming",
+      "year": "2022",
+      "semester": "SEM1",
+      "students": [
+        "phurry0",
+        "kbreakspear1",
+        "aspering2",
+        "ahounihan3",
+        "cjakubczyk4",
+        "hbassano5",
+        "vmyall6",
+        "fbouchard7",
+        "wmacilriach8",
+        "farons9",
+        "wmccrystala",
+        "tcanelasb",
+        "clafayec",
+        "dplewmand",
+        "arenshelle",
+        "raldcornef",
+        "mmacteggartg",
+        "rmcgettiganh",
+        "cnorgani",
+        "chaggethj"
+      ],
+      "cohorts": [
+        {
+          "identifier": "All",
+          "students": [
+            "phurry0",
+            "kbreakspear1",
+            "aspering2",
+            "ahounihan3",
+            "cjakubczyk4",
+            "hbassano5",
+            "vmyall6",
+            "fbouchard7",
+            "wmacilriach8",
+            "farons9",
+            "wmccrystala",
+            "tcanelasb",
+            "clafayec",
+            "dplewmand",
+            "arenshelle",
+            "raldcornef",
+            "mmacteggartg",
+            "rmcgettiganh",
+            "cnorgani",
+            "chaggethj"
+          ]
+        },
+        {
+          "identifier": "Group 1",
+          "students": [
+            "phurry0",
+            "kbreakspear1",
+            "aspering2",
+            "ahounihan3",
+            "cjakubczyk4",
+            "hbassano5",
+            "vmyall6",
+            "fbouchard7",
+            "wmacilriach8",
+            "farons9"
+          ]
+        },
+        {
+          "identifier": "Group 2",
+          "students": [
+            "wmccrystala",
+            "tcanelasb",
+            "clafayec",
+            "dplewmand",
+            "arenshelle",
+            "raldcornef",
+            "mmacteggartg",
+            "rmcgettiganh",
+            "cnorgani",
+            "chaggethj"
+          ]
+        }
+      ],
+      "moduleLeader" : "afirebrace1",
+      "instructors" : ["bpolly3", "pwadlow2"]
+    },
+    {
+      "identifier": "31e46f30-09f7-4f7d-a4c7-61eaceb01d94",
+      "name": "Foundations of Object Oriented Design",
+      "year": "2022",
+      "semester": "SEM2",
+      "students": [
+        "phurry0",
+        "kbreakspear1",
+        "aspering2",
+        "ahounihan3",
+        "cjakubczyk4",
+        "hbassano5",
+        "vmyall6",
+        "fbouchard7",
+        "wmacilriach8",
+        "farons9"
+      ],
+      "cohorts": [
+        {
+          "identifier": "All",
+          "students": [
+            "phurry0",
+            "kbreakspear1",
+            "aspering2",
+            "ahounihan3",
+            "cjakubczyk4",
+            "hbassano5",
+            "vmyall6",
+            "fbouchard7",
+            "wmacilriach8",
+            "farons9"
+          ]
+        },
+        {
+          "identifier": "Group 1",
+          "students": [
+            "phurry0",
+            "kbreakspear1",
+            "aspering2",
+            "ahounihan3",
+            "cjakubczyk4"
+          ]
+        },
+        {
+          "identifier": "Group 2",
+          "students": [
+            "hbassano5",
+            "vmyall6",
+            "fbouchard7",
+            "wmacilriach8",
+            "farons9"
+          ]
+        }
+      ],
+      "moduleLeader" : "elamburn5",
+      "instructors" : ["bpolly3", "pwadlow2"]
+    },
+    {
+      "identifier": "a920e775-9f1d-4743-b0d7-b28b0d8098bb",
+      "name": "Foundations of Programming Languages",
+      "year": "2022",
+      "semester": "SEM2",
+      "students": [
+        "phurry0",
+        "kbreakspear1",
+        "aspering2",
+        "ahounihan3",
+        "cjakubczyk4",
+        "hbassano5",
+        "vmyall6",
+        "fbouchard7",
+        "wmacilriach8",
+        "farons9"
+      ],
+      "cohorts": [
+        {
+          "identifier": "All",
+          "students": [
+            "phurry0",
+            "kbreakspear1",
+            "aspering2",
+            "ahounihan3",
+            "cjakubczyk4",
+            "hbassano5",
+            "vmyall6",
+            "fbouchard7",
+            "wmacilriach8",
+            "farons9"
+          ]
+        },
+        {
+          "identifier": "Group 1",
+          "students": [
+            "phurry0",
+            "kbreakspear1",
+            "aspering2",
+            "ahounihan3",
+            "cjakubczyk4"
+          ]
+        },
+        {
+          "identifier": "Group 2",
+          "students": [
+            "hbassano5",
+            "vmyall6",
+            "fbouchard7",
+            "wmacilriach8",
+            "farons9"
+          ]
+        }
+      ],
+      "moduleLeader" : "ikerin6",
+      "instructors" : ["cmustoo7", "mhannay8"]
+    },
+    {
+      "identifier": "46d6e109-4c45-40b8-b345-fe27e1ef1463",
+      "name": "Foundations of System Design",
+      "year": "2022",
+      "semester": "SEM2",
+      "students": [
+        "wmccrystala",
+        "tcanelasb",
+        "clafayec",
+        "dplewmand",
+        "arenshelle",
+        "raldcornef",
+        "mmacteggartg",
+        "rmcgettiganh",
+        "cnorgani",
+        "chaggethj"
+      ],
+      "cohorts": [
+        {
+          "identifier": "All",
+          "students": [
+            "wmccrystala",
+            "tcanelasb",
+            "clafayec",
+            "dplewmand",
+            "arenshelle",
+            "raldcornef",
+            "mmacteggartg",
+            "rmcgettiganh",
+            "cnorgani",
+            "chaggethj"
+          ]
+        },
+        {
+          "identifier": "Group 1",
+          "students": [
+            "wmccrystala",
+            "tcanelasb",
+            "clafayec",
+            "dplewmand",
+            "arenshelle"
+          ]
+        },
+        {
+          "identifier": "Group 2",
+          "students": [
+            "raldcornef",
+            "mmacteggartg",
+            "rmcgettiganh",
+            "cnorgani",
+            "chaggethj"
+          ]
+        }
+      ],
+      "moduleLeader" : "cberdale9",
+      "instructors" : ["jstandering0", "afirebrace1"]
+    }
+  ]
+}

@@ -7,8 +7,8 @@ import { GenerateAPIResult, HttpException } from '../helpers';
 import { Request, Response, NextFunction } from 'express';
 import { LoginRequest, RegisterRequest } from '../validation/auth';
 import { IJWTPayload } from '../interfaces/auth';
-import { IUser } from '../interfaces/user';
-
+import { IRole, IUser } from '../interfaces/user';
+const { SECRET = "secret" } = process.env;
 
 // class JWTPayload implements IJWTPayload{
 //     UserID: String;
@@ -31,7 +31,7 @@ export default class AuthController{
             }
 
             const loginRequest: LoginRequest = req.body;
-            const user = await User.findOne({username: loginRequest.username});
+            const user = await User.findOne({username: loginRequest.username}).populate("roles");
             if(user){
                 const passwordMatch = await bcrypt.compare(loginRequest.password, user.password);
                 if(passwordMatch){
@@ -40,7 +40,7 @@ export default class AuthController{
                     });
 
                     const decoded = jwt.decode(token, {complete: true});
-                    res.status(200).json(GenerateAPIResult(true, {token: token, expiry: (decoded!.payload as jwt.JwtPayload).exp}))
+                    res.status(200).json(GenerateAPIResult(true, {token: token, expiry: (decoded!.payload as jwt.JwtPayload).exp, roles: user.roles.map((r) => (r as IRole).name)}))
 
                 } else{
                     throw new HttpException(409, "Details are incorrect");

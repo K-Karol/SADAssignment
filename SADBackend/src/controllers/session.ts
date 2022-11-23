@@ -1,21 +1,145 @@
 import { Request, Response, NextFunction } from "express";
 import mongoose, { AggregatePaginateModel, isValidObjectId, model, Schema, Types } from "mongoose";
 import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } from "../helpers";
-import { GetSessionForStudentBody, GetSessionForStudentParams_ControllerStage, GetSessionForStudentParams_ValidationStage, GetSessionsQuery, SessionPostRequest_ControllerStage, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody, GetAttendenceForSessionParams } from "../validation/session";
+import { GetSessionForStudentBody, GetSessionForStudentParams_ControllerStage, GetSessionForStudentParams_ValidationStage, GetSessionsQuery, SessionPostRequest_ControllerStage, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody, GetAttendenceForSessionParams, GetSessionsQueryBody } from "../validation/session";
 import { Module } from "../models/module";
 import { ICohortWithAttendance, ISession, IStudentWithAttendance } from "../interfaces/session";
 import { Session, SessionPaginate } from "../models/session";
+import { GenerateBaseExcludes as UserGenerateBaseExcludes } from "../models/user";
 import { plainToInstance } from "class-transformer";
 import { User } from "../models/user";
 // import {aggregate} from 'mongoose-aggregate-paginate-v2';
 
 export default class SessionController {
 
-    public PostSession = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            var postRequest: SessionPostRequest_ControllerStage = plainToInstance(SessionPostRequest_ControllerStage, req.body, {});
+  public GetSessions = async (req: Request, res: Response, next: NextFunction) => {
+    try {
 
-            var module = await Module.findById(postRequest.module);
+      var reqQuery: GetSessionsQueryBody = req.body;
+
+      if (reqQuery.filter) {
+        GoThroughJSONAndReplaceObjectIDs(reqQuery.filter);
+      }
+
+      let aggregate_options = [];
+      let page = 1;
+      let limit = 20;
+
+      if (req.query.page) {
+        page = parseInt(req.query.page as string);
+      }
+
+      if (req.query.limit) {
+        limit = parseInt(req.query.limit as string);
+      }
+
+      const options = {
+        page,
+        limit,
+        collation: { locale: "en" },
+        customLabels: {
+          totalDocs: "totalResults",
+          docs: "sessions",
+        },
+      };
+
+      if (reqQuery.joinStudents) {
+
+        aggregate_options.push(
+          {
+            '$unwind': {
+              'path': '$cohort.students'
+            }
+          }, {
+            '$lookup': {
+              'from': 'users',
+              'localField': 'cohort.students.student',
+              'foreignField': '_id',
+              'as': 'cohort.students.student'
+            }
+          }, {
+            '$unwind': {
+              'path': '$cohort.students.student'
+            }
+          }, {
+            '$group': {
+              '_id': '$_id',
+              'students': {
+                '$push': '$cohort.students'
+              }
+            }
+          }, {
+            '$lookup': {
+              'from': 'sessions',
+              'localField': '_id',
+              'foreignField': '_id',
+              'as': 'sessionDetails'
+            }
+          }, {
+            '$unwind': {
+              'path': '$sessionDetails'
+            }
+          }, {
+            '$addFields': {
+              'sessionDetails.cohort.students': '$students'
+            }
+          }, {
+            '$replaceRoot': {
+              'newRoot': '$sessionDetails'
+            }
+          }
+        );
+
+        UserGenerateBaseExcludes("cohort.students.student.").forEach((element) => {
+          aggregate_options.push({ $project: element });
+        });
+      }
+
+      if(reqQuery.joinModules){
+        aggregate_options.push({
+            '$lookup': {
+              'from': 'modules', 
+              'localField': 'module', 
+              'foreignField': '_id', 
+              'as': 'module'
+            }
+          }, {
+            '$set': {
+              'module': {
+                '$arrayElemAt': [
+                  '$module', 0
+                ]
+              }
+            }
+          }
+        );
+      }
+
+
+      if (reqQuery.filter) aggregate_options.push({ $match: reqQuery.filter });
+
+
+      const myAggregate = SessionPaginate.aggregate(aggregate_options);
+      SessionPaginate.aggregatePaginate(myAggregate, options)
+          .then((result) =>
+              res.status(200).json(GenerateAPIResult(true, result))
+          )
+          .catch((err) => {
+              console.log(err);
+              next(new HttpException(500, "Failed to fetch sessions", undefined, err));
+          });
+
+
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  public PostSession = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      var postRequest: SessionPostRequest_ControllerStage = plainToInstance(SessionPostRequest_ControllerStage, req.body, {});
+
+      var module = await Module.findById(postRequest.module);
 
       if (!module) {
         throw new HttpException(400, "Module cannot be found");
@@ -46,10 +170,10 @@ export default class SessionController {
     }
   }
 
-    public GetAllSessionsForStudent = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            var params: GetSessionForStudentParams_ControllerStage = plainToInstance(GetSessionForStudentParams_ControllerStage, (req as any)["params"], {});
-            var queryBody: GetSessionForStudentBody = req.body;
+  public GetAllSessionsForStudent = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      var params: GetSessionForStudentParams_ControllerStage = plainToInstance(GetSessionForStudentParams_ControllerStage, (req as any)["params"], {});
+      var queryBody: GetSessionForStudentBody = req.body;
 
       if (!isValidObjectId(params.studentID)) {
         throw new HttpException(400, "studentID is not in the valid format");
@@ -84,34 +208,34 @@ export default class SessionController {
         },
       };
 
-            aggregate_options.push(
-                {
-                    $match: {
-                        $expr: {
-                            $in: [params.studentID, "$cohort.students.student"]
-                        }
-                    }
-                }, {
-                $unwind: {
-                    path: "$cohort.students"
-                }
-            },
-                {
-                    $match: {
-                        "cohort.students.student": params.studentID
-                    }
-                },
-                {
-                    $set: {
-                        "cohort.student": "$cohort.students.student"
-                    }
-                },
-                { $unset: 'cohort.students' }
-            );
+      aggregate_options.push(
+        {
+          $match: {
+            $expr: {
+              $in: [params.studentID, "$cohort.students.student"]
+            }
+          }
+        }, {
+        $unwind: {
+          path: "$cohort.students"
+        }
+      },
+        {
+          $match: {
+            "cohort.students.student": params.studentID
+          }
+        },
+        {
+          $set: {
+            "cohort.student": "$cohort.students.student"
+          }
+        },
+        { $unset: 'cohort.students' }
+      );
 
-            //remove irrelevant students
+      //remove irrelevant students
 
-            if (queryBody.filter) aggregate_options.push({ $match: queryBody.filter });
+      if (queryBody.filter) aggregate_options.push({ $match: queryBody.filter });
 
       const myAggregate = SessionPaginate.aggregate(aggregate_options);
 
@@ -140,7 +264,7 @@ export default class SessionController {
 
       var attendanceList = await Promise.all(session!.cohort.students.map(async (s) => {
         var ur = await User.findById(s.student);
-        return {id : s.student, username: ur?.username, fullname: ur?.fullname, attendance: s.attendance};
+        return { id: s.student, username: ur?.username, fullname: ur?.fullname, attendance: s.attendance };
       }));
 
       res.status(200).json(GenerateAPIResult(true, attendanceList));
@@ -171,7 +295,7 @@ export default class SessionController {
 
       var ur = await User.findById(attendanceForUser?.student);
       //return {id : attendanceForUser.student, username: ur?.username, fullname: ur?.fullname, attendance: attendanceForUser.attendance};
-      res.status(200).json(GenerateAPIResult(true, {id : attendanceForUser.student, username: ur?.username, fullname: ur?.fullname, attendance: attendanceForUser.attendance}));
+      res.status(200).json(GenerateAPIResult(true, { id: attendanceForUser.student, username: ur?.username, fullname: ur?.fullname, attendance: attendanceForUser.attendance }));
 
     } catch (err) {
       next(err);

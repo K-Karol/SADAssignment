@@ -6,6 +6,7 @@ export interface IJWTPayload{
 }
 
 export interface IAuthenticatedRequest extends Request{
-    User?: typeof User | IUser
+    User?: typeof User | IUser,
+    IsUsingAPIKey?: boolean;
 }
 

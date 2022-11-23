@@ -1,0 +1,194 @@
+{
+  "Users": [
+    {
+      "username": "jstandering0",
+      "password": "5qDbRoD2w",
+      "fullname": {
+        "firstname": "Scarlet",
+        "middlenames": null,
+        "lastname": "Standering"
+      },
+      "roles": ["Staff"],
+      "address": {
+        "addressLine1": "2141 Pawling Pass",
+        "addressLine2": null,
+        "addressLine3": null,
+        "addressLine4": null,
+        "postcode": "BT2",
+        "city": "Belfast",
+        "country": "United Kingdom"
+      }
+    },
+    {
+      "username": "afirebrace1",
+      "password": "C1TfwEQ6",
+      "fullname": {
+        "firstname": "Albina",
+        "middlenames": "Auguste",
+        "lastname": "Firebrace"
+      },
+      "roles": ["Staff"],
+      "address": {
+        "addressLine1": "9518 Londonderry Place",
+        "addressLine2": null,
+        "addressLine3": null,
+        "addressLine4": null,
+        "postcode": "DN21",
+        "city": "Upton",
+        "country": "United Kingdom"
+      }
+    },
+    {
+      "username": "pwadlow2",
+      "password": "K92stmMl",
+      "fullname": {
+        "firstname": "Rosabelle",
+        "middlenames": "Prudence",
+        "lastname": "Wadlow"
+      },
+      "roles": ["Staff"],
+      "address": {
+        "addressLine1": "686 Hoepker Court",
+        "addressLine2": null,
+        "addressLine3": null,
+        "addressLine4": null,
+        "postcode": "EH52",
+        "city": "Burnside",
+        "country": "United Kingdom"
+      }
+    },
+    {
+      "username": "bpolly3",
+      "password": "OxcHJT1Kvgc",
+      "fullname": {
+        "firstname": "Alaster",
+        "middlenames": null,
+        "lastname": "Polly"
+      },
+      "roles": ["Staff"],
+      "address": {
+        "addressLine1": "5 Ridgeway Alley",
+        "addressLine2": null,
+        "addressLine3": null,
+        "addressLine4": null,
+        "postcode": "DL10",
+        "city": "Whitwell",
+        "country": "United Kingdom"
+      }
+    },
+    {
+      "username": "hmclafferty4",
+      "password": "CMnEj9DN",
+      "fullname": {
+        "firstname": "Kiersten",
+        "middlenames": "Hunter",
+        "lastname": "McLafferty"
+      },
+      "roles": ["Staff"],
+      "address": {
+        "addressLine1": "933 Clove Way",
+        "addressLine2": null,
+        "addressLine3": null,
+        "addressLine4": null,
+        "postcode": "WF9",
+        "city": "Upton",
+        "country": "United Kingdom"
+      }
+    },
+    {
+      "username": "elamburn5",
+      "password": "8khU1GSQF58",
+      "fullname": {
+        "firstname": "Helaina",
+        "middlenames": null,
+        "lastname": "Lamburn"
+      },
+      "roles": ["Staff"],
+      "address": {
+        "addressLine1": "87 Namekagon Circle",
+        "addressLine2": null,
+        "addressLine3": null,
+        "addressLine4": null,
+        "postcode": "BS41",
+        "city": "Bristol",
+        "country": "United Kingdom"
+      }
+    },
+    {
+      "username": "ikerin6",
+      "password": "koA9gbNRp",
+      "fullname": {
+        "firstname": "Perry",
+        "middlenames": "Irita",
+        "lastname": "Kerin"
+      },
+      "roles": ["Staff"],
+      "address": {
+        "addressLine1": "7 Shelley Plaza",
+        "addressLine2": null,
+        "addressLine3": null,
+        "addressLine4": null,
+        "postcode": "BS37",
+        "city": "Horton",
+        "country": "United Kingdom"
+      }
+    },
+    {
+      "username": "cmustoo7",
+      "password": "vTdvuvZHTsvk",
+      "fullname": {
+        "firstname": "Bill",
+        "middlenames": null,
+        "lastname": "Mustoo"
+      },
+      "roles": ["Staff"],
+      "address": {
+        "addressLine1": "6001 Fieldstone Lane",
+        "addressLine2": null,
+        "addressLine3": null,
+        "addressLine4": null,
+        "postcode": "B40",
+        "city": "Birmingham",
+        "country": "United Kingdom"
+      }
+    },
+    {
+      "username": "mhannay8",
+      "password": "eJd3i1",
+      "fullname": {
+        "firstname": "Ebonee",
+        "middlenames": null,
+        "lastname": "Hannay"
+      },
+      "roles": ["Staff"],
+      "address": {
+        "addressLine1": "3833 Mallard Circle",
+        "addressLine2": null,
+        "addressLine3": null,
+        "addressLine4": null,
+        "postcode": "BS14",
+        "city": "Whitchurch",
+        "country": "United Kingdom"
+      }
+    },
+    {
+      "username": "cberdale9",
+      "password": "DkLHfvrS",
+      "fullname": {
+        "firstname": "Anna-diane",
+        "middlenames": null,
+        "lastname": "Berdale"
+      },
+      "roles": ["Staff"],
+      "address": {
+        "addressLine1": "13 Shopko Parkway",
+        "addressLine2": null,
+        "addressLine3": null,
+        "addressLine4": null,
+        "postcode": "WF9",
+        "city": "Upton",
+        "country": "United Kingdom"
+      }
+    }
+  ]
+}

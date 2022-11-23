@@ -1,0 +1,35 @@
+{
+  "Courses": [
+    {
+      "identifier": "842bc992-a47f-4fe9-a5f8-a4ec850fd7b9",
+      "name": "Computer Science",
+      "yearOfEntry": "2022",
+      "courseLeader": "jstandering0",
+      "students": [
+        "phurry0",
+        "kbreakspear1",
+        "aspering2",
+        "ahounihan3",
+        "cjakubczyk4",
+        "hbassano5",
+        "vmyall6",
+        "fbouchard7",
+        "wmacilriach8",
+        "farons9",
+        "wmccrystala",
+        "tcanelasb",
+        "clafayec",
+        "dplewmand",
+        "arenshelle",
+        "raldcornef",
+        "mmacteggartg",
+        "rmcgettiganh",
+        "cnorgani",
+        "chaggethj"
+      ],
+      "modules" : [
+        "24ac7636-bc50-4499-96a3-ca91129d23f4", "d813a175-cd97-4016-8e31-217c725f4a18", "31e46f30-09f7-4f7d-a4c7-61eaceb01d94", "a920e775-9f1d-4743-b0d7-b28b0d8098bb", "46d6e109-4c45-40b8-b345-fe27e1ef1463"
+      ]
+    }
+  ]
+}

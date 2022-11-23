@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { GenerateAPIResult, HttpException } from '../helpers';
 import { IJWTPayload, IAuthenticatedRequest } from '../interfaces/auth';
 import { User } from "../models/user";
-const AuthenticateAPIKeyRequest = async (req: Request, res: Response, next: NextFunction) => {
+const AuthenticateAPIKeyRequest = async (req: IAuthenticatedRequest, res: Response, next: NextFunction) => {
     try {
         const APIKey = req.header('X-API-Key');
         if (!APIKey) {
@@ -23,7 +23,7 @@ const AuthenticateAPIKeyRequest = async (req: Request, res: Response, next: Next
             next(new HttpException(401, 'Wrong API key', undefined));
             return;
         }
-
+        req.IsUsingAPIKey = true;
         next();
     }
     catch (error) {
