@@ -714,6 +714,7 @@
     "tests": []
   },
   {
+<<<<<<< HEAD
     "_id": "b7ae0da2-85d6-4a18-9fbb-20624433efe8",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
@@ -745,5 +746,19 @@
       "form": []
     },
     "tests": []
+=======
+    "_id": "3ad4786e-bbea-4ca6-b209-de3963bb7b94",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Delete Session",
+    "url": "sessions/resource/637e40862a32ce56f32ea7df",
+    "method": "DELETE",
+    "sortNum": 210000,
+    "created": "2022-11-23T15:46:46.612Z",
+    "modified": "2022-11-23T15:47:26.090Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+>>>>>>> 00a79c3 (Added delete controller for sessions.)
   }
 ]

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import mongoose, { AggregatePaginateModel, isValidObjectId, model, Schema, Types } from "mongoose";
 import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } from "../helpers";
-import { GetSessionForStudentBody, GetSessionForStudentParams_ControllerStage, GetSessionForStudentParams_ValidationStage, GetSessionsQuery, SessionPostRequest_ControllerStage, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody, GetAttendenceForSessionParams, GetSessionsQueryBody } from "../validation/session";
+import { GetSessionForStudentBody, GetSessionForStudentParams_ControllerStage, GetSessionForStudentParams_ValidationStage, GetSessionsQuery, SessionPostRequest_ControllerStage, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody, GetAttendenceForSessionParams, GetSessionsQueryBody, GetSessionByID_ControllerStage } from "../validation/session";
 import { Module } from "../models/module";
 import { ICohortWithAttendance, ISession, IStudentWithAttendance } from "../interfaces/session";
 import { Session, SessionPaginate } from "../models/session";
@@ -330,5 +330,20 @@ export default class SessionController {
     } catch (err) {
       next(err);
     }
-  }
+  };
+
+  public DeleteSession = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const params: GetSessionByID_ControllerStage = plainToInstance(GetSessionByID_ControllerStage, (req as any)["params"], {});
+  
+        const deleteRes = await Session.deleteOne({ _id: params.sessionID });
+  
+        if (deleteRes.deletedCount != 1) throw new HttpException(400, "Failed to delete");
+  
+        res.status(200).json(GenerateAPIResult(true, "Deleted", undefined));
+  
+      } catch (err) {
+        next(err);
+      }
+};
 }

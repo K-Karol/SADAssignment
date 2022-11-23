@@ -113,3 +113,15 @@ export class UpdateStudentAttendanceBody{
   @IsNotEmpty()
   attendance!: string;
 }
+
+export class GetSessionByID_ControllerStage{
+    @Transform(({value}) => new Types.ObjectId(value))
+    sessionID!: Types.ObjectId;
+}
+
+export class GetSessionByID_ValidationStage{
+    @DoesObjectIdExist(Session)
+    @IsMongooseObjectId()
+    @IsNotEmpty()
+    sessionID!: string;
+}
