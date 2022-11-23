@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import { AggregatePaginateModel, isValidObjectId, Schema, Types } from "mongoose";
-import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } from "../helpers";
+import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException, RemoveUndefinedFieldsRoot } from "../helpers";
 import bcrypt from "bcryptjs";
 import { GenerateBaseExcludes as UserGenerateBaseExcludes } from "../models/user";
 import { Course, CoursePaginate } from "../models/course";
 import { ICourse } from "../interfaces/course";
 import { IAuthenticatedRequest } from "../interfaces/auth";
-import { GetModuleByID_ControllerStage, GetModulesQueryBody, PostModuleRequest_ControllerStage } from "../validation/module";
+import { GetModuleByID_ControllerStage, GetModulesQueryBody, ModulePutRequest_ControllerStage, PostModuleRequest_ControllerStage } from "../validation/module";
 import { plainToInstance } from "class-transformer";
 import { ICohort, IModule } from "../interfaces/module";
 import { Module, ModulePaginate } from "../models/module";
@@ -148,6 +148,36 @@ export default class ModuleController {
             next(err);
         }
     };
+
+    public UpdateModule = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+          const putRequest: ModulePutRequest_ControllerStage = plainToInstance(ModulePutRequest_ControllerStage, req.body, {});
+          const params: GetModuleByID_ControllerStage = plainToInstance(GetModuleByID_ControllerStage, (req as any)["params"], {});
+    
+          if ((putRequest.name) == undefined && (putRequest.year == undefined) && (putRequest.semester == undefined) && (putRequest.students == undefined) && (putRequest.cohorts == undefined) && (putRequest.moduleLeader == undefined) && (putRequest.instructors == undefined)) {
+            throw new HttpException(400, "Put request contains no data to update");
+          }
+    
+          var deltaObj = RemoveUndefinedFieldsRoot(putRequest);
+    
+          //check if id exists so failure can be 500?
+    
+          const updateRes = await Module.updateOne({ _id: params.id }, deltaObj);
+    
+          if (updateRes.modifiedCount != 1) throw new HttpException(400, "Failed to update");
+    
+    
+          const newModule= await Module.findById(params.id);
+          if (!newModule) throw new HttpException(400, "Failed to find Module and/or update");
+    
+          res.status(200).json(GenerateAPIResult(true, newModule, undefined));
+    
+    
+        }
+        catch (err) {
+          next(err);
+        }
+      };
 
     public DeleteModule = async (req: Request, res: Response, next: NextFunction) => {
         try {

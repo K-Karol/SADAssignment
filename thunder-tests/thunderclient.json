@@ -759,6 +759,24 @@
     "headers": [],
     "params": [],
     "tests": []
->>>>>>> 00a79c3 (Added delete controller for sessions.)
+  },
+  {
+    "_id": "965897ee-ed6f-411f-8cb3-2a8f95170d8a",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "870408ec-c098-4f3c-85c1-7bf856026fb5",
+    "name": "Update Module",
+    "url": "modules/resource/637e5edd0745e72469a92d3e",
+    "method": "PUT",
+    "sortNum": 230000,
+    "created": "2022-11-23T17:40:06.036Z",
+    "modified": "2022-11-23T17:58:04.233Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\" : \"Awesome Science 23\",\n  \"year\" : \"2023\",\n  \"semester\" : \"2\",\n  \"students\" : [\"636e720ce404fad7cacacf95\"],\n  \"cohorts\" : [{\n    \"identifier\": \"2\",\n    \"students\": [\"636e720ce404fad7cacacf95\"]\n  }],\n  \"moduleLeader\" : \"636e720ce404fad7cacacf97\",\n  \"instructors\" : [\"636e720ce404fad7cacacf97\"]\n}",
+      "form": []
+    },
+    "tests": []
   }
 ]
