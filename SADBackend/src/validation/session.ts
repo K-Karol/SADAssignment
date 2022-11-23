@@ -74,7 +74,7 @@ export class GetAttendenceForStudentParams_ValidationStage{
     @DoesObjectIdExist(User)
     @IsNotEmpty()
     @IsMongooseObjectId()
-    studentID!: string;;
+    studentID!: string;
 }
 
 export class GetSessionForStudentBody{
@@ -91,6 +91,20 @@ export class GetSessionsQuery{
     @IsOptional()
     @Type(() => Number)
     limit?: number;
+}
+
+export class GetSessionsQueryBody{
+    @IsOptional()
+    @Type(() => Object)
+    filter?: object
+
+    @IsBoolean()
+    @IsOptional()
+    joinStudents?: boolean;
+
+    @IsBoolean()
+    @IsOptional()
+    joinModules?: boolean;
 }
 
 export class UpdateStudentAttendanceBody{

@@ -17,7 +17,7 @@ export default class ModuleRoute implements IRoute {
     this.router.post(`${this.path}resource/`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(PostModuleRequest_ValidationStage, 'body'), this.moduleController.PostModule);
     //this.router.get(`${this.path}GetSessionsForStudent/:studentID`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(GetSessionForStudentParams, 'params'), ValidationMiddleware(GetSessionsQuery, 'query'), ValidationMiddleware(GetSessionForStudentBody, 'body'), this.sessionController.GetAllSessionsForStudent);
 
-    this.router.get(`${this.path}resource/`, AuthenticateRequest, ValidationMiddleware(GetModulesQuery, 'query'), ValidationMiddleware(GetModulesQueryBody, 'body'),  this.moduleController.GetModules);
+    this.router.get(`${this.path}resource/`, AuthenticateRequest, AuthoriseByRoles(["Admin", "Staff"]), ValidationMiddleware(GetModulesQuery, 'query'), ValidationMiddleware(GetModulesQueryBody, 'body'),  this.moduleController.GetModules);
     // this.router.get(`${this.path}resource/:id`, AuthenticateRequest, ValidationMiddleware(GetUserByID, 'params'),  this.userController.GetUser);
     // this.router.get(`${this.path}self`, AuthenticateRequest, this.userController.GetCurrentUser);
     // this.router.post(`${this.path}resource/`, AuthenticateRequest, ValidationMiddleware(UserDecorated, 'body'), this.userController.PostUser);
