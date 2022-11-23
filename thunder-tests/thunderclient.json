@@ -425,12 +425,12 @@
     "method": "POST",
     "sortNum": 90000,
     "created": "2022-11-14T15:12:41.871Z",
-    "modified": "2022-11-19T16:27:11.065Z",
+    "modified": "2022-11-23T20:27:56.674Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"type\" : \"lecture\",\n  \"module\" : \"637903757fe5c01974895fd3\",\n  \"cohortIdentifier\" : \"All\",\n  \"startDateTime\" : \"2022-11-20T11:15\",\n  \"endDateTime\" : \"2022-11-20T12:15\"\n}",
+      "raw": "{\n  \"type\" : \"lecture\",\n  \"module\" : \"637e5edd0745e72469a92d3e\",\n  \"cohortIdentifier\" : \"1\",\n  \"startDateTime\" : \"2022-11-20T11:15\",\n  \"endDateTime\" : \"2022-11-20T12:15\"\n}",
       "form": []
     },
     "tests": []
@@ -744,6 +744,39 @@
     "modified": "2022-11-23T18:02:30.079Z",
     "headers": [],
     "params": [],
+    "tests": []
+  },
+  {
+    "_id": "096c209e-914e-4413-869c-ddc367cc6e57",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Get Session",
+    "url": "sessions/resource/637e82b3dd5f70eded40af28",
+    "method": "GET",
+    "sortNum": 250000,
+    "created": "2022-11-23T20:20:10.334Z",
+    "modified": "2022-11-23T20:37:02.397Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "eed4b0c0-b68a-4726-aa82-dfa14ecfd8e2",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Update Session",
+    "url": "sessions/resource/637e82b3dd5f70eded40af28",
+    "method": "PUT",
+    "sortNum": 260000,
+    "created": "2022-11-23T20:21:09.812Z",
+    "modified": "2022-11-23T20:53:44.999Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"type\" : \"seminar\",\n  \"module\" : \"637e5edd0745e72469a92d3e\",\n  \"cohort\": [\n        {\n            \"identifier\" : \"2\",\n            \"students\" : [\n                \"636e720ce404fad7cacacf95\"\n            ],\n            \"attendance\" : \"late\"\n        }\n    ],\n  \"startDateTime\" : \"2022-11-20T12:15\",\n  \"endDateTime\" : \"2022-11-20T13:15\"\n}",
+      "form": []
+    },
     "tests": []
   }
 ]

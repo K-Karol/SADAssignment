@@ -1,4 +1,4 @@
-import { Transform, Type } from "class-transformer";
+import { plainToInstance, Transform, Type } from "class-transformer";
 import { IsNotEmpty, IsOptional, IsString, IsInt, IsBoolean, IsIn, IsDate, IsISO8601 } from "class-validator";
 import { Schema, Types } from "mongoose";
 import "reflect-metadata";
@@ -6,6 +6,7 @@ import { Module } from "../models/module";
 import { Session } from "../models/session";
 import { User } from "../models/user";
 import { DoesObjectIdExist, IsArrayOfMongooseObjectId, IsMongooseObjectId } from "./custom-decorators";
+import { Cohort_ControllerStage, Cohort_ValidationStage } from "./module";
 
 export class SessionPostRequest_Stage1{
     @IsNotEmpty()
@@ -56,8 +57,6 @@ export class GetAttendenceForSessionParams{
     @IsMongooseObjectId()
     sessionID!: string;
 }
-
-
 
 export class GetAttendenceForStudentParams_ControllerStage{
   @Transform(({value}) => new Types.ObjectId(value))
@@ -124,4 +123,33 @@ export class GetSessionByID_ValidationStage{
     @IsMongooseObjectId()
     @IsNotEmpty()
     sessionID!: string;
+}
+
+export class SessionPutRequest_ControllerStage{
+    type?: string;
+    @Transform(({value}) => new Types.ObjectId(value))
+    module?: Types.ObjectId;
+    @Transform(({value}) => plainToInstance(Cohort_ControllerStage, value, {}))
+    cohort?: Cohort_ControllerStage[];
+    startDateTime?: Date;
+    endDateTime?: Date;
+}
+
+export class SessionPutRequest_ValidationStage{
+    @IsString()
+    @IsIn(["lecture", "seminar"])
+    @IsOptional()
+    type?: string;
+    @DoesObjectIdExist(Module)
+    @IsMongooseObjectId()
+    @IsOptional()
+    module?: string;
+    @IsOptional()
+    cohort?: Cohort_ValidationStage[];
+    @IsISO8601()
+    @IsOptional()
+    startDateTime?: Date;
+    @IsISO8601()
+    @IsOptional()
+    endDateTime?: Date;
 }
