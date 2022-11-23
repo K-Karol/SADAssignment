@@ -207,4 +207,23 @@ export default class SessionController {
       next(err);
     }
   }
+
+  public DeleteSession = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const params: GetAttendenceForSessionParams = (req as any)["params"];
+      if (!isValidObjectId(params.sessionID)) {
+        throw new HttpException(400, "ID is not in the valid format");
+      }
+
+      //check if id exists so failure can be 500?
+      const deleteRes = await Session.deleteOne({ _id: params.sessionID });
+
+      if (deleteRes.deletedCount != 1) throw new HttpException(400, "Failed to delete");
+
+      res.status(200).json(GenerateAPIResult(true, "Deleted", undefined));
+
+    } catch (err) {
+      next(err);
+    }
+  };
 }

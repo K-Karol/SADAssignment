@@ -628,5 +628,19 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "639570c1-bb9c-4fd4-97a4-366fc36907a2",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Delete Session",
+    "url": "sessions/DeleteSession/6374ecaedb31e5f26ef6e6da",
+    "method": "DELETE",
+    "sortNum": 180000,
+    "created": "2022-11-23T13:01:20.027Z",
+    "modified": "2022-11-23T13:09:51.696Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

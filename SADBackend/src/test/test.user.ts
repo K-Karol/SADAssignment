@@ -27,7 +27,7 @@ before(function () { //don't put tests in here else the before will not be calle
     })
     .end((err, res) => {
       bearertoken = res.body.Response.token; //save the value locally to use in later methods
-      console.log(bearertoken);
+      //console.log(bearertoken);
     });
 });
 

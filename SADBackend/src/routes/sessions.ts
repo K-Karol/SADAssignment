@@ -20,9 +20,6 @@ export default class SessionRoute implements IRoute {
     this.router.get(`${this.path}GetSessionAttendence/:sessionID`, AuthenticateRequest, ValidationMiddleware(GetAttendenceForSessionParams, 'params'),  this.sessionController.GetSessionAttendence);
     this.router.get(`${this.path}GetUserAttendence/:sessionID/:studentID`, AuthenticateRequest, ValidationMiddleware(GetAttendenceForStudentParams_ValidationStage, 'params'), this.sessionController.GetUserAttendence);
     this.router.patch(`${this.path}PatchUserAttendence/:sessionID/:studentID`, AuthenticateRequest, ValidationMiddleware(GetAttendenceForStudentParams_ValidationStage, 'params'), ValidationMiddleware(UpdateStudentAttendanceBody, 'body'), this.sessionController.PatchUserAttendence);
-
-    // this.router.get(`${this.path}resource/`, AuthenticateRequest, ValidationMiddleware(GetUsersQuery, 'query'), ValidationMiddleware(GetUsersQueryBody, 'body'),  this.userController.GetUsers);
-    // this.router.get(`${this.path}resource/:id`, AuthenticateRequest, ValidationMiddleware(GetUserByID, 'params'),  this.userController.GetUser);
-    // this.router.get(`${this.path}self`, AuthenticateRequest, this.userController.GetCurrentUser);
+    this.router.delete(`${this.path}DeleteSession/:sessionID`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(GetAttendenceForSessionParams, 'params'),  this.sessionController.DeleteSession);
   }
 }
