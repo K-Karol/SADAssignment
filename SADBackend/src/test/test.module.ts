@@ -1,13 +1,15 @@
-import { expect, should } from "chai"
+import { expect } from "chai"
 import chai from "chai"
 import chaiHttp from "chai-http"
 import app from "../index"
+import e from 'express';
 import { assert } from "console";
 import { stringify } from "querystring";
 import { after, before } from "mocha";
 
 chai.use(chaiHttp);
-chai.should();
+let should = chai.should();
+
 const NUMSTUDENTS = 3;
 var bearertoken: string; //auth token
 var tutorid: string;
@@ -15,7 +17,7 @@ var modleadid: string;
 var studentids: string[] = []; //create users
 
 //Assumes that staff, Module leader, Student roles exit, that danny 123 is a valid auth
-//don't put tests in here else the before will not be called first causing issues (same with describe and it)
+
 before(function () { //do first
   chai.request(app)
     .post('/api/auth/login')
@@ -58,7 +60,7 @@ before(function () { //do first
         .send({
           "username": "TestModLeadermoduletest",
           "password": "123456",
-          "roles": ["Staff", "Module leader"],
+          "roles": ["Staff"],
           "fullname": {
             "firstname": "Mod",
             "lastname": "Lead"
@@ -83,7 +85,7 @@ before(function () { //do first
           .send({
             "username": `Student${index}moduletest`,
             "password": "123456",
-            "roles": ["Student"],
+            "roles": [],
             "fullname": {
               "firstname": "Stu",
               "lastname": `${index}`
@@ -104,10 +106,11 @@ before(function () { //do first
 });
 
 describe('Test Module', () => {
-  it("Create a Module"), () => {
+  var moduleid :string;
+  it("Create a Module", (done) => {
     chai.request(app)
       .post(`api/modules/resource`)
-      .set({ "Authorization": `Bearer ${bearertoken}` }) // pass the login token from before method
+      .set({ "Authorization": `Bearer ${bearertoken}`}) // pass the login token from before method
       .type('json')
       .send({
         "name": "WTFYMNMT",
@@ -125,10 +128,23 @@ describe('Test Module', () => {
       })
       .end((err, res) => {
         res.should.have.status(200);
-        res.body.should.have.property("Success").eql(true);
+        res.body.should.have.property("Success").equal(true);
         res.body.should.have.property("Response").property("token");
+        moduleid = res.body.Response.token;
+        done();
       });
-  };
+  });
+
+  it("Delete a Module", (done) => { //delete the created module
+    chai.request(app)
+      .delete(`api/modules/resource/${moduleid}`)
+      .set({ "Authorization": `Bearer ${bearertoken}`}) // pass the login token from before method
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.have.property("Success").equal(true);
+        done();
+      });
+  });
 });
 
 after(function () { //delete the create object in before method
