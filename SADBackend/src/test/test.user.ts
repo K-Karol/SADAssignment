@@ -10,28 +10,52 @@ chai.use(chaiHttp);
 chai.should();
 
 var bearertoken: string;
+var admin: string;
 
 describe("Users", () => {
   before(function (done) { //don't put tests in here else the before will not be called first causing issues (same with describe and it)
-    /*{
-      "Success": true,
-      "Response": {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiI2MzZjZjZkY2U3OWIxMjZkNmQyOTg5YmQiLCJpYXQiOjE2Njg3ODM4NjksImV4cCI6MTY2ODc5MTA2OX0.jLRN_7aXHicgYblQtDL620Tyct_j0bX6bEmWzLaFfM8",
-        "expiry": 1668791069
-      }
-    }*/
     chai.request(app)
-      .post('/api/auth/login')
-      .type('json')
+      .post("/api/admin/createAdminUser")
+      .set('X-API-Key', `${process.env.ADMIN_APIKEY}`)
+      .type("json")
       .send({
-        "username": "Danny",
-        "password": "123"
+        "username": "TesterUser",
+        "password": "123",
+        "fullname": {
+          "firstname": "Firstname",
+          "lastname": "Lastname"
+        },
+        "address": {
+          "addressLine1": "test address",
+          "postcode": "abcde",
+          "city": "sheffield",
+          "country": "UK"
+        }
       })
       .end((err, res) => {
-        bearertoken = res.body.Response.token; //save the value locally to use in later methods
-        done();
-        //console.log(bearertoken);
+        res.should.have.status(200);
+        admin = res.body.Response;
+        /*{
+          "Success": true,
+          "Response": {
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiI2MzZjZjZkY2U3OWIxMjZkNmQyOTg5YmQiLCJpYXQiOjE2Njg3ODM4NjksImV4cCI6MTY2ODc5MTA2OX0.jLRN_7aXHicgYblQtDL620Tyct_j0bX6bEmWzLaFfM8",
+            "expiry": 1668791069
+          }
+        }*/
+        chai.request(app)
+          .post('/api/auth/login')
+          .type('json')
+          .send({
+            "username": "TesterUser",
+            "password": "123"
+          })
+          .end((err, res) => {
+            bearertoken = res.body.Response.token; //save the value locally to use in later methods
+            done();
+            //console.log(bearertoken);
+          });
       });
+
   });
 
   //these methods work under the assumption that the DB exists and that the roles Staff, Admin and Student exist
@@ -108,5 +132,14 @@ describe("Users", () => {
           done(); //end point
         });
     });
+  });
+
+  after(function(done){
+    chai.request(app)
+        .delete(`/api/users/resource/${admin}`) //route path
+        .set({ "Authorization": `Bearer ${bearertoken}` }) // pass the login token from before method
+        .end((err, res) => {
+          done(); //end point
+        });
   });
 });
