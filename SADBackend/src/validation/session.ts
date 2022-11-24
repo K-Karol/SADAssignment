@@ -129,8 +129,7 @@ export class SessionPutRequest_ControllerStage{
     type?: string;
     @Transform(({value}) => new Types.ObjectId(value))
     module?: Types.ObjectId;
-    @Transform(({value}) => plainToInstance(Cohort_ControllerStage, value, {}))
-    cohort?: Cohort_ControllerStage[];
+    cohortIdentifier?: string;
     startDateTime?: Date;
     endDateTime?: Date;
 }
@@ -144,8 +143,9 @@ export class SessionPutRequest_ValidationStage{
     @IsMongooseObjectId()
     @IsOptional()
     module?: string;
+    @IsString()
     @IsOptional()
-    cohort?: Cohort_ValidationStage[];
+    cohortIdentifier?: string;
     @IsISO8601()
     @IsOptional()
     startDateTime?: Date;
