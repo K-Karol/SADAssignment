@@ -341,11 +341,11 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
     "name": "Get User",
-    "url": "users/resource/6374e1be45f2d92a9b42f80f",
+    "url": "users/resource/637dfab875f042c13c3aa209",
     "method": "GET",
     "sortNum": 40000,
     "created": "2022-11-14T11:15:54.911Z",
-    "modified": "2022-11-16T21:51:40.028Z",
+    "modified": "2022-11-24T16:13:10.075Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -425,12 +425,12 @@
     "method": "POST",
     "sortNum": 90000,
     "created": "2022-11-14T15:12:41.871Z",
-    "modified": "2022-11-19T16:27:11.065Z",
+    "modified": "2022-11-24T14:25:40.223Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"type\" : \"lecture\",\n  \"module\" : \"637903757fe5c01974895fd3\",\n  \"cohortIdentifier\" : \"All\",\n  \"startDateTime\" : \"2022-11-20T11:15\",\n  \"endDateTime\" : \"2022-11-20T12:15\"\n}",
+      "raw": "{\n  \"type\" : \"lecture\",\n  \"module\" : \"637e67c0a2bc984669519555\",\n  \"cohortIdentifier\" : \"A1\",\n  \"startDateTime\" : \"2022-11-20T11:15\",\n  \"endDateTime\" : \"2022-11-20T12:15\"\n}",
       "form": []
     },
     "tests": []
@@ -463,12 +463,12 @@
     "method": "POST",
     "sortNum": 110000,
     "created": "2022-11-14T20:04:17.012Z",
-    "modified": "2022-11-16T20:7T16:38:53.45:35.631Z",
+    "modified": "2022-11-24T14:02:28.329Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\" : \"Computer Science\",\n  \"yearOfEntry\" : \"2022\",\n  \"courseLeader\" : \"637546a5e29602143922d0da\",\n  \"modules\" : [\"637533e9fa78e8cb01f8e159\",\"637538a93a381e0ace1db219\"],\n  \"students\" : [\"637537f46e74842534423f11\", \"637537f46e74842534423f13\"]\n  \n}",
+      "raw": "{\n  \"name\" : \"Computer Science\",\n  \"yearOfEntry\" : \"2022\",\n  \"courseLeader\" : \"636cf8b4e79b126d6d2989c1\",\n  \"modules\" : [\"6374e5fa0466431dcce95b8d\",\"637e67c0a2bc984669519555\"],\n  \"students\" : [\"636cf6dce79b126d6d2989bd\", \"636cf6dce79b126d6d2989bd\"]\n  \n}",
       "form": []
     },
     "tests": []
@@ -480,11 +480,19 @@
     "name": "Create Module",
     "url": "modules/resource",
     "method": "POST",
+<<<<<<< HEAD
+=======
+    "modified": "2022-11-24T14:10:21.187Z",
+>>>>>>> 13831d6 (All CHAI tests done)
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
+<<<<<<< HEAD
       "raw": "{\n  \"name\" : \"Awesome Science 24\",\n  \"yearOfEntry\" : \"2022\",\n  \"courseLeader\" : \"6376526c429a15adc3184fe5\",\n  \"modules\" : [\"63766378136363abb643fae2\"],\n  \"students\" : [\"6376526c429a15adc3184fe5\"]\n}",
+=======
+      "raw": "{\n    \"name\" : \"Awesome Science 245\",\n    \"year\": \"2022\",\n    \"semester\": \"SEM1\",\n    \"students\": [\"637dfab875f042c13c3aa209\"],\n    \"cohorts\": [{\n      \"identifier\": \"A1\",\n      \"students\": [\"637dfab875f042c13c3aa209\"]\n    }],\n    \"moduleLeader\": \"636cf8b4e79b126d6d2989c1\",\n    \"instructors\": [\"636cf8b4e79b126d6d2989c1\"]\n}",
+>>>>>>> 13831d6 (All CHAI tests done)
       "form": []
     },
     "tests": []
@@ -522,6 +530,7 @@
     "tests": []
   },
   {
+<<<<<<< HEAD
     "_id": "a554b736-9363-4049-81fb-bbae78a53083",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
@@ -569,6 +578,8 @@
     "tests": []
   },
   {
+=======
+>>>>>>> 13831d6 (All CHAI tests done)
     "_id": "b6bef16a-04f5-4708-b6a9-8e9b416e10b4",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "870408ec-c098-4f3c-85c1-7bf856026fb5",
@@ -666,6 +677,7 @@
     "tests": []
   },
   {
+<<<<<<< HEAD
     "_id": "c560084d-5ad7-4324-aca4-514faf966094",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "83a72f30-0839-4dcb-9768-658d5c585bb0",
@@ -686,6 +698,9 @@
   },
   {
     "_id": "38e450a6-09c7-44f5-8f4b-ef0f84fbc18d",
+=======
+    "_id": "639570c1-bb9c-4fd4-97a4-366fc36907a2",
+>>>>>>> 13831d6 (All CHAI tests done)
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "870408ec-c098-4f3c-85c1-7bf856026fb5",
     "name": "Delete Module",
@@ -696,6 +711,39 @@
     "modified": "2022-11-23T13:47:31.217Z",
     "headers": [],
     "params": [],
+    "tests": []
+  },
+  {
+    "_id": "b7ae0da2-85d6-4a18-9fbb-20624433efe8",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Find User Attendence",
+    "url": "sessions/GetUserAttendence/637f7ee41033a2dd0c455ac7/636cf6dce79b126d6d2989bd",
+    "method": "GET",
+    "sortNum": 190000,
+    "created": "2022-11-24T14:32:47.344Z",
+    "modified": "2022-11-24T14:42:31.550Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "2153950e-85dd-4f0a-bf8e-2d8b0e4f9fba",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Patch Attendence ",
+    "url": "sessions/PatchUserAttendence/637f7ee41033a2dd0c455ac7/636cf6dce79b126d6d2989bd",
+    "method": "PATCH",
+    "sortNum": 200000,
+    "created": "2022-11-24T14:42:00.532Z",
+    "modified": "2022-11-24T14:42:00.532Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"attendance\" : \"late\"\n}",
+      "form": []
+    },
     "tests": []
   }
 ]
