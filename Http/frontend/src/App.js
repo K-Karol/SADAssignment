@@ -9,6 +9,7 @@ import GenerateCode from './pages/GenerateCode/GenerateCode.jsx';
 import ViewAttendance from './pages/VisualiseAttendance/ViewAttendance.jsx';
 import GenerateReport from './pages/GenerateReport.jsx';
 import RegisterForm from './forms/RegisterForm.jsx';
+import Logout from './pages/Logout.jsx';
 import useToken from './components/useToken';
 // import SideMenu from './components/SideMenu.jsx';
 
@@ -40,11 +41,12 @@ function App() {
   // Components for the different kinds of functionality
   // Visualising, etc. will require more - i.e Graph, etc.
   // props too 
-
+  // in theory could pass in roles from the token
   return (
     <BrowserRouter>
         <div className="App">
           <NavMenu/>
+          
           {/* <Stack direction="column" spacing={2} 
           justifyContent="center"
           alignItems="center"
@@ -59,6 +61,7 @@ function App() {
             <Route path='/generateCode' element={<GenerateCode/>}/>
             <Route path='/viewAttendance' element={<ViewAttendance/>}/>   
             <Route path='/generateReport' element={<GenerateReport/>}/>
+            <Route path='/logout' element={<Logout/>}/>
           </Routes>
         </div>
     </BrowserRouter>

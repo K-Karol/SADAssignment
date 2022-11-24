@@ -2,6 +2,7 @@ import { Button } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { useState} from 'react';
 import styles from './GenerateCode.module.css';
+// REFACTOR to use server-side code generation
 
 function makecode(length) {
     let result ='';

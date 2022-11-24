@@ -12,3 +12,5 @@ export default DBPage;
 // It'll be separated into a 'pages' folder soon along with similar.
 // Then we achieve clear separation of components and pages which is important.
 // As this shows clear project structure and is in line with React principles.
+
+// May be deprecated

@@ -4,6 +4,13 @@ import data from './data.json';
 // import styles from './ViewAttendanceLine.css'
 //         data={data} and import for when needed. Placeholder for now?
 // get the individual student select working
+
+// This will take JSON data from the server
+// not sure which route yet
+// may need to containerise to avoid repeated API requests
+// we'll need to get USERS, their ATTENDANCE, and possibly their COURSE
+// May be too late to use Redux
+
 const Line = () => (
     <ResponsiveLine
         data={data}

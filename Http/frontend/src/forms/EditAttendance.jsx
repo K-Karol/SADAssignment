@@ -11,3 +11,4 @@ export default EditAttendance;
 // extenuating circumstances etc - easy to do with API call
 // could also include change status of session too 
 // with RBAC we limit his edit access
+// get the roles from the token, and that governs what can be done
