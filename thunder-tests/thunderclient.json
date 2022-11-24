@@ -341,11 +341,11 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
     "name": "Get User",
-    "url": "users/resource/6374e1be45f2d92a9b42f80f",
+    "url": "users/resource/637dfab875f042c13c3aa209",
     "method": "GET",
     "sortNum": 40000,
     "created": "2022-11-14T11:15:54.911Z",
-    "modified": "2022-11-16T21:51:40.028Z",
+    "modified": "2022-11-24T16:13:10.075Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -425,12 +425,12 @@
     "method": "POST",
     "sortNum": 90000,
     "created": "2022-11-14T15:12:41.871Z",
-    "modified": "2022-11-19T16:27:11.065Z",
+    "modified": "2022-11-24T14:25:40.223Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"type\" : \"lecture\",\n  \"module\" : \"637903757fe5c01974895fd3\",\n  \"cohortIdentifier\" : \"All\",\n  \"startDateTime\" : \"2022-11-20T11:15\",\n  \"endDateTime\" : \"2022-11-20T12:15\"\n}",
+      "raw": "{\n  \"type\" : \"lecture\",\n  \"module\" : \"637e67c0a2bc984669519555\",\n  \"cohortIdentifier\" : \"A1\",\n  \"startDateTime\" : \"2022-11-20T11:15\",\n  \"endDateTime\" : \"2022-11-20T12:15\"\n}",
       "form": []
     },
     "tests": []
@@ -463,12 +463,12 @@
     "method": "POST",
     "sortNum": 110000,
     "created": "2022-11-14T20:04:17.012Z",
-    "modified": "2022-11-16T20:7T16:38:53.45:35.631Z",
+    "modified": "2022-11-24T14:02:28.329Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"name\" : \"Computer Science\",\n  \"yearOfEntry\" : \"2022\",\n  \"courseLeader\" : \"637546a5e29602143922d0da\",\n  \"modules\" : [\"637533e9fa78e8cb01f8e159\",\"637538a93a381e0ace1db219\"],\n  \"students\" : [\"637537f46e74842534423f11\", \"637537f46e74842534423f13\"]\n  \n}",
+      "raw": "{\n  \"name\" : \"Computer Science\",\n  \"yearOfEntry\" : \"2022\",\n  \"courseLeader\" : \"636cf8b4e79b126d6d2989c1\",\n  \"modules\" : [\"6374e5fa0466431dcce95b8d\",\"637e67c0a2bc984669519555\"],\n  \"students\" : [\"636cf6dce79b126d6d2989bd\", \"636cf6dce79b126d6d2989bd\"]\n  \n}",
       "form": []
     },
     "tests": []
@@ -480,12 +480,12 @@
     "name": "Create Module",
     "url": "modules/resource",
     "method": "POST",
-    "modified": "2022-11-23T18:34:40.963Z",
+    "modified": "2022-11-24T14:10:21.187Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"name\" : \"Awesome Science 245\",\n    \"year\": \"2022\",\n    \"semester\": \"SEM1\",\n    \"students\": [\"6377759ec20dd85de6dc09d1\"],\n    \"cohorts\": [{\n      \"identifier\": \"A1\",\n      \"students\": [\"6377759ec20dd85de6dc09d1\"]\n    }],\n    \"moduleLeader\": \"6377759ec20dd85de6dc09d1\",\n    \"instructors\": [\"6377759ec20dd85de6dc09d1\"]\n}",
+      "raw": "{\n    \"name\" : \"Awesome Science 245\",\n    \"year\": \"2022\",\n    \"semester\": \"SEM1\",\n    \"students\": [\"637dfab875f042c13c3aa209\"],\n    \"cohorts\": [{\n      \"identifier\": \"A1\",\n      \"students\": [\"637dfab875f042c13c3aa209\"]\n    }],\n    \"moduleLeader\": \"636cf8b4e79b126d6d2989c1\",\n    \"instructors\": [\"636cf8b4e79b126d6d2989c1\"]\n}",
       "form": []
     },
     "tests": []
@@ -520,25 +520,6 @@
     "sortNum": 115000,
     "created": "2022-11-16T18:59:3842534423c0d\", \"637537da6e74842534423c19\", \"637537da6e74842534423c1b\", \"637537da6e74842534423c1d\"],\n  \"cohorts\" : [\n    {\n      \"identifier\" : \"group 1\",\n      \"students\" : [\"637537d96e74842534423c0d\", \"637537da6e74842534423c19\"]\n    },\n    {\n      \"identifier\" : \"group 2\",\n      \"students\" : [\"637537da6e74842534423c1b\", \"637537da6e74842534423c1d\"]\n    }\n  ],\n  \"moduleLeader\" : \"6374e1be45f2d92a9b42f80f\",\n  \"instructors\" : [\"6374e1be45f2d92a9b42f80f\"]\n}",
     "form": [],
-    "tests": []
-  },
-  {
-    "_id": "b2381a04-6967-4e05-af5b-6acaba303b44",
-    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
-    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
-    "name": "Update Course",
-    "url": "courses/resource/6376639d45d8afa6bfb9a515",
-    "method": "PUT",
-    "sortNum": 117500,
-    "created": "2022-11-16T19:06:02.904Z",
-    "modified": "2022-11-17T17:01:03.853Z",
-    "headers": [],
-    "params": [],
-    "body": {
-      "type": "json",
-      "raw": "{\n  \"name\" : \"Awesome Science 123123\",\n  \"yearOfEntry\" : \"2019\",\n  \"modules\": [\n      \"63766378136363abb643fae\"\n    ]\n}",
-      "form": []
-    },
     "tests": []
   },
   {
@@ -639,25 +620,6 @@
     "tests": []
   },
   {
-    "_id": "b2381a04-6967-4e05-af5b-6acaba303b44",
-    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
-    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
-    "name": "Patch User Attendence",
-    "url": "sessions/PatchUserAttendence/6374eceadb31e5f26ef6e6e2/636cf6dce79b126d6d2989bd",
-    "method": "PATCH",
-    "sortNum": 130000,
-    "created": "2022-11-17T14:59:55.928Z",
-    "modified": "2022-11-17T15:29:17.414Z",
-    "headers": [],
-    "params": [],
-    "body": {
-      "type": "json",
-      "raw": "{\n  \"attendance\" : \"full\"\n}",
-      "form": []
-    },
-    "tests": []
-  },
-  {
     "_id": "639570c1-bb9c-4fd4-97a4-366fc36907a2",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
@@ -669,6 +631,39 @@
     "modified": "2022-11-23T13:26:56.067Z",
     "headers": [],
     "params": [],
+    "tests": []
+  },
+  {
+    "_id": "b7ae0da2-85d6-4a18-9fbb-20624433efe8",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Find User Attendence",
+    "url": "sessions/GetUserAttendence/637f7ee41033a2dd0c455ac7/636cf6dce79b126d6d2989bd",
+    "method": "GET",
+    "sortNum": 190000,
+    "created": "2022-11-24T14:32:47.344Z",
+    "modified": "2022-11-24T14:42:31.550Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "2153950e-85dd-4f0a-bf8e-2d8b0e4f9fba",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Patch Attendence ",
+    "url": "sessions/PatchUserAttendence/637f7ee41033a2dd0c455ac7/636cf6dce79b126d6d2989bd",
+    "method": "PATCH",
+    "sortNum": 200000,
+    "created": "2022-11-24T14:42:00.532Z",
+    "modified": "2022-11-24T14:42:00.532Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"attendance\" : \"late\"\n}",
+      "form": []
+    },
     "tests": []
   }
 ]
