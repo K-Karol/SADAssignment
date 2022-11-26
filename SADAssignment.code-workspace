@@ -21,14 +21,14 @@
 				"protocol": "inspector",
 			},
 			{
-				"type": "msedge",
+				"type": "chrome",
 				"request": "launch",
 				"name": "Launch Chrome against fronend",
-				"url": "http://localhost",
-				"webRoot": "${workspaceFolder}/Http/frontend/src",
+				"url": "https://localhost",
+				"webRoot": "${workspaceFolder}/Http/frontend",
 				"pathMapping": {
 					"localRoot": "${workspaceFolder}/Http/frontend/src",
-            		"remoteRoot": "app/src"
+            		"remoteRoot": "/app/src"
 				}
 			  }
 		]

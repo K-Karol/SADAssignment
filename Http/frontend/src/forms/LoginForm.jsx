@@ -2,34 +2,66 @@ import { useState } from 'react';
 // import { Formik, Form, Field, ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
 
+import { useSelector, useDispatch } from 'react-redux'
+
 // Will pretty this up with Material in SAD-005 commit.
 // Remove email validation as no longer needed.
 // Replace with validation for usernames
 
 // Take Logout out of here and put it somewhere else
 async function userLogin(credentials) {
-  return fetch(`${window.location.origin}/api/auth/login`, {
+  const request = await fetch(`${window.location.origin}/api/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(credentials)
-  })
-    .then(data => data.json())
+  });
+  return request.json();
 }
-export default function LoginForm({ setToken})
+
+async function getUserDetails(token){
+  const request = await fetch(`${window.location.origin}/api/users/self`, {
+    headers: {
+      Accept: "*/*",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return request.json();
+}
+
+export default function LoginForm()
 {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+
+  const dispatch = useDispatch();
+
   // store token in local storage if it isn't already
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = await userLogin({
+    const response = await userLogin({
       username,
       password
     });
-    setToken(token);
+
+    if(response.Success === true){
+      const userDetails = await getUserDetails(response.Response.token);
+      if(userDetails.Success === true){
+        dispatch({type: "login", payload: {tokenDetails: response.Response, userDetails: userDetails.Response}});
+      } else{
+        //error
+      }
+      
+    } else{
+      //error
+    }
+
+    //setToken(token);
   }
+
+  
 
     return (
         <div>
@@ -50,6 +82,6 @@ export default function LoginForm({ setToken})
         </div>
     )
 }
-LoginForm.propTypes = {
-  setToken: PropTypes.func.isRequired
-}
+// LoginForm.propTypes = {
+//   setToken: PropTypes.func.isRequired
+// }

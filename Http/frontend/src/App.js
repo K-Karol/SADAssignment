@@ -11,21 +11,24 @@ import GenerateReport from './pages/GenerateReport.jsx';
 import RegisterForm from './forms/RegisterForm.jsx';
 import Logout from './pages/Logout.jsx';
 import useToken from './components/useToken';
+import { useSelector } from 'react-redux'
+import {fetchToken} from './store'
 // import SideMenu from './components/SideMenu.jsx';
 
 
 function App() {
   // const [message, setMessage] = useState('');
-  const { token, setToken } = useToken();
+  //const { token, setToken } = useToken();
 /*   useEffect(() => {
     fetch(`${window.location.origin}/api`)
         .then((res) => res.text())
         .then((text) => {setMessage(text); console.log(text); });
   }, []); */
 
+  const isLoggedIn = useSelector(state => state.isLoggedIn); //does not persist refresh
 
-  if(!token) {
-    return <LoginForm setToken={setToken} />
+  if(!isLoggedIn) {
+    return <LoginForm />
   }
 
   // call DB method would go here, fetching from localhost/DB route
