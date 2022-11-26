@@ -13,6 +13,7 @@ import Logout from './pages/Logout.jsx';
 import useToken from './components/useToken';
 import { useSelector } from 'react-redux'
 import {fetchToken} from './store'
+import UserTable from './pages/VisualiseAttendance/UserTable.jsx';
 // import SideMenu from './components/SideMenu.jsx';
 
 
@@ -65,6 +66,8 @@ function App() {
             <Route path='/viewAttendance' element={<ViewAttendance/>}/>   
             <Route path='/generateReport' element={<GenerateReport/>}/>
             <Route path='/logout' element={<Logout/>}/>
+            <Route path='/users' element={<UserTable/>}/>
+
           </Routes>
         </div>
     </BrowserRouter>

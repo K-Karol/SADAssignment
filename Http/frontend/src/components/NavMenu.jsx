@@ -15,9 +15,6 @@ function NavMenu() {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -66,6 +63,11 @@ function NavMenu() {
   <Grid item xs={2} sm={4} md={4}>
     <Link to="/register">
       <Button variant ="contained"> Register</Button>
+    </Link>
+  </Grid>
+  <Grid item xs={2} sm={4} md={4}>
+    <Link to="/users">
+      <Button variant ="contained"> Users</Button>
     </Link>
   </Grid>
 </Grid>]

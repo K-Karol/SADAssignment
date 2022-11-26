@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 export default function Logout() {
     const handleClick = event => {
         // 👇️ toggle shown state
-          sessionStorage.removeItem('token')
+          localStorage.removeItem('token')
           ;
     };
     return(

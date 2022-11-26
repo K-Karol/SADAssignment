@@ -17,7 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 export default function Main() {
   //const [user, setUser] = useState([]);
-  //const tokenString = sessionStorage.getItem('token');
+  //const tokenString = localStorage.getItem('token');
   // const userToken = JSON.parse(tokenString);
 
   const user = useSelector((state) => state.user);
@@ -51,7 +51,7 @@ export default function Main() {
   //console.log(user.username);
   // const handleClick = event => {
   //     // 👇️ toggle shown state
-  //       sessionStorage.removeItem('token', JSON.stringify(userToken));
+  //       localStorage.removeItem('token', JSON.stringify(userToken));
   // };
   return (
     <div>
