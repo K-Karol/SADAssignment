@@ -5,6 +5,10 @@ const initialState = {
     // authenticationTokenDetails: undefined,  // {token: string, expirt: dt}
     user: undefined, 
     users: [],
+    currentPage: 0,
+    pagesAvailable: 0,
+    rowsPerPage: 25,
+    totalRecords: 0,
     roles: []
 }
 
@@ -19,7 +23,14 @@ function reducer(state = initialState, action){
         return {...state, isLoggedIn: true, roles: action.payload.tokenDetails.roles, user: action.payload.userDetails}
     }
     if(action.type === "fetchUsers") {
-        return {...state, isLoggedIn: true, users: action.payload.users}
+        return {...state, users: action.payload.users, pagesAvailable: action.payload.pagesAvailable, totalRecords: action.payload.totalRecords}
+    }
+
+    if(action.type === "updatePage"){
+        if(action.payload.rowsPerPage){
+            return {...state, currentPage: action.payload.newPage, rowsPerPage: action.payload.rowsPerPage}
+        }
+        return {...state, currentPage: action.payload.newPage}
     }
     return state;
 }
