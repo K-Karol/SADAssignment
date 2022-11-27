@@ -17,4 +17,6 @@ FROM builder as prod-builder
 
 #ENV NODE_ENV production
 
+run npm run build
+
 CMD ["npm", "run", "start"]
