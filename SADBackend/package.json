@@ -6,7 +6,8 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts --legacy-watch"
+    "dev": "nodemon src/index.ts --legacy-watch",
+    "test": "mocha --inspect=0.0.0.0:9229 -r ts-node/register 'src/**/*.ts'"
   },
   "keywords": [],
   "author": "",

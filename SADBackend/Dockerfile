@@ -13,10 +13,10 @@ FROM builder as dev-builder
 CMD ["npm", "run", "dev"]
 
 # Production build stage
-FROM builder as prod-builder
+FROM builder as dist-builder
 
 #ENV NODE_ENV production
 
-run npm run build
+RUN npm run build
 
 CMD ["npm", "run", "start"]

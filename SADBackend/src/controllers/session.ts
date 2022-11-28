@@ -51,43 +51,43 @@ export default class SessionController {
               'path': '$cohort.students'
             }
           }, {
-            '$lookup': {
-              'from': 'users',
-              'localField': 'cohort.students.student',
-              'foreignField': '_id',
-              'as': 'cohort.students.student'
-            }
-          }, {
-            '$unwind': {
-              'path': '$cohort.students.student'
-            }
-          }, {
-            '$group': {
-              '_id': '$_id',
-              'students': {
-                '$push': '$cohort.students'
-              }
-            }
-          }, {
-            '$lookup': {
-              'from': 'sessions',
-              'localField': '_id',
-              'foreignField': '_id',
-              'as': 'sessionDetails'
-            }
-          }, {
-            '$unwind': {
-              'path': '$sessionDetails'
-            }
-          }, {
-            '$addFields': {
-              'sessionDetails.cohort.students': '$students'
-            }
-          }, {
-            '$replaceRoot': {
-              'newRoot': '$sessionDetails'
+          '$lookup': {
+            'from': 'users',
+            'localField': 'cohort.students.student',
+            'foreignField': '_id',
+            'as': 'cohort.students.student'
+          }
+        }, {
+          '$unwind': {
+            'path': '$cohort.students.student'
+          }
+        }, {
+          '$group': {
+            '_id': '$_id',
+            'students': {
+              '$push': '$cohort.students'
             }
           }
+        }, {
+          '$lookup': {
+            'from': 'sessions',
+            'localField': '_id',
+            'foreignField': '_id',
+            'as': 'sessionDetails'
+          }
+        }, {
+          '$unwind': {
+            'path': '$sessionDetails'
+          }
+        }, {
+          '$addFields': {
+            'sessionDetails.cohort.students': '$students'
+          }
+        }, {
+          '$replaceRoot': {
+            'newRoot': '$sessionDetails'
+          }
+        }
         );
 
         UserGenerateBaseExcludes("cohort.students.student.").forEach((element) => {
@@ -95,23 +95,23 @@ export default class SessionController {
         });
       }
 
-      if(reqQuery.joinModules){
+      if (reqQuery.joinModules) {
         aggregate_options.push({
-            '$lookup': {
-              'from': 'modules', 
-              'localField': 'module', 
-              'foreignField': '_id', 
-              'as': 'module'
-            }
-          }, {
-            '$set': {
-              'module': {
-                '$arrayElemAt': [
-                  '$module', 0
-                ]
-              }
+          '$lookup': {
+            'from': 'modules',
+            'localField': 'module',
+            'foreignField': '_id',
+            'as': 'module'
+          }
+        }, {
+          '$set': {
+            'module': {
+              '$arrayElemAt': [
+                '$module', 0
+              ]
             }
           }
+        }
         );
       }
 
@@ -121,13 +121,13 @@ export default class SessionController {
 
       const myAggregate = SessionPaginate.aggregate(aggregate_options);
       SessionPaginate.aggregatePaginate(myAggregate, options)
-          .then((result) =>
-              res.status(200).json(GenerateAPIResult(true, result))
-          )
-          .catch((err) => {
-              console.log(err);
-              next(new HttpException(500, "Failed to fetch sessions", undefined, err));
-          });
+        .then((result) =>
+          res.status(200).json(GenerateAPIResult(true, result))
+        )
+        .catch((err) => {
+          console.log(err);
+          next(new HttpException(500, "Failed to fetch sessions", undefined, err));
+        });
 
 
     } catch (err) {
@@ -334,63 +334,64 @@ export default class SessionController {
 
   public DeleteSession = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const params: GetSessionByID_ControllerStage = plainToInstance(GetSessionByID_ControllerStage, (req as any)["params"], {});
-  
-        const deleteRes = await Session.deleteOne({ _id: params.sessionID });
-  
-        if (deleteRes.deletedCount != 1) throw new HttpException(400, "Failed to delete");
-  
-        res.status(200).json(GenerateAPIResult(true, "Deleted", undefined));
-  
-      } catch (err) {
-        next(err);
-      }
-};
+      const params: GetSessionByID_ControllerStage = plainToInstance(GetSessionByID_ControllerStage, (req as any)["params"], {});
 
-public GetSession = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    var params: GetSessionByID_ControllerStage = plainToInstance(GetSessionByID_ControllerStage, (req as any)["params"], {});
+      const deleteRes = await Session.deleteOne({ _id: params.sessionID });
 
-    const session = await Session.findById(
-      params.sessionID,
-    );
+      if (deleteRes.deletedCount != 1) throw new HttpException(400, "Failed to delete");
 
-    if (!session) throw new HttpException(400, "Session not found");
+      res.status(200).json(GenerateAPIResult(true, "Deleted", undefined));
 
-    res.status(200).json(GenerateAPIResult(true, session, undefined));
-
-  } catch (err) {
-    next(err);
-  }
-};
-
-public UpdateSession = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const putRequest: SessionPutRequest_ControllerStage = plainToInstance(SessionPutRequest_ControllerStage, req.body, {});
-    const params: GetSessionByID_ControllerStage = plainToInstance(GetSessionByID_ControllerStage, (req as any)["params"], {});
-
-    if ((putRequest.type == undefined) && (putRequest.module == undefined) && (putRequest.cohort == undefined) && (putRequest.startDateTime == undefined) && (putRequest.endDateTime == undefined)) {
-      throw new HttpException(400, "Put request contains no data to update");
+    } catch (err) {
+      next(err);
     }
+  };
 
-    var deltaObj = RemoveUndefinedFieldsRoot(putRequest);
+  public GetSession = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      var params: GetSessionByID_ControllerStage = plainToInstance(GetSessionByID_ControllerStage, (req as any)["params"], {});
 
-    //check if id exists so failure can be 500?
+      const session = await Session.findById(
+        params.sessionID,
+      );
 
-    const updateRes = await Session.updateOne({ _id: params.sessionID }, deltaObj);
+      if (!session) throw new HttpException(400, "Session not found");
 
-    if (updateRes.modifiedCount != 1) throw new HttpException(400, "Failed to update");
+      res.status(200).json(GenerateAPIResult(true, session, undefined));
+
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  public UpdateSession = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const putRequest: SessionPutRequest_ControllerStage = plainToInstance(SessionPutRequest_ControllerStage, req.body, {});
+      const params: GetSessionByID_ControllerStage = plainToInstance(GetSessionByID_ControllerStage, (req as any)["params"], {});
+
+      if ((putRequest.type == undefined) && (putRequest.module == undefined) && (putRequest.cohort == undefined) && (putRequest.startDateTime == undefined) && (putRequest.endDateTime == undefined)) {
+        throw new HttpException(400, "Put request contains no data to update");
+      }
+
+      var deltaObj = RemoveUndefinedFieldsRoot(putRequest);
+
+      //check if id exists so failure can be 500?
+
+      const updateRes = await Session.updateOne({ _id: params.sessionID }, deltaObj);
+
+      if (updateRes.modifiedCount != 1) throw new HttpException(400, "Failed to update");
 
 
-    const newSession= await Session.findById(params.sessionID);
-    if (!newSession) throw new HttpException(400, "Failed to find Session and/or update");
+      const newSession = await Session.findById(params.sessionID);
+      if (!newSession) throw new HttpException(400, "Failed to find Session and/or update");
 
-    res.status(200).json(GenerateAPIResult(true, newSession, undefined));
+      res.status(200).json(GenerateAPIResult(true, newSession, undefined));
 
 
-  }
-  catch (err) {
-    next(err);
+    }
+    catch (err) {
+      next(err);
+    }
   }
 };
 }
