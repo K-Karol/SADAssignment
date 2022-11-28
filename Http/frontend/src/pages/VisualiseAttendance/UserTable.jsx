@@ -110,7 +110,7 @@ export default function UserTable() {
               <TableRow
                 key={row.username}
                 /* ${n}  - this is how we'd specify individual viewAttendance pages should it be necessary (pass in relevant props)*/ 
-                component={Link} to={`/viewAttendance`}
+                component={Link} to= "/viewAttendance" state = { {row} }
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="div" scope="row">

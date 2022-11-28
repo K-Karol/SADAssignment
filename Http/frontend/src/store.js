@@ -9,7 +9,8 @@ const initialState = {
     pagesAvailable: 0,
     rowsPerPage: 25,
     totalRecords: 0,
-    roles: []
+    roles: [],
+    sessions:[]
 }
 
 
@@ -30,6 +31,9 @@ function reducer(state = initialState, action){
             return {...state, currentPage: action.payload.newPage, rowsPerPage: action.payload.rowsPerPage}
         }
         return {...state, currentPage: action.payload.newPage}
+    }
+    if(action.type === "fetchSessions"){
+        return {...state, sessions: action.payload.sessions}
     }
     return state;
 }
