@@ -23,7 +23,7 @@ The system is orchestrated using **Docker** and **Docker Compose**. All relevant
 * Docker
   * *Requires WSL on Windows*
 * Repository cloned locally
-* `.env` file configured in the `/NodeJS/` directory
+* `.env` file configured in the `/SADBackend/` directory
 
 ### .env file
 
@@ -35,21 +35,90 @@ Below is an example:
 PORT=5000
 DATABASE_URL=mongodb://mongodb:27017/saddb
 SECRET=<YOUR SECRET HERE>
-CORS_ORIGIN=https://localhost
+CORS_ORIGIN=*
 ADMIN_APIKEY=<API KEY HERE>
 ```
 
-The `PORT`, `DATABASE_URL` and `CORS_ORIGIN` should remain as they are since Docker-Compose is configured that way.
+The `PORT`, `DATABASE_URL` and `CORS_ORIGIN` should remain as they are since Docker-Compose is configured that way. For production, `CORS_ORIGIN` should match the DNS of the website.
 
 The `SECRET` and `ADMIN_APIKEY` can be literally anything. The `ADMIN_APIKEY` is then entered into the Blazor Admin Panel so the panel can access admin endpoints.
 
 ### Commands
 
-In the root of the repository, run `docker-compose up --build`. This will proceed to pull all images required and start to build all of the containers. Once built, they are ran and the terminal used will start to display all logs from all containers.
+* `docker-compose build` will build all of the containers
+* `docker-compose up` will deploy all of the containers
+  * Use the argument `--build` to skip running `docker-compose build`
+* `docker-compose down` to take down all containers
+  * Use the argument `--volumes` to remove all data that was generated.
 
-Pressing `Ctrl+C` on Windows will gracefully stop the containers. The containers will be stopped but will still exist.
+### Environment configuration
 
-To take down the containers, you may run `docker-compose down`. If you want to clear all of the volumes which contain persistant data (like the **MongoDb** data), run `docker-compose down --volumes`. This will clear all volumes that were created.
+The base `docker-compose.yml` file is used for **production**. The repository contains a `docker-compose.override.yml` which applies overrides to the base file that will provide a **development** environment. This override file is automatically applied when running `docker-compose` such as `docker-compose up --build`. To run the solution for production, you would either get rid of the override file, or specify the configuration file for each `docker-compose` command using the `-f / --file` argument.
+
+For example, to run the solution in production without deleting the override file, simple run:
+
+> `docker-compose -f docker-compose.yml up --build`
+
+This will build and run the containers in production mode.
+
+Alternatively there is an **admin** environment which is based of production with the difference being the enabled Blazor admin panel and backend admin endpoint. Example command:
+
+> `docker-compose -f docker-compose.yml -f docker-compose.admin.yml up --build`
+
+
+#### Environments
+
+##### Production
+
+Containers:
+
+* sad-backend
+  * Environment variables: `ENV=PROD`
+  * Runs build
+* nginx
+  * Environment variables: `ENV=PROD`
+  * Builds frontend
+* mongodb
+
+Nginx configuration:
+
+* Serves SPA dist files
+* Routes to backend API
+
+##### DEVELOPMENT
+
+Containers:
+
+* sad-backend
+  * Environment variables: `ENV=DEV`
+  * Backend will allow the Admin Route
+  * Swagger is enabled
+  * Runs backend in 'dev' mode (watch; hot reload; debug)
+* nginx
+  * Environment variables: `ENV=DEV`
+  * Does not build the frontend SPA
+  * Builds Blazor Admin Panel
+* frontend
+  * Runs frontend in 'dev' mode (watch; hot reload; debug)
+* mongodb
+* mongo-express
+  * Provides MongoDb GUI
+
+Nginx configuration:
+
+* Routes to frontend development server
+* Routes to backend API
+* Routes to MongoDb stream
+* Serves Admin panel area (protected by basic auth)
+
+##### ADMIN
+
+Changes in regards to **Production**
+
+* `ENV=ADMIN`
+  * Backend will allow the Admin Route
+* *nginx* container builds Blazor Admin Panel
+* *nginx* is configured to serve the admin panel area
 
 ### Potential errors
 
@@ -61,9 +130,7 @@ To free up resources (Windows), close down Docker Desktop and then run the comma
 
 `wsl --shutdown`
 
-If you want to develop with Docker again, you need to start wsl again by running:
-
-`wsl`
+If you want to develop with Docker again, just start up the Docker Desktop client again.
 
 ## Docker Compose configuration
 

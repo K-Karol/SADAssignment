@@ -1,0 +1,6 @@
+frontend/build
+frontend/node_modules
+BlazorAdminPanel/.vs
+BlazorAdminPanel/bin
+BlazorAdminPanel/obj
+BlazorAdminPanel/BlazorAdminPanel.csproj.user
