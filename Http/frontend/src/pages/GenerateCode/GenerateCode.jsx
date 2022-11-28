@@ -1,62 +1,68 @@
-import { Button } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
-import { useState} from 'react';
-import styles from './GenerateCode.module.css';
-// REFACTOR to use server-side code generation
+import { Button } from "@mui/material";
+import { useState } from "react";
+import { fetchToken } from "../../store";
 
-function makecode(length) {
-    let result ='';
-    let characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let charactersLength = characters.length;
-    for ( let i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+export default function GenerateCode() {
+  const [code, setCode] = useState("");
+  const [isShown, setIsShown] = useState(false);
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${fetchToken().token}`,
+    },
+    body: JSON.stringify({ // TODO: This body needs to be changed (potentially passed in to this function)
+      type: "lecture",
+      module: "63837a704a7208be7665db7a", 
+      cohortIdentifier: "All",
+      startDateTime: "2022-11-24T20:08:53+0000",
+      endDateTime: "2022-11-24T20:11:53+0000",
+    }),
+  };
+
+  const createSessionAndCode = async () => {
+    var newSessionRequest = await fetch(
+      `${window.location.origin}/api/sessions/resource`,
+      requestOptions
+    );
+    var newSession = await newSessionRequest.json();
+
+    if (newSession.Success) {
+      var sessionCode = newSession.Response;
+      var newActiveSessionRequest = await fetch(
+        `${window.location.origin}/api/activeSessions/GenerateNewActiveSession/${sessionCode}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${fetchToken().token}`,
+          },
+        }
+      );
+      var codeBody = await newActiveSessionRequest.json();
+      if (codeBody.Success) {
+        return codeBody.Response.code;
+      }
+    } else {
+      return "Failed to get code";
     }
-    return result;
+  };
+
+  const handleClick = async (event) => {
+    var c = await createSessionAndCode();
+    setCode(c);
+    setIsShown(true);
+  };
+
+  return (
+    <div className="GenerateCode">
+      <h1> Generate your random code here.</h1>
+      <Button color="secondary" variant="contained" onClick={handleClick}>
+        {" "}
+        Generate Code
+      </Button>
+      {isShown && <h1 style={{ fontSize: "9rem" }}>{code}</h1>}
+    </div>
+  );
 }
-
-const theme = createTheme({
-  status: {
-    danger: '#e53e3e',
-  },
-  palette: {
-    primary: {
-      main: '#0971f1',
-      darker: '#000000',
-    },
-    neutral: {
-      main: '#64748B',
-      contrastText: '#fff',
-    },
-  },
-});
-
-const randomCode = makecode(8);
-// this will obviously be alphanumeric and possibly generated server-side
-// either way it's calm
-// style={{ fontSize: "9rem", color: 'blue'}}
-// Grid it for full responsiveness
-
-const GenerateCode = () => {
-    const [isShown, setIsShown] = useState(false);
-
-    const handleClick = event => {
-  // 👇️ toggle shown state
-    setIsShown(current => !current);
-    };
-
-    return (
-        <div className="GenerateCode">
-            <h1> Generate your random code here.</h1>
-            <Button color="secondary" variant ="contained" onClick={handleClick}
-            > Generate Code</Button>
-            {isShown && (
-                <div className="shadowBox">
-                    <h1 style={{ fontSize: "9rem"}} className={styles.rainbow_text_animated}>{randomCode}</h1>
-                </div>
-            )}
-
-        </div>
-
-    )
-}
-export default GenerateCode;

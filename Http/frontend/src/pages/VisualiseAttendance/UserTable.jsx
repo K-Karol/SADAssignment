@@ -42,7 +42,7 @@ export default function UserTable() {
             users: data.Response.users,
             pagesAvailable: data.Response.totalPages,
             totalRecords: data.Response.totalResults,
-          },
+          }
         });
       })
       .catch((err) => {

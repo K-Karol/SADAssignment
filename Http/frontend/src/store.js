@@ -25,7 +25,6 @@ function reducer(state = initialState, action){
     if(action.type === "fetchUsers") {
         return {...state, users: action.payload.users, pagesAvailable: action.payload.pagesAvailable, totalRecords: action.payload.totalRecords}
     }
-
     if(action.type === "updatePage"){
         if(action.payload.rowsPerPage){
             return {...state, currentPage: action.payload.newPage, rowsPerPage: action.payload.rowsPerPage}
