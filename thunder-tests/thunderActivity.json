@@ -12,5 +12,19 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "f0040391-a896-434e-9f27-7df16aac882d",
+    "colId": "history",
+    "containerId": "",
+    "name": "https://www.thunderclient.com/welcome",
+    "url": "https://www.thunderclient.com/welcome",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-11-23T18:32:10.610Z",
+    "modified": "2022-11-23T18:32:10.610Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]
