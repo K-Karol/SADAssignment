@@ -369,7 +369,7 @@ public UpdateSession = async (req: Request, res: Response, next: NextFunction) =
     const putRequest: SessionPutRequest_ControllerStage = plainToInstance(SessionPutRequest_ControllerStage, req.body, {});
     const params: GetSessionByID_ControllerStage = plainToInstance(GetSessionByID_ControllerStage, (req as any)["params"], {});
 
-    if ((putRequest.type) == undefined && (putRequest.module == undefined) && (putRequest.cohortIdentifier == undefined) && (putRequest.startDateTime == undefined) && (putRequest.endDateTime == undefined)) {
+    if ((putRequest.type == undefined) && (putRequest.module == undefined) && (putRequest.cohort == undefined) && (putRequest.startDateTime == undefined) && (putRequest.endDateTime == undefined)) {
       throw new HttpException(400, "Put request contains no data to update");
     }
 

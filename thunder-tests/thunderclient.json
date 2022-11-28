@@ -812,18 +812,32 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
     "name": "Update Session",
-    "url": "sessions/resource/637e82b3dd5f70eded40af28",
+    "url": "sessions/resource/6383938aa29553d4f368b97e",
     "method": "PUT",
     "sortNum": 260000,
     "created": "2022-11-23T20:21:09.812Z",
-    "modified": "2022-11-23T20:53:44.999Z",
+    "modified": "2022-11-28T14:41:02.921Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"type\" : \"seminar\",\n  \"module\" : \"637e5edd0745e72469a92d3e\",\n  \"cohort\": [\n        {\n            \"identifier\" : \"2\",\n            \"students\" : [\n                \"636e720ce404fad7cacacf95\"\n            ],\n            \"attendance\" : \"late\"\n        }\n    ],\n  \"startDateTime\" : \"2022-11-20T12:15\",\n  \"endDateTime\" : \"2022-11-20T13:15\"\n}",
+      "raw": "{\n  \"type\": \"seminar\",\n  \"cohort\": {\n    \"identifier\": \"All\",\n    \"students\": [\n      {\n        \"student\": \"638357cdf850b555be712972\",\n        \"attendance\": \"full\",\n        \"_id\": \"6383938aa29553d4f368b97f\"\n      },\n      {\n        \"student\": \"638357cdf850b555be712974\",\n        \"attendance\": \"not\",\n        \"_id\": \"6383938aa29553d4f368b980\"\n      }\n    ]\n  },\n  \"startDateTime\": \"2022-11-24T20:08:53.000Z\",\n  \"endDateTime\": \"2022-11-24T20:11:53.000Z\"\n}",
       "form": []
     },
+    "tests": []
+  },
+  {
+    "_id": "4de55f7e-b748-43ad-be7a-2f4638da1d61",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Get Sessions",
+    "url": "sessions/resource",
+    "method": "GET",
+    "sortNum": 270000,
+    "created": "2022-11-28T14:39:05.788Z",
+    "modified": "2022-11-28T14:39:10.970Z",
+    "headers": [],
+    "params": [],
     "tests": []
   }
 ]
