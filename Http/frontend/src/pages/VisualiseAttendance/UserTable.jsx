@@ -11,6 +11,8 @@ import {
   TablePagination,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+
 import { fetchToken } from "../../store";
 
 export default function UserTable() {
@@ -66,7 +68,7 @@ export default function UserTable() {
       {/* <h1> {userArray[0].username} </h1>
             <h1> {userArray[0].fullname.firstname} </h1> */}
 
-      <TableContainer component={Paper}>
+      <TableContainer component="div">
         <TablePagination
           component="div"
           count={totalRecords}
@@ -75,8 +77,8 @@ export default function UserTable() {
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table" component='div'>
+          <TableHead component='div'>
             {/* to be reinstated with the foreach loop
           {headCells.map((headCell)=> (
             <TableRow
@@ -93,29 +95,31 @@ export default function UserTable() {
             </TableRow>
 
           ))} */}
-            <TableRow>
-              <TableCell>Username</TableCell>
+            <TableRow component='div'>
+              <TableCell component='div'>Username</TableCell>
               {/*             We'll pass in clickability by using component={Link} on TableRow for each user
                */}{" "}
-              <TableCell align="right">First Name</TableCell>
-              <TableCell align="right">Middle Names</TableCell>
-              <TableCell align="right">Last Name</TableCell>
-              <TableCell align="right">Student ID</TableCell>
+              <TableCell component='div' align="right">First Name</TableCell>
+              <TableCell component='div' align="right">Middle Names</TableCell>
+              <TableCell component='div' align="right">Last Name</TableCell>
+              <TableCell component='div' align="right">Student ID</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody component='div'>
             {userArray.map((row) => (
               <TableRow
                 key={row.username}
+                /* ${n}  - this is how we'd specify individual viewAttendance pages should it be necessary (pass in relevant props)*/ 
+                component={Link} to={`/viewAttendance`}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
+                <TableCell component="div" scope="row">
                   {row.username}
                 </TableCell>
-                <TableCell align="right">{row.fullname.firstname}</TableCell>
-                <TableCell align="right">{row.fullname.middlenames}</TableCell>
-                <TableCell align="right">{row.fullname.lastname}</TableCell>
-                <TableCell align="right">{row._id}</TableCell>
+                <TableCell component='div' align="right">{row.fullname.firstname}</TableCell>
+                <TableCell component='div' align="right">{row.fullname.middlenames}</TableCell>
+                <TableCell component='div' align="right">{row.fullname.lastname}</TableCell>
+                <TableCell component='div' align="right">{row._id}</TableCell>
               </TableRow>
             ))}
           </TableBody>
