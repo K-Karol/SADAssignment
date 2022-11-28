@@ -103,6 +103,11 @@ export class GetSessionsQueryBody{
     @IsBoolean()
     @IsOptional()
     joinModules?: boolean;
+
+    
+    @IsBoolean()
+    @IsOptional()
+    joinActiveSessions?: boolean;
 }
 
 export class UpdateStudentAttendanceBody{

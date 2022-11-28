@@ -16,12 +16,11 @@
     "data": [
       {
         "name": "access-token",
-        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiI2MzZjZjZkY2U3OWIxMjZkNmQyOTg5YmQiLCJpYXQiOjE2NjkzMDYzNjQsImV4cCI6MTY2OTMxMzU2NH0.ebMbMfA_-q4bYprVLdaZxTPyVXFourRQDx_lNAT0Enw"
->>>>>>> 13831d6 (All CHAI tests done)
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiI2Mzg0ZjBjMjg5MGFhZWRmZjM5NzliYzUiLCJpYXQiOjE2Njk2Njc3MjAsImV4cCI6MTY2OTY3NDkyMH0.2TYpVwist8cGTP9AVPkw1T1zJySfcRyRJHz33jVcSa0"
       },
       {
         "name": "apikey",
-        "value": "9089c7b7-45f0-4a79-ba6e-38804ee61930"
+        "value": ""
       },
       {
         "name": "username",
