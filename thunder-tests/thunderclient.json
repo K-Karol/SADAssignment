@@ -425,12 +425,12 @@
     "method": "POST",
     "sortNum": 90000,
     "created": "2022-11-14T15:12:41.871Z",
-    "modified": "2022-11-24T14:25:40.223Z",
+    "modified": "2022-11-23T20:27:56.674Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"type\" : \"lecture\",\n  \"module\" : \"637e67c0a2bc984669519555\",\n  \"cohortIdentifier\" : \"A1\",\n  \"startDateTime\" : \"2022-11-20T11:15\",\n  \"endDateTime\" : \"2022-11-20T12:15\"\n}",
+      "raw": "{\n  \"type\" : \"lecture\",\n  \"module\" : \"637e5edd0745e72469a92d3e\",\n  \"cohortIdentifier\" : \"1\",\n  \"startDateTime\" : \"2022-11-20T11:15\",\n  \"endDateTime\" : \"2022-11-20T12:15\"\n}",
       "form": []
     },
     "tests": []
@@ -480,12 +480,12 @@
     "name": "Create Module",
     "url": "modules/resource",
     "method": "POST",
-    "modified": "2022-11-24T14:10:21.187Z",
+    "modified": "2022-11-23T17:56:45.229Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n    \"name\" : \"Awesome Science 245\",\n    \"year\": \"2022\",\n    \"semester\": \"SEM1\",\n    \"students\": [\"637dfab875f042c13c3aa209\"],\n    \"cohorts\": [{\n      \"identifier\": \"A1\",\n      \"students\": [\"637dfab875f042c13c3aa209\"]\n    }],\n    \"moduleLeader\": \"636cf8b4e79b126d6d2989c1\",\n    \"instructors\": [\"636cf8b4e79b126d6d2989c1\"]\n}",
+      "raw": "{\n  \"name\" : \"Awesome Science 24\",\n  \"year\" : \"2022\",\n  \"semester\" : \"1\",\n  \"students\" : [\"636e720ce404fad7cacacf91\"],\n  \"cohorts\" : [{\n    \"identifier\": \"1\",\n    \"students\": [\"636e720ce404fad7cacacf91\"]\n  }],\n  \"moduleLeader\" : \"636e720ce404fad7cacacf93\",\n  \"instructors\" : [\"636e720ce404fad7cacacf93\"]\n}",
       "form": []
     },
     "tests": []
@@ -664,6 +664,100 @@
       "raw": "{\n  \"attendance\" : \"late\"\n}",
       "form": []
     },
+    "tests": []
+  },
+  {
+    "_id": "3ad4786e-bbea-4ca6-b209-de3963bb7b94",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Delete Session",
+    "url": "sessions/resource/637e40862a32ce56f32ea7df",
+    "method": "DELETE",
+    "sortNum": 210000,
+    "created": "2022-11-23T15:46:46.612Z",
+    "modified": "2022-11-23T15:47:26.090Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "965897ee-ed6f-411f-8cb3-2a8f95170d8a",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "870408ec-c098-4f3c-85c1-7bf856026fb5",
+    "name": "Update Module",
+    "url": "modules/resource/637e5edd0745e72469a92d3e",
+    "method": "PUT",
+    "sortNum": 230000,
+    "created": "2022-11-23T17:40:06.036Z",
+    "modified": "2022-11-23T17:58:04.233Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"name\" : \"Awesome Science 23\",\n  \"year\" : \"2023\",\n  \"semester\" : \"2\",\n  \"students\" : [\"636e720ce404fad7cacacf95\"],\n  \"cohorts\" : [{\n    \"identifier\": \"2\",\n    \"students\": [\"636e720ce404fad7cacacf95\"]\n  }],\n  \"moduleLeader\" : \"636e720ce404fad7cacacf97\",\n  \"instructors\" : [\"636e720ce404fad7cacacf97\"]\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "fbfdbce9-40db-4b04-988a-38663e63edd2",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "870408ec-c098-4f3c-85c1-7bf856026fb5",
+    "name": "Get Module",
+    "url": "modules/resource/637e5edd0745e72469a92d3e",
+    "method": "GET",
+    "sortNum": 240000,
+    "created": "2022-11-23T18:00:13.269Z",
+    "modified": "2022-11-23T18:02:30.079Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "096c209e-914e-4413-869c-ddc367cc6e57",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Get Session",
+    "url": "sessions/resource/637e82b3dd5f70eded40af28",
+    "method": "GET",
+    "sortNum": 250000,
+    "created": "2022-11-23T20:20:10.334Z",
+    "modified": "2022-11-23T20:37:02.397Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "eed4b0c0-b68a-4726-aa82-dfa14ecfd8e2",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Update Session",
+    "url": "sessions/resource/6383938aa29553d4f368b97e",
+    "method": "PUT",
+    "sortNum": 260000,
+    "created": "2022-11-23T20:21:09.812Z",
+    "modified": "2022-11-28T14:41:02.921Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"type\": \"seminar\",\n  \"cohort\": {\n    \"identifier\": \"All\",\n    \"students\": [\n      {\n        \"student\": \"638357cdf850b555be712972\",\n        \"attendance\": \"full\",\n        \"_id\": \"6383938aa29553d4f368b97f\"\n      },\n      {\n        \"student\": \"638357cdf850b555be712974\",\n        \"attendance\": \"not\",\n        \"_id\": \"6383938aa29553d4f368b980\"\n      }\n    ]\n  },\n  \"startDateTime\": \"2022-11-24T20:08:53.000Z\",\n  \"endDateTime\": \"2022-11-24T20:11:53.000Z\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "4de55f7e-b748-43ad-be7a-2f4638da1d61",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Get Sessions",
+    "url": "sessions/resource",
+    "method": "GET",
+    "sortNum": 270000,
+    "created": "2022-11-28T14:39:05.788Z",
+    "modified": "2022-11-28T14:39:10.970Z",
+    "headers": [],
+    "params": [],
     "tests": []
   }
 ]

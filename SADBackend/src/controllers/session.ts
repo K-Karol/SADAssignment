@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import mongoose, { AggregatePaginateModel, isValidObjectId, model, Schema, Types } from "mongoose";
-import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } from "../helpers";
-import { GetSessionForStudentBody, GetSessionForStudentParams_ControllerStage, GetSessionForStudentParams_ValidationStage, GetSessionsQuery, SessionPostRequest_ControllerStage, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody, GetAttendenceForSessionParams, GetSessionsQueryBody } from "../validation/session";
+import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException, RemoveUndefinedFieldsRoot } from "../helpers";
+import { GetSessionForStudentBody, GetSessionForStudentParams_ControllerStage, GetSessionForStudentParams_ValidationStage, GetSessionsQuery, SessionPostRequest_ControllerStage, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody, GetAttendenceForSessionParams, GetSessionsQueryBody, GetSessionByID_ControllerStage, SessionPutRequest_ControllerStage } from "../validation/session";
 import { Module } from "../models/module";
 import { ICohortWithAttendance, ISession, IStudentWithAttendance } from "../interfaces/session";
 import { Session, SessionPaginate } from "../models/session";
@@ -330,24 +330,66 @@ export default class SessionController {
     } catch (err) {
       next(err);
     }
-  }
+  };
 
   public DeleteSession = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const params: GetAttendenceForSessionParams = (req as any)["params"];
-      if (!isValidObjectId(params.sessionID)) {
-        throw new HttpException(400, "ID is not in the valid format");
+        const params: GetSessionByID_ControllerStage = plainToInstance(GetSessionByID_ControllerStage, (req as any)["params"], {});
+  
+        const deleteRes = await Session.deleteOne({ _id: params.sessionID });
+  
+        if (deleteRes.deletedCount != 1) throw new HttpException(400, "Failed to delete");
+  
+        res.status(200).json(GenerateAPIResult(true, "Deleted", undefined));
+  
+      } catch (err) {
+        next(err);
       }
+};
 
-      //check if id exists so failure can be 500?
-      const deleteRes = await Session.deleteOne({ _id: params.sessionID });
+public GetSession = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    var params: GetSessionByID_ControllerStage = plainToInstance(GetSessionByID_ControllerStage, (req as any)["params"], {});
 
-      if (deleteRes.deletedCount != 1) throw new HttpException(400, "Failed to delete");
+    const session = await Session.findById(
+      params.sessionID,
+    );
 
-      res.status(200).json(GenerateAPIResult(true, "Deleted", undefined));
+    if (!session) throw new HttpException(400, "Session not found");
 
-    } catch (err) {
-      next(err);
+    res.status(200).json(GenerateAPIResult(true, session, undefined));
+
+  } catch (err) {
+    next(err);
+  }
+};
+
+public UpdateSession = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const putRequest: SessionPutRequest_ControllerStage = plainToInstance(SessionPutRequest_ControllerStage, req.body, {});
+    const params: GetSessionByID_ControllerStage = plainToInstance(GetSessionByID_ControllerStage, (req as any)["params"], {});
+
+    if ((putRequest.type == undefined) && (putRequest.module == undefined) && (putRequest.cohort == undefined) && (putRequest.startDateTime == undefined) && (putRequest.endDateTime == undefined)) {
+      throw new HttpException(400, "Put request contains no data to update");
     }
-  };
+
+    var deltaObj = RemoveUndefinedFieldsRoot(putRequest);
+
+    //check if id exists so failure can be 500?
+
+    const updateRes = await Session.updateOne({ _id: params.sessionID }, deltaObj);
+
+    if (updateRes.modifiedCount != 1) throw new HttpException(400, "Failed to update");
+
+
+    const newSession= await Session.findById(params.sessionID);
+    if (!newSession) throw new HttpException(400, "Failed to find Session and/or update");
+
+    res.status(200).json(GenerateAPIResult(true, newSession, undefined));
+
+
+  }
+  catch (err) {
+    next(err);
+  }
 }
