@@ -35,7 +35,12 @@ dotenv.config();
 const log: Logger = new Logger({ name: "Index" });
 
 const app: Express = express();
-const routes: IRoute[] = [new AuthRoute(), new AdminRoute(), new UserRoute(), new CourseRoute(), new SessionRoute(), new ModuleRoute(), new ActiveSessionRoute()];
+const routes: IRoute[] = [new AuthRoute(), new UserRoute(), new CourseRoute(), new SessionRoute(), new ModuleRoute(), new ActiveSessionRoute()];
+
+if(process.env.ENV === "DEV" || process.env.ENV === "ADMIN"){
+  routes.push(new AdminRoute());
+}
+
 //a
 const {PORT = 5000, CORS_ORIGIN="https://localhost"} = process.env
 const db: Database = new Database();
@@ -60,21 +65,24 @@ app.get("/api", (req, res) => {res.send("Root of the API")})
 
 app.use(ErrorHandler);
 
-const swaggerOptions = {
-  failOnErrors: true, // Whether or not to throw when parsing errors. Defaults to false.
-  definition: {
-    openapi: '3.0.2',
-    info: {
-      title: 'SADBackend REST API',
-      description: "NodeJS + TypeScript API for the SAD Attendance System.",
-      version: '1.0.0',
+if(process.env.ENV === "DEV"){
+  const swaggerOptions = {
+    failOnErrors: true, // Whether or not to throw when parsing errors. Defaults to false.
+    definition: {
+      openapi: '3.0.2',
+      info: {
+        title: 'SADBackend REST API',
+        description: "NodeJS + TypeScript API for the SAD Attendance System.",
+        version: '1.0.0',
+      },
     },
-  },
-  apis: ['swagger.yaml'],
-};
+    apis: ['swagger.yaml'],
+  };
+  
+  const specs = swaggerJSDoc(swaggerOptions);
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(specs));
+}
 
-const specs = swaggerJSDoc(swaggerOptions);
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.listen(PORT, () => log.info("Server is up and running"));
 

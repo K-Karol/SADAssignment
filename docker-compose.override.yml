@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  sad-backend:
+    build:
+      context: SADBackend/.
+      target: dev-builder
+      dockerfile: Dockerfile
+    ports:
+      - "9229:9229"
+    volumes:
+      - ./SADBackend/src:/app/src
+      - ./SADBackend/nodemon.json:/app/nodemon.json
+      - ./SADBackend/swagger.taml:/app/swagger.json
+    environment:
+      - ENV=DEV
+  nginx:
+    container_name: nginx
+    build:
+      context: Http/.
+      dockerfile: Dev.Dockerfile
+    ports:
+      - target: 2000
+        published: 4321
+        mode: host
+    environment:
+      - ENV=DEV
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    ports:
+      - target: 8081
+        published: 8081
+        mode: host
+    environment:
+      ME_CONFIG_MONGODB_URL: "mongodb://mongodb:27017/"
+    depends_on:
+      - mongodb
+  frontend:
+    container_name: frontend
+    build:
+      context: Http/frontend/.
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" #for nginx and debugging
+    volumes:
+      - ./Http/frontend/src:/app/src

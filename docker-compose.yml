@@ -4,22 +4,16 @@ services:
   sad-backend:
     build:
       context: SADBackend/.
-      target: test-builder
+      target: dist-builder
       dockerfile: Dockerfile
     container_name: sad-backend
     expose:
       - "5000"
-    ports:
-      - "9229:9229"
     restart: always
+    environment:
+      - ENV=PROD
     depends_on:
       - mongodb
-      - nginx
-    volumes:
-      - ./SADBackend/src:/app/src
-      - ./SADBackend/nodemon.json:/app/nodemon.json
-      - ./SADBackend/swagger.taml:/app/swagger.json
-
   nginx:
     container_name: nginx
     build:
@@ -32,15 +26,13 @@ services:
       - target: 443
         published: 443
         mode: host
-        # Temp opened for debugging
-      - target: 2000
-        published: 4321
-        mode: host
     volumes:
       - nginx_certs:/etc/nginx/certs
+    environment:
+      - ENV=PROD
     restart: always
     depends_on:
-      - mongodb
+      - sad-backend
   mongodb:
     image: mongo:latest
     command: mongod --port 27017
@@ -49,17 +41,6 @@ services:
     volumes:
       - mongodb_data_container:/data/db
     container_name: mongodb
-  mongo-express:
-    image: mongo-express:latest
-    container_name: mongo-express
-    ports:
-      - target: 8081
-        published: 8081
-        mode: host
-    environment:
-      ME_CONFIG_MONGODB_URL: "mongodb://mongodb:27017/"
-    depends_on:
-      - mongodb
       
 volumes:
   mongodb_data_container:

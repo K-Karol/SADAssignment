@@ -20,8 +20,10 @@ FROM builder as test-builder
 CMD ["npm", "run", "test"]
 
 # Production build stage
-FROM builder as prod-builder
+FROM builder as dist-builder
 
 #ENV NODE_ENV production
+
+RUN npm run build
 
 CMD ["npm", "run", "start"]
