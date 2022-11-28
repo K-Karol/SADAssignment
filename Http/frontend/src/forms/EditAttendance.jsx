@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { fetchToken } from "../store";
+import {Button} from "@mui/material";
 
 export default function EditAttendance() {
 
@@ -43,10 +44,14 @@ export default function EditAttendance() {
                 </label>
                 <label>
                     <p>Attendance</p>
-                    <input type="text" onChange={e => setAttendance(e.target.value)}/>
+                    <select name="Attendance" onChange={e => setAttendance(e.target.value)}>Attendance
+                        <option value="late">Late</option>
+                        <option value="not">Not</option>
+                        <option value="full">Full</option>
+                    </select>
                 </label>
                 <div>
-                    <button type="submit">Submit</button>
+                    <Button variant="contained" type="submit">Submit</Button>
                 </div>
             </form>
         </div>
