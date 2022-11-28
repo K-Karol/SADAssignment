@@ -42,17 +42,17 @@ function NavMenu() {
   </Grid>
   <Grid item xs={2} sm={4} md={4}>
     <Link to="/viewAttendance">
-      <Button variant ="contained"> View Attendance</Button>
+      <Button variant ="contained"> View Current User Attendance</Button>
+    </Link>
+  </Grid>
+  <Grid item xs={2} sm={4} md={4}>
+    <Link to="/viewOverallAttendance">
+      <Button variant ="contained"> View Overall Attendance</Button>
     </Link>
   </Grid>
   <Grid item xs={2} sm={4} md={4}>
     <Link to="/generateReport">
       <Button variant ="contained"> Generate Report</Button>
-    </Link>
-  </Grid>
-  <Grid item xs={2} sm={4} md={4}>
-    <Link to="/databaseTest">
-      <Button variant ="contained"> Databases</Button>
     </Link>
   </Grid>
   <Grid item xs={2} sm={4} md={4}>
