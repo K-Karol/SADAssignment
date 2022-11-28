@@ -6,7 +6,6 @@ import { Module } from "../models/module";
 import { Session } from "../models/session";
 import { User } from "../models/user";
 import { DoesObjectIdExist, IsArrayOfMongooseObjectId, IsMongooseObjectId } from "./custom-decorators";
-import { Cohort_ControllerStage, Cohort_ValidationStage } from "./module";
 
 export class SessionPostRequest_Stage1{
     @IsNotEmpty()
@@ -125,11 +124,45 @@ export class GetSessionByID_ValidationStage{
     sessionID!: string;
 }
 
+
+export class StudentAttendance_ControllerStage{
+    @Transform(({value}) => new Types.ObjectId(value))
+    student!: Types.ObjectId;
+    attendance!: string;
+}
+
+export class StudentAttendance_ValidationStage{
+    @DoesObjectIdExist(User)
+    @IsMongooseObjectId()
+    @IsNotEmpty()
+    student!: string;
+    @IsIn(["full", "not", "late"])
+    @IsString()
+    @IsNotEmpty()
+    attendance!: string;
+}
+
+export class CohortWithAttendance_ControllerStage{
+    identifier!: string;
+    @Transform(({value}) => plainToInstance(StudentAttendance_ControllerStage, value, {}))
+    students!: StudentAttendance_ControllerStage[];
+}
+
+export class CohortWithAttendance_ValidationStage {
+    @IsString()
+    @IsNotEmpty()
+    identifier!: string;
+    @IsNotEmpty()
+    students!: StudentAttendance_ValidationStage[];
+}
+
 export class SessionPutRequest_ControllerStage{
     type?: string;
     @Transform(({value}) => new Types.ObjectId(value))
     module?: Types.ObjectId;
-    cohortIdentifier?: string;
+    //cohortIdentifier?: string; makes little sense here
+    @Transform(({value}) => plainToInstance(CohortWithAttendance_ControllerStage, value, {}))
+    cohort!: CohortWithAttendance_ControllerStage;
     startDateTime?: Date;
     endDateTime?: Date;
 }
@@ -139,13 +172,8 @@ export class SessionPutRequest_ValidationStage{
     @IsIn(["lecture", "seminar"])
     @IsOptional()
     type?: string;
-    @DoesObjectIdExist(Module)
-    @IsMongooseObjectId()
     @IsOptional()
-    module?: string;
-    @IsString()
-    @IsOptional()
-    cohortIdentifier?: string;
+    cohort!: CohortWithAttendance_ValidationStage;
     @IsISO8601()
     @IsOptional()
     startDateTime?: Date;
