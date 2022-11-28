@@ -425,12 +425,12 @@
     "method": "POST",
     "sortNum": 90000,
     "created": "2022-11-14T15:12:41.871Z",
-    "modified": "2022-11-23T20:27:56.674Z",
+    "modified": "2022-11-28T20:40:38.288Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"type\" : \"lecture\",\n  \"module\" : \"637e5edd0745e72469a92d3e\",\n  \"cohortIdentifier\" : \"1\",\n  \"startDateTime\" : \"2022-11-20T11:15\",\n  \"endDateTime\" : \"2022-11-20T12:15\"\n}",
+      "raw": "{\n  \"type\" : \"lecture\",\n  \"module\" : \"6384f186890aaedff397a3e8\",\n  \"cohortIdentifier\" : \"Group 2\",\n  \"startDateTime\" : \"2022-11-29T11:15\",\n  \"endDateTime\" : \"2022-11-29T12:15\"\n}",
       "form": []
     },
     "tests": []
@@ -440,11 +440,11 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
     "name": "Get All sessions for student",
-    "url": "sessions/GetSessionsForStudent/637903107fe5c01974895f66",
+    "url": "sessions/GetSessionsForStudent/6384f10c890aaedff397a36f",
     "method": "GET",
     "sortNum": 100000,
     "created": "2022-11-14T15:56:02.634Z",
-    "modified": "2022-11-19T16:27:27.934Z",
+    "modified": "2022-11-28T17:52:20.301Z",
     "headers": [],
     "params": [],
     "body": {
@@ -596,11 +596,11 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b9826620-6ad2-41cd-902b-e67e5bb17341",
     "name": "Generate New Active Session",
-    "url": "activeSessions/GenerateNewActiveSession/637903df7fe5c01974896038",
+    "url": "activeSessions/GenerateNewActiveSession/6384f225890aaedff397a4f3",
     "method": "POST",
     "sortNum": 160000,
     "created": "2022-11-16T21:44:05.873Z",
-    "modified": "2022-11-19T16:27:59.188Z",
+    "modified": "2022-11-28T20:49:17.843Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -634,48 +634,15 @@
     "tests": []
   },
   {
-    "_id": "b7ae0da2-85d6-4a18-9fbb-20624433efe8",
-    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
-    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
-    "name": "Find User Attendence",
-    "url": "sessions/GetUserAttendence/637f7ee41033a2dd0c455ac7/636cf6dce79b126d6d2989bd",
-    "method": "GET",
-    "sortNum": 190000,
-    "created": "2022-11-24T14:32:47.344Z",
-    "modified": "2022-11-24T14:42:31.550Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "2153950e-85dd-4f0a-bf8e-2d8b0e4f9fba",
-    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
-    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
-    "name": "Patch Attendence ",
-    "url": "sessions/PatchUserAttendence/637f7ee41033a2dd0c455ac7/636cf6dce79b126d6d2989bd",
-    "method": "PATCH",
-    "sortNum": 200000,
-    "created": "2022-11-24T14:42:00.532Z",
-    "modified": "2022-11-24T14:42:00.532Z",
-    "headers": [],
-    "params": [],
-    "body": {
-      "type": "json",
-      "raw": "{\n  \"attendance\" : \"late\"\n}",
-      "form": []
-    },
-    "tests": []
-  },
-  {
     "_id": "3ad4786e-bbea-4ca6-b209-de3963bb7b94",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
     "name": "Delete Session",
-    "url": "sessions/resource/637e40862a32ce56f32ea7df",
+    "url": "sessions/resource/6384f1c9890aaedff397a45f",
     "method": "DELETE",
     "sortNum": 210000,
     "created": "2022-11-23T15:46:46.612Z",
-    "modified": "2022-11-23T15:47:26.090Z",
+    "modified": "2022-11-28T20:40:31.090Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -747,6 +714,39 @@
     "tests": []
   },
   {
+    "_id": "b7ae0da2-85d6-4a18-9fbb-20624433efe8",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Find User Attendence",
+    "url": "sessions/GetUserAttendence/637f7ee41033a2dd0c455ac7/636cf6dce79b126d6d2989bd",
+    "method": "GET",
+    "sortNum": 190000,
+    "created": "2022-11-24T14:32:47.344Z",
+    "modified": "2022-11-24T14:42:31.550Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "2153950e-85dd-4f0a-bf8e-2d8b0e4f9fba",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Patch Attendence ",
+    "url": "sessions/PatchUserAttendence/637f7ee41033a2dd0c455ac7/636cf6dce79b126d6d2989bd",
+    "method": "PATCH",
+    "sortNum": 200000,
+    "created": "2022-11-24T14:42:00.532Z",
+    "modified": "2022-11-24T14:42:00.532Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"attendance\" : \"late\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
     "_id": "4de55f7e-b748-43ad-be7a-2f4638da1d61",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
@@ -755,9 +755,14 @@
     "method": "GET",
     "sortNum": 270000,
     "created": "2022-11-28T14:39:05.788Z",
-    "modified": "2022-11-28T14:39:10.970Z",
+    "modified": "2022-11-28T21:02:38.862Z",
     "headers": [],
     "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"filter\": {\n    \"$expr\": {\n      \"$in\": [\n        \"ObjectID(6384f10d890aaedff397a395)\",\n        \"$cohort.students.student\"\n      ]\n    },\n   \"$nor\" : [\n    {\"activeSessions\" : {\"$exists\" : false}},\n    {\"activeSessions\" : {\"$size\" : 0}}\n    ]\n  },\n  \"joinActiveSessions\": true\n}",
+      "form": []
+    },
     "tests": []
   }
 ]

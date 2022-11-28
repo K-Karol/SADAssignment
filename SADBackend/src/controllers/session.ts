@@ -116,6 +116,31 @@ export default class SessionController {
       }
 
 
+      if(reqQuery.joinActiveSessions){
+        aggregate_options.push(
+          {
+            '$lookup': {
+              'from': 'activesessions', 
+              'let': {
+                'session_id': '$_id'
+              }, 
+              'pipeline': [
+                {
+                  '$match': {
+                    '$expr': {
+                      '$eq': [
+                        '$$session_id', '$session'
+                      ]
+                    }
+                  }
+                }
+              ], 
+              'as': 'activeSessions'
+            }
+          }
+        );
+      }
+
       if (reqQuery.filter) aggregate_options.push({ $match: reqQuery.filter });
 
 
