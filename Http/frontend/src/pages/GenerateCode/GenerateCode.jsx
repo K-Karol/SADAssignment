@@ -2,6 +2,12 @@ import { Button } from "@mui/material";
 import { useState } from "react";
 import { fetchToken } from "../../store";
 
+// Restrict via roles on here - hide button or container if no admin role
+// roles selector
+// then either match or equal to
+// for conditional rendering on code gen button
+// then sneaky students can't generate a code from the frontend (enough for Proof of Context)
+
 export default function GenerateCode() {
   const [code, setCode] = useState("");
   const [isShown, setIsShown] = useState(false);

@@ -6,7 +6,6 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  Paper,
   Pagination,
   TablePagination,
 } from "@mui/material";
@@ -63,11 +62,7 @@ export default function UserTable() {
 
   return (
     <div>
-      {/* <h1> {userArray[0].username} </h1> */}
-      <h1> Attendance </h1>
-      {/* <h1> {userArray[0].username} </h1>
-            <h1> {userArray[0].fullname.firstname} </h1> */}
-
+      <h1> Please choose a user to view attendance for. </h1>
       <TableContainer component="div">
         <TablePagination
           component="div"
@@ -79,26 +74,9 @@ export default function UserTable() {
         />
         <Table sx={{ minWidth: 650 }} aria-label="simple table" component='div'>
           <TableHead component='div'>
-            {/* to be reinstated with the foreach loop
-          {headCells.map((headCell)=> (
-            <TableRow
-                 key={headCell.id}
-                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-            <TableCell component="th" scope="row">
-                {headCell.label}
-              </TableCell>
-              <TableCell align="right">{headCell.label}</TableCell>
-              <TableCell align="right">{headCell.label}</TableCell>
-              <TableCell align="right">{headCell.label}</TableCell>
-              <TableCell align="right">{headCell.label}</TableCell>
-            </TableRow>
-
-          ))} */}
             <TableRow component='div'>
               <TableCell component='div'>Username</TableCell>
-              {/*             We'll pass in clickability by using component={Link} on TableRow for each user
-               */}{" "}
+              {" "}
               <TableCell component='div' align="right">First Name</TableCell>
               <TableCell component='div' align="right">Middle Names</TableCell>
               <TableCell component='div' align="right">Last Name</TableCell>
@@ -109,8 +87,8 @@ export default function UserTable() {
             {userArray.map((row) => (
               <TableRow
                 key={row.username}
-                /* ${n}  - this is how we'd specify individual viewAttendance pages should it be necessary (pass in relevant props)*/ 
                 component={Link} to= "/viewAttendance" state = { {row} }
+                // The above line takes a row to serve the individual view attendance page for the student clicked on
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="div" scope="row">

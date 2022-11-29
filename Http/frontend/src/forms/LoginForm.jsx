@@ -1,15 +1,9 @@
 import { useState } from 'react';
-// import { Formik, Form, Field, ErrorMessage } from 'formik';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux'
+import { Typography } from '@mui/material';
 
-import { useSelector, useDispatch } from 'react-redux'
-
-// Will pretty this up with Material in SAD-005 commit.
-// Remove email validation as no longer needed.
-// Replace with validation for usernames
-
-// Take Logout out of here and put it somewhere else
 async function userLogin(credentials) {
+  // Makes login request (POST) with supplied credentials.
   const request = await fetch(`${window.location.origin}/api/auth/login`, {
     method: 'POST',
     headers: {
@@ -21,6 +15,7 @@ async function userLogin(credentials) {
 }
 
 async function getUserDetails(token){
+  // Retrieves the relevant user details.
   const request = await fetch(`${window.location.origin}/api/users/self`, {
     headers: {
       Accept: "*/*",
@@ -35,30 +30,35 @@ export default function LoginForm()
 {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [error, setError] = useState();
 
   const dispatch = useDispatch();
 
-  // store token in local storage if it isn't already
+  // This function awaits userLogin and takes it from there.
   const handleSubmit = async e => {
     e.preventDefault();
     const response = await userLogin({
       username,
       password
     });
-
+    // Takes the login response and determines next course of action
+    // If successful, takes the token and user details and saves them
+    // Thus logging in the user
     if(response.Success === true){
       const userDetails = await getUserDetails(response.Response.token);
       if(userDetails.Success === true){
         dispatch({type: "login", payload: {tokenDetails: response.Response, userDetails: userDetails.Response}});
       } else{
-        //error
+        // Error handling
+        console.log("Invalid username / password, please check your details and try again.");
+        setError("Invalid username / password, please check your details and try again.")
       }
       
     } else{
-      //error
+      console.log("Invalid username / password, please check your details and try again.");
+      setError("Invalid username / password, please check your details and try again.")
+      //Error handling
     }
-
-    //setToken(token);
   }
 
   
@@ -78,8 +78,10 @@ export default function LoginForm()
         <div>
           <button type="submit">Submit</button>
         </div>
+        {error?<Typography>{error}</Typography>:null}          
       </form>
         </div>
+
     )
 }
 // LoginForm.propTypes = {
