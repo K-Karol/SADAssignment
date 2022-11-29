@@ -1,6 +1,12 @@
 import { Button } from "@mui/material";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchToken } from "../../store";
+import { Form, Field, Formik } from "formik";
+import dayjs from 'dayjs';
+import { TextField, Stack } from '@mui/material';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { StaticTimePicker, DesktopTimePicker } from '@mui/x-date-pickers';
 
 // Restrict via roles on here - hide button or container if no admin role
 // roles selector
@@ -11,26 +17,63 @@ import { fetchToken } from "../../store";
 export default function GenerateCode() {
   const [code, setCode] = useState("");
   const [isShown, setIsShown] = useState(false);
+  const [moduleList, setModuleList] = useState([]);
+  const [cohortsList, setCohortsList] = useState([]);
+  const [typeOfSession, setTypeOfSession] = useState("");
+  const [module, setmodule] = useState("");
+  const [cohortIdentifier, setcohortIdentifier] = useState("");
+  const [startTime, setStartTime] = useState(dayjs());
+  const [endTime, setEndTime] = useState(dayjs());
 
-  const requestOptions = {
+  const createSessionRequestOptions = {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json", // speech marks needed?
       Authorization: `Bearer ${fetchToken().token}`,
     },
-    body: JSON.stringify({ // TODO: This body needs to be changed (potentially passed in to this function)
-      type: "lecture",
-      module: "63837a704a7208be7665db7a", 
-      cohortIdentifier: "All",
-      startDateTime: "2022-11-24T20:08:53+0000",
-      endDateTime: "2022-11-24T20:11:53+0000",
-    }),
+    
   };
 
-  const createSessionAndCode = async () => {
+  console.log(`Bearer ${fetchToken().token}`);
+  
+  useEffect(() => {
+    fetch(`${window.location.origin}/api/modules/resource`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${fetchToken().token}`
+      },
+      // body: JSON.stringify({
+        // joinStudents: ids or whole object
+        // joinStaff: ids or whole object
+      // })
+    }).then((res) => res.json())
+    .then((modules) => {
+      if (modules.Success) {
+        setModuleList(modules.Response.modules);
+        for (let module of modules.Response.modules) {
+          for (let attribute in module) {
+            if (attribute == 'cohorts') {
+              setCohortsList(module[attribute]);
+            }
+          }
+        }
+      }
+    });
+  }, []);
+
+  const createSessionAndCode = async (requestBody) => {
     var newSessionRequest = await fetch(
       `${window.location.origin}/api/sessions/resource`,
-      requestOptions
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // speech marks needed?
+          Authorization: `Bearer ${fetchToken().token}`,
+        },
+        body: JSON.stringify(requestBody)
+      }
     );
     var newSession = await newSessionRequest.json();
 
@@ -43,32 +86,99 @@ export default function GenerateCode() {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${fetchToken().token}`,
-          },
+          }
         }
       );
-      var codeBody = await newActiveSessionRequest.json();
-      if (codeBody.Success) {
-        return codeBody.Response.code;
+      var generatedCode = await newActiveSessionRequest.json();
+      if (generatedCode.Success) {
+        return generatedCode.Response.code;
       }
     } else {
       return "Failed to get code";
     }
   };
 
-  const handleClick = async (event) => {
-    var c = await createSessionAndCode();
-    setCode(c);
-    setIsShown(true);
-  };
-
   return (
     <div className="GenerateCode">
-      <h1> Generate your random code here.</h1>
-      <Button color="secondary" variant="contained" onClick={handleClick}>
-        {" "}
-        Generate Code
-      </Button>
-      {isShown && <h1 style={{ fontSize: "9rem" }}>{code}</h1>}
+      <Formik
+        initialValues={{
+          typeOfSession: '',
+          moduleEl: '',
+          cohortIdentifier: ''
+        }}
+        onSubmit={async (values) => {
+          await new Promise((r) => setTimeout(r, 500));
+          var requestBody = {
+            type: values.typeOfSession,
+            module: values.moduleEl, 
+            cohortIdentifier: values.cohortIdentifier,
+            startDateTime: startTime.format(),
+            endDateTime: endTime.format(),
+          }
+          var code = await createSessionAndCode(requestBody);
+          setCode(code);
+          setIsShown(true);
+      
+        }}
+      >
+        <Form>
+          <Stack spacing={1}>
+            <label htmlFor="typeOfSession">Type of session: </label>
+            <Field as="select" name="typeOfSession">
+              <option value=""></option>
+              <option value="lecture">Lecture</option>
+              <option value="seminar">Seminar</option>
+            </Field>
+            <label htmlFor="moduleEl">Module: </label>
+            <Field as="select" name="moduleEl">
+              <option value=""></option>
+              {moduleList.map((module) => <option value={module._id}>{module.name}</option>)}
+            </Field >
+            <label htmlFor="cohortIdentifier">Cohort Identifier</label>
+            <Field as="select" name="cohortIdentifier">
+              <option value=""></option>
+              {cohortsList.map((cohort) => <option value={cohort.name}>{cohort.identifier}</option>)}
+            </Field>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              {/* <StaticTimePicker
+                renderInput={(props) => <TextField {...props} />}
+                label="Start Time"
+                value={startTime}
+                onChange={(value) => {
+                  setStartTime(value);
+                }}
+              />
+              <StaticTimePicker
+                renderInput={(props) => <TextField {...props} />}
+                label="End Time"
+                value={endTime}
+                onChange={(value) => {
+                  setEndTime(value);
+                }}
+              /> */}
+              <DesktopTimePicker
+                renderInput={(props) => <TextField {...props} />}
+                label="Start Time"
+                value={startTime}
+                onChange={(value) => {
+                  setStartTime(value);
+                }}
+              />
+              <DesktopTimePicker
+                renderInput={(props) => <TextField {...props} />}
+                label="End Time"
+                value={endTime}
+                onChange={(value) => {
+                  setEndTime(value);
+                }}
+              />
+            </LocalizationProvider>
+            <button type="submit"> Start new session </button>
+            {isShown && <h1 style={{ fontSize: "9rem" }}>{code}</h1>}
+          </Stack>
+        </Form>
+      </Formik>
+
     </div>
   );
 }
