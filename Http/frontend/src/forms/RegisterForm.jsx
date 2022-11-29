@@ -1,14 +1,16 @@
-import { useEffect } from "react";
-import { Formik, Form, useField, useFormikContext } from "formik";
+import { Formik, Form, useField } from "formik";
 import * as Yup from "yup";
 import styled from "@emotion/styled";
 import "./styles.css";
 import "./styles-custom.css";
-import { Grid } from "@mui/material";
 
 
 // fix this up as it's just the Formik example at the minute
 // add better CSS, onSubmit etc
+
+  // Throw this in properly if we're struggling for Reqs
+  // RegisterForm to be used only if necessary
+
 
 const MyTextInput = ({ label, ...props }) => {
     // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -77,7 +79,6 @@ const MyTextInput = ({ label, ...props }) => {
       </>
     );
   };
-  
   // And now we can use these
   const RegisterForm = () => {
     return (

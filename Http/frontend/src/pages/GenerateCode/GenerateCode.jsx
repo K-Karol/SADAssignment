@@ -8,6 +8,12 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { StaticTimePicker, DesktopTimePicker } from '@mui/x-date-pickers';
 
+// Restrict via roles on here - hide button or container if no admin role
+// roles selector
+// then either match or equal to
+// for conditional rendering on code gen button
+// then sneaky students can't generate a code from the frontend (enough for Proof of Context)
+
 export default function GenerateCode() {
   const [code, setCode] = useState("");
   const [isShown, setIsShown] = useState(false);

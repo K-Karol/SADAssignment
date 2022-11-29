@@ -3,15 +3,20 @@ import { AppBar, Box, Container, Grid, IconButton, Menu, MenuItem, Toolbar, Typo
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import styles from '../pages/GenerateCode/GenerateCode.module.css';
+import { useSelector } from "react-redux";
 
 
 // being added back in SAD-005 when I've made it persist - easy fix but wanted to get 004 up to source control first.
 // Needs serious prettying up
 
+// set restrictedroles and check for them on return??
+
 function NavMenu() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  // const roles = useSelector((state) => state.roles);
+  // const adminRoles = ["Admin", "User"];
+  // console.log("These are the current user's roles" + roles);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -23,6 +28,7 @@ function NavMenu() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
 
   const pages =  [<Grid container direction="row"  justifyContent="left" alignItems="left" spacing={{ xs: 1, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
   <Grid item xs={2} sm={4} md={4}>
@@ -40,19 +46,10 @@ function NavMenu() {
       <Button variant ="contained"> Generate Code</Button>
     </Link>
   </Grid>
-  <Grid item xs={2} sm={4} md={4}>
-    <Link to="/viewAttendance">
-      <Button variant ="contained"> View Current User Attendance</Button>
-    </Link>
-  </Grid>
+  
   <Grid item xs={2} sm={4} md={4}>
     <Link to="/viewOverallAttendance">
       <Button variant ="contained"> View Overall Attendance</Button>
-    </Link>
-  </Grid>
-  <Grid item xs={2} sm={4} md={4}>
-    <Link to="/generateReport">
-      <Button variant ="contained"> Generate Report</Button>
     </Link>
   </Grid>
   <Grid item xs={2} sm={4} md={4}>
@@ -154,36 +151,4 @@ function NavMenu() {
     </AppBar>
       );
 };
-/*     //       <div className="navigation-links">
-    //       <Stack direction="row" spacing={2}>
-    //                 <Link to="/">
-    //                     <Button variant ="contained"> Home</Button>
-    //                 </Link>
-    //                 <Link to="/editAttendance">
-    //                     <Button variant ="contained"> Edit Attendance</Button>
-    //                 </Link>
-    //                 <Link to="/generateCode">
-    //                     <Button variant ="contained"> Generate Code</Button>
-    //                 </Link>
-    //                 <Link to="/viewAttendance">
-    //                     <Button variant ="contained"> View Attendance</Button>
-    //                 </Link>
-    //                 <Link to="/generateReport">
-    //                     <Button variant ="contained"> Generate Report</Button>
-    //                 </Link>
-    //                 <Link to="/databaseTest">
-    //                     <Button variant ="contained"> Databases</Button>
-    //                 </Link>
-    //                 <Link to="/login">
-    //                     <Button variant ="contained"> Login</Button>
-    //                 </Link>
-    //                 <Link to="/register">
-    //                   <Button variant ="contained"> Register</Button>
-    //                 </Link>
-    //         </Stack>       
-    //       </div>
-    //     </Toolbar>
-    //   </Container>
-    // </AppBar> */
-
 export default NavMenu;
