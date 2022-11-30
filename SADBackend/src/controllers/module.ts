@@ -6,7 +6,7 @@ import { GenerateBaseExcludes as UserGenerateBaseExcludes } from "../models/user
 import { Course, CoursePaginate } from "../models/course";
 import { ICourse } from "../interfaces/course";
 import { IAuthenticatedRequest } from "../interfaces/auth";
-import { GetModuleByID_ControllerStage, GetModulesQueryBody, ModulePutRequest_ControllerStage, PostModuleRequest_ControllerStage } from "../validation/module";
+import { GetModuleByID_ControllerStage, GetModulesQuery, ModulePutRequest_ControllerStage, PostModuleRequest_ControllerStage } from "../validation/module";
 import { plainToInstance } from "class-transformer";
 import { ICohort, IModule } from "../interfaces/module";
 import { Module, ModulePaginate } from "../models/module";
@@ -38,24 +38,33 @@ export default class ModuleController {
 
     public GetModules = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            var reqQuery: GetModulesQueryBody = req.body;
+            //var reqQuery: GetModulesQueryBody = req.body;
+
+            var reqQuery : GetModulesQuery = plainToInstance(GetModulesQuery, (req['query'] as any), {});
+
             if (reqQuery.filter) {
+                try{
+                    reqQuery.filter = JSON.parse((reqQuery.filter as unknown as string));
+                } catch(err){
+                    throw new HttpException(400, "Cannot convert the filter to a JSON object", undefined, err as Error);
+                }
+                
                 GoThroughJSONAndReplaceObjectIDs(reqQuery.filter);
             }
 
             let aggregate_options = [];
 
-            var temp = req.query.page;
+            var temp = reqQuery.page;
 
             let page = 1;
             let limit = 20;
 
-            if (req.query.page) {
-                page = parseInt(req.query.page as string);
+            if (reqQuery.page) {
+                page = reqQuery.page;
             }
 
-            if (req.query.limit) {
-                limit = parseInt(req.query.limit as string);
+            if (reqQuery.limit) {
+                limit = reqQuery.limit;
             }
 
             const options = {

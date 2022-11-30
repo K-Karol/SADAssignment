@@ -4,7 +4,6 @@ import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException } fr
 import bcrypt from "bcryptjs";
 import { GenerateBaseExcludes as UserGenerateBaseExcludes, User } from "../models/user";
 import { IAuthenticatedRequest } from "../interfaces/auth";
-import { GetSessionForStudentBody, GetSessionForStudentParams_ControllerStage, GetSessionForStudentParams_ValidationStage, GetSessionsQuery, SessionPostRequest_ControllerStage } from "../validation/session";
 import { Module } from "../models/module";
 import { ICohortWithAttendance, ISession } from "../interfaces/session";
 import { Session, SessionPaginate } from "../models/session";

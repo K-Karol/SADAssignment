@@ -4,7 +4,7 @@ import { IRoute } from '../interfaces/routes';
 import {AuthenticateRequest, AuthoriseByRoles} from '../middleware/auth';
  import ValidationMiddleware from '../middleware/validate';
 // import { LoginRequest, RegisterRequest } from '../validation/auth';
-import { GetUserByID_ValidationStage, GetUsersQuery, GetUsersQueryBody, UserDecorated, UserPutRequest_ValidationStage } from '../validation/user';
+import { GetUserByID_ValidationStage, GetUsersQuery, UserDecorated, UserPutRequest_ValidationStage } from '../validation/user';
 export default class UserRoute implements IRoute {
   public path = '/users/';
   public router = Router();
@@ -15,7 +15,7 @@ export default class UserRoute implements IRoute {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}resource/`, AuthenticateRequest, AuthoriseByRoles(["Admin", "Staff"]), ValidationMiddleware(GetUsersQuery, 'query'), ValidationMiddleware(GetUsersQueryBody, 'body'),  this.userController.GetUsers);
+    this.router.get(`${this.path}resource/`, AuthenticateRequest, AuthoriseByRoles(["Admin", "Staff"]), ValidationMiddleware(GetUsersQuery, 'query'),  this.userController.GetUsers);
     this.router.get(`${this.path}resource/:id`, AuthenticateRequest, AuthoriseByRoles(["Admin", "Staff"]), ValidationMiddleware(GetUserByID_ValidationStage, 'params'),  this.userController.GetUser);
     this.router.get(`${this.path}self`, AuthenticateRequest, this.userController.GetCurrentUser);
     this.router.post(`${this.path}resource/`, AuthenticateRequest, AuthoriseByRoles(["Admin"]), ValidationMiddleware(UserDecorated, 'body'), this.userController.PostUser);

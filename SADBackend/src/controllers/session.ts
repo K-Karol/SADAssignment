@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import mongoose, { AggregatePaginateModel, isValidObjectId, model, Schema, Types } from "mongoose";
 import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException, RemoveUndefinedFieldsRoot } from "../helpers";
-import { GetSessionForStudentBody, GetSessionForStudentParams_ControllerStage, GetSessionForStudentParams_ValidationStage, GetSessionsQuery, SessionPostRequest_ControllerStage, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody, GetAttendenceForSessionParams, GetSessionsQueryBody, GetSessionByID_ControllerStage, SessionPutRequest_ControllerStage } from "../validation/session";
+import { GetSessionForStudentParams_ControllerStage,  GetSessionsForStudentQuery, SessionPostRequest_ControllerStage, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody, GetAttendenceForSessionParams, GetSessionByID_ControllerStage, SessionPutRequest_ControllerStage, GetSessionsQuery } from "../validation/session";
 import { Module } from "../models/module";
 import { ICohortWithAttendance, ISession, IStudentWithAttendance } from "../interfaces/session";
 import { Session, SessionPaginate } from "../models/session";
@@ -15,9 +15,15 @@ export default class SessionController {
   public GetSessions = async (req: Request, res: Response, next: NextFunction) => {
     try {
 
-      var reqQuery: GetSessionsQueryBody = req.body;
+
+      var reqQuery: GetSessionsQuery = plainToInstance(GetSessionsQuery, (req['query'] as any), {});
 
       if (reqQuery.filter) {
+        try {
+          reqQuery.filter = JSON.parse((reqQuery.filter as unknown as string));
+        } catch (err) {
+          throw new HttpException(400, "Cannot convert the filter to a JSON object", undefined, err as Error);
+        }
         GoThroughJSONAndReplaceObjectIDs(reqQuery.filter);
       }
 
@@ -25,12 +31,12 @@ export default class SessionController {
       let page = 1;
       let limit = 20;
 
-      if (req.query.page) {
-        page = parseInt(req.query.page as string);
+      if (reqQuery.page) {
+        page = reqQuery.page;
       }
 
-      if (req.query.limit) {
-        limit = parseInt(req.query.limit as string);
+      if (reqQuery.limit) {
+        limit = reqQuery.limit;
       }
 
       const options = {
@@ -116,14 +122,14 @@ export default class SessionController {
       }
 
 
-      if(reqQuery.joinActiveSessions){
+      if (reqQuery.joinActiveSessions) {
         aggregate_options.push(
           {
             '$lookup': {
-              'from': 'activesessions', 
+              'from': 'activesessions',
               'let': {
                 'session_id': '$_id'
-              }, 
+              },
               'pipeline': [
                 {
                   '$match': {
@@ -134,7 +140,7 @@ export default class SessionController {
                     }
                   }
                 }
-              ], 
+              ],
               'as': 'activeSessions'
             }
           }
@@ -198,14 +204,21 @@ export default class SessionController {
   public GetAllSessionsForStudent = async (req: Request, res: Response, next: NextFunction) => {
     try {
       var params: GetSessionForStudentParams_ControllerStage = plainToInstance(GetSessionForStudentParams_ControllerStage, (req as any)["params"], {});
-      var queryBody: GetSessionForStudentBody = req.body;
+      //var queryBody: GetSessionForStudentBody = req.body;
+
+      var reqQuery: GetSessionsForStudentQuery = plainToInstance(GetSessionsForStudentQuery, (req['query'] as any), {});
 
       if (!isValidObjectId(params.studentID)) {
         throw new HttpException(400, "studentID is not in the valid format");
       }
 
-      if (queryBody.filter) {
-        GoThroughJSONAndReplaceObjectIDs(queryBody.filter);
+      if (reqQuery.filter) {
+        try {
+          reqQuery.filter = JSON.parse((reqQuery.filter as unknown as string));
+        } catch (err) {
+          throw new HttpException(400, "Cannot convert the filter to a JSON object", undefined, err as Error);
+        }
+        GoThroughJSONAndReplaceObjectIDs(reqQuery.filter);
       }
 
       let aggregate_options = [];
@@ -215,12 +228,12 @@ export default class SessionController {
       let page = 1;
       let limit = 20;
 
-      if (req.query.page) {
-        page = parseInt(req.query.page as string);
+      if (reqQuery.page) {
+        page = reqQuery.page;
       }
 
-      if (req.query.limit) {
-        limit = parseInt(req.query.limit as string);
+      if (reqQuery.limit) {
+        limit = reqQuery.limit;
       }
 
       const options = {
@@ -260,7 +273,7 @@ export default class SessionController {
 
       //remove irrelevant students
 
-      if (queryBody.filter) aggregate_options.push({ $match: queryBody.filter });
+      if (reqQuery.filter) aggregate_options.push({ $match: reqQuery.filter });
 
       const myAggregate = SessionPaginate.aggregate(aggregate_options);
 
