@@ -15,6 +15,20 @@ export class GetUsersQuery{
     @IsOptional()
     @Type(() => Number)
     limit?: number;
+
+    @IsOptional()
+    @Type(() => Object)
+    filter?: object
+
+    @IsBoolean()
+    @Transform(({ value} ) => value === 'true' || value === 'True')
+    @IsOptional()
+    joinCourses?: boolean;
+
+    @IsBoolean()
+    @Transform(({ value} ) => value === 'true' || value === 'True')
+    @IsOptional()
+    joinModules?: boolean;
 }
 
 export class FullNameDecorated implements IFullname{
@@ -132,22 +146,4 @@ export class GetUserByID_ValidationStage{
 export class GetUserByID_ControllerStage{
     @Transform(({value}) => new Types.ObjectId(value))
     id!: Types.ObjectId;
-}
-
-
-
-
-export class GetUsersQueryBody{
-    @IsOptional()
-    @Type(() => Object)
-    filter?: object
-
-    @IsBoolean()
-    @IsOptional()
-    joinCourses?: boolean;
-
-    @IsBoolean()
-    @IsOptional()
-    joinModules?: boolean;
-
 }

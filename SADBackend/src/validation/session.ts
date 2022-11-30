@@ -74,12 +74,22 @@ export class GetAttendenceForStudentParams_ValidationStage{
     @IsMongooseObjectId()
     studentID!: string;
 }
+export class GetSessionsForStudentQuery{
+    @IsInt()
+    @IsOptional()
+    @Type(() => Number)
+    page?: number;
+    @IsInt()
+    @IsOptional()
+    @Type(() => Number)
+    limit?: number;
 
-export class GetSessionForStudentBody{
     @IsOptional()
     @Type(() => Object)
     filter?: object
 }
+
+
 export class GetSessionsQuery{
     @IsInt()
     @IsOptional()
@@ -89,20 +99,26 @@ export class GetSessionsQuery{
     @IsOptional()
     @Type(() => Number)
     limit?: number;
-}
 
-export class GetSessionsQueryBody{
     @IsOptional()
     @Type(() => Object)
     filter?: object
 
     @IsBoolean()
+    @Transform(({ value} ) => value === 'true' || value === 'True')
     @IsOptional()
     joinStudents?: boolean;
 
     @IsBoolean()
+    @Transform(({ value} ) => value === 'true' || value === 'True')
     @IsOptional()
     joinModules?: boolean;
+
+    
+    @IsBoolean()
+    @Transform(({ value} ) => value === 'true' || value === 'True')
+    @IsOptional()
+    joinActiveSessions?: boolean;
 }
 
 export class UpdateStudentAttendanceBody{
