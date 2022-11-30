@@ -15,8 +15,6 @@ export default function EditAttendance() {
     const [studentsList, setStudentsList] = useState([]);
     const [session, setSession] = useState("");
     const [student, setStudent] = useState("");
-    const dispatch = useDispatch();
-    const courseArray = useSelector((state) => state.courses);
 
     const editAttendance = async () => {
         var newAttendanceRequest = await fetch (`${window.location.origin}/api/sessions/PatchUserAttendence/${sessionID}/${studentID}`, {
@@ -37,16 +35,13 @@ export default function EditAttendance() {
     console.log(`Bearer ${fetchToken().token}`);
 
   useEffect(() => {
-    fetch(`${window.location.origin}/api/courses/resource`,
+    fetch(`${window.location.origin}/api/courses/resource?joinModules=true`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${fetchToken().token}`
       },
-        body : JSON.stringify({
-            joinModules : true
-          })
     }).then((res) => res.json())
     .then((courses) => {
       if (courses.Success) {
@@ -56,21 +51,13 @@ export default function EditAttendance() {
   }, []);
 
   useEffect(() => {
-    fetch(`${window.location.origin}/api/sessions/resource`,
+    fetch(`${window.location.origin}/api/sessions/resource?joinStudents=true`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${fetchToken().token}`
       },
-      params: {
-        body: JSON.stringify({
-            filter : {
-                module : "ObjectID(63866a3fe3ddc3104189ef39)"
-            },
-            joinStudents : true
-          })
-      }
     }).then((res) => res.json())
     .then((sessions) => {
       if (sessions.Success) {
@@ -108,7 +95,7 @@ export default function EditAttendance() {
                     <label htmlFor="moduleField">Module</label>
                     <Field as="select" name="moduleField">
                         <option value=""></option>
-                        {courseList.map((module) => <option value={module.modules}>{module.modules}</option>)}
+                        {courseList.map((course) => (course.modules.map((module) => ( <option value={module._id}>{module.name} {module.semester}</option>))))}
                     </Field>
                     <label htmlFor="sessionField">Session</label>
                     <Field as="select" name="sessionField">
@@ -118,7 +105,7 @@ export default function EditAttendance() {
                     <label htmlFor="studentField">Student</label>
                     <Field as="select" name="studentField">
                         <option value=""></option>
-                        {sessionList.map((session) => <option value={session.students}>{session.cohort.students._id}</option>)}
+                        {sessionList.map((session) => (session.cohort.students.map((students) => <option value={students.student._id}>{students.student.fullname.firstname} {students.student.fullname.lastname}</option>)))}
                     </Field>
                     <label htmlFor="attendanceField">Attendance</label>
                     <Field as="select" name="attendanceField">

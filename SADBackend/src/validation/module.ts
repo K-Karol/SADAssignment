@@ -71,21 +71,20 @@ export class GetModulesQuery{
     @IsOptional()
     @Type(() => Number)
     limit?: number;
-}
 
-export class GetModulesQueryBody{
     @IsOptional()
     @Type(() => Object)
     filter?: object;
 
     @IsBoolean()
+    @Transform(({ value} ) => value === 'true' || value === 'True')
     @IsOptional()
     joinStudents?: boolean;
 
     @IsBoolean()
+    @Transform(({ value} ) => value === 'true' || value === 'True')
     @IsOptional()
     joinStaff?: boolean;
-
 }
 
 export class GetModuleByID_ControllerStage{
@@ -98,4 +97,44 @@ export class GetModuleByID_ValidationStage{
     @IsMongooseObjectId()
     @IsNotEmpty()
     id!: string;
+}
+
+export class ModulePutRequest_ControllerStage{
+    name?: string;
+    year?: string;
+    semester?: string;
+    @Transform(({value}) => (value as Array<string>).map((v) => new Types.ObjectId(v)))
+    students?: Types.ObjectId[];
+    @Transform(({value}) => plainToInstance(Cohort_ControllerStage, value, {}))
+    cohorts?: Cohort_ControllerStage[];
+    @Transform(({value}) => new Types.ObjectId(value))
+    moduleLeader?: Types.ObjectId;
+    @Transform(({value}) => (value as Array<string>).map((v) => new Types.ObjectId(v)))
+    instructors?: Types.ObjectId[];
+}
+
+export class ModulePutRequest_ValidationStage{
+    @IsString()
+    @IsOptional()
+    name?: string;
+    @IsString()
+    @IsOptional()
+    year?: string;
+    @IsString()
+    @IsOptional()
+    semester?: string;
+    @DoesArrayOfObjectIdExist(User)
+    @IsArrayOfMongooseObjectId()
+    @IsOptional()
+    students?: string[];
+    @IsOptional()
+    cohorts?: Cohort_ValidationStage[];
+    @DoesObjectIdExist(User)
+    @IsMongooseObjectId()
+    @IsOptional()
+    moduleLeader?: string;
+    @DoesArrayOfObjectIdExist(User)
+    @IsArrayOfMongooseObjectId()
+    @IsOptional()
+    instructors?: string[];
 }

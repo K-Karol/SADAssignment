@@ -660,13 +660,19 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "83a72f30-0839-4dcb-9768-658d5c585bb0",
     "name": "Get Courses",
-    "url": "courses/resource",
+    "url": "courses/resource?joinModules=true",
     "method": "GET",
     "sortNum": 180000,
     "created": "2022-11-19T16:12:15.701Z",
-    "modified": "2022-11-30T15:07:57.408Z",
+    "modified": "2022-11-30T18:30:04.968Z",
     "headers": [],
-    "params": [],
+    "params": [
+      {
+        "name": "joinModules",
+        "value": "true",
+        "isPath": false
+      }
+    ],
     "body": {
       "type": "json",
       "raw": "{\n  \"joinModules\" : true\n}",
@@ -693,13 +699,19 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
     "name": "Get Sessions",
-    "url": "sessions/resource/",
+    "url": "sessions/resource/?joinStudents=true",
     "method": "GET",
     "sortNum": 210000,
     "created": "2022-11-29T19:54:48.861Z",
-    "modified": "2022-11-30T15:46:25.336Z",
+    "modified": "2022-11-30T18:30:13.775Z",
     "headers": [],
-    "params": [],
+    "params": [
+      {
+        "name": "joinStudents",
+        "value": "true",
+        "isPath": false
+      }
+    ],
     "body": {
       "type": "json",
       "raw": "{\n  \"filter\" : {\n    \"module\" : \"ObjectID(63866a3fe3ddc3104189ef39)\"\n  },\n  \"joinStudents\" : true\n}",

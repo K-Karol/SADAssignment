@@ -8,7 +8,7 @@ import {
 import { AggregatePaginateModel, isValidObjectId } from "mongoose";
 import { IRole, IUser } from "../interfaces/user";
 import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException, RecursiveRemoveUndefinedFields, RemoveUndefinedFieldsRoot } from "../helpers";
-import { GetUserByID_ControllerStage, GetUsersQueryBody, UserDecorated, UserPutRequest_ControllerStage, UserPutRequest_ValidationStage } from "../validation/user";
+import { GetUserByID_ControllerStage, GetUsersQuery, UserDecorated, UserPutRequest_ControllerStage, UserPutRequest_ValidationStage } from "../validation/user";
 import bcrypt from "bcryptjs";
 import { IAuthenticatedRequest } from "../interfaces/auth";
 import { instanceToInstance, plainToInstance } from "class-transformer";
@@ -24,10 +24,10 @@ export default class UserController {
 
       var rolesToInsert: IRole[] = [];
 
-      if(postRequest.roles){
+      if (postRequest.roles) {
         rolesToInsert = await Promise.all(postRequest.roles!.map(async (sr) => {
-          const r = await Role.findOne({name: sr})
-          if(!r){
+          const r = await Role.findOne({ name: sr })
+          if (!r) {
             throw new HttpException(400, "One or more roles supplied do not exist");
           }
           return (r as IRole);
@@ -51,10 +51,14 @@ export default class UserController {
 
   public GetUsers = async (req: IAuthenticatedRequest, res: Response, next: NextFunction) => {
 
-    var reqQuery: GetUsersQueryBody = req.body;
-
+    var reqQuery: GetUsersQuery = plainToInstance(GetUsersQuery, (req['query'] as any), {});
 
     if (reqQuery.filter) {
+      try {
+        reqQuery.filter = JSON.parse((reqQuery.filter as unknown as string));
+      } catch (err) {
+        throw new HttpException(400, "Cannot convert the filter to a JSON object", undefined, err as Error);
+      }
       GoThroughJSONAndReplaceObjectIDs(reqQuery.filter);
     }
 
@@ -67,12 +71,12 @@ export default class UserController {
     let page = 1;
     let limit = 20;
 
-    if (req.query.page) {
-      page = parseInt(req.query.page as string);
+    if (reqQuery.page) {
+      page = reqQuery.page;
     }
 
-    if (req.query.limit) {
-      limit = parseInt(req.query.limit as string);
+    if (reqQuery.limit) {
+      limit = reqQuery.limit;
     }
 
     const options = {
@@ -90,7 +94,7 @@ export default class UserController {
 
     const isAdmin = ((req.User! as IUser).roles! as IRole[]).find((r) => r.name == "Admin");
 
-    if(isAdmin){
+    if (isAdmin) {
       excludeExceptions.push("roles");
       excludeExceptions.push("address");
     }
@@ -99,7 +103,7 @@ export default class UserController {
       aggregate_options.push({ $project: element });
     });
 
-    if(isAdmin)
+    if (isAdmin)
       aggregate_options.push({
         $lookup: {
           from: "roles",
@@ -146,7 +150,7 @@ export default class UserController {
   public GetUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
       //var params: GetUserByID_Stage2 = (req as any)["params"];
-      
+
       var params: GetUserByID_ControllerStage = plainToInstance(GetUserByID_ControllerStage, (req as any)["params"], {});
 
       // if (!isValidObjectId(params.id)) {
@@ -218,7 +222,7 @@ export default class UserController {
   };
 
   public GetCurrentUser = async (req: IAuthenticatedRequest, res: Response, next: NextFunction) => {
-    var returnObj = { username: (req.User! as IUser).username, roles: (req.User! as IUser).roles.map((r) => (r as IRole).name), fullname : (req.User! as IUser).fullname, address : (req.User! as IUser).address};
+    var returnObj = { username: (req.User! as IUser).username, roles: (req.User! as IUser).roles.map((r) => (r as IRole).name), fullname: (req.User! as IUser).fullname, address: (req.User! as IUser).address };
     res.status(200).json(GenerateAPIResult(true, returnObj));
   };
 }

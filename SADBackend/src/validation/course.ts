@@ -8,20 +8,6 @@ import { DoesArrayOfObjectIdExist, DoesObjectIdExist, IsArrayOfMongooseObjectId,
 import { User } from "../models/user";
 import { ICourse } from "../interfaces/course";
 
-export class GetCoursesQueryBody{
-    @IsOptional()
-    @Type(() => Object)
-    filter?: object
-
-    @IsBoolean()
-    @IsOptional()
-    joinStudents?: boolean;
-
-    @IsBoolean()
-    @IsOptional()
-    joinModules?: boolean;
-}
-
 export class GetCoursesQuery{
     @IsInt()
     @IsOptional()
@@ -31,6 +17,20 @@ export class GetCoursesQuery{
     @IsOptional()
     @Type(() => Number)
     limit?: number;
+
+    @IsOptional()
+    @Type(() => Object)
+    filter?: object
+
+    @IsBoolean()
+    @Transform(({ value} ) => value === 'true' || value === 'True')
+    @IsOptional()
+    joinStudents?: boolean;
+
+    @IsBoolean()
+    @Transform(({ value} ) => value === 'true' || value === 'True')
+    @IsOptional()
+    joinModules?: boolean;
 }
 
 export class PostCourse_ControllerStage{
@@ -108,4 +108,3 @@ export class CoursePutRequest_ValidationStage{
     @IsOptional()
     students?: string[];
 }
-
