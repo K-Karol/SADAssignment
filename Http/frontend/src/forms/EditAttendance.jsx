@@ -90,17 +90,17 @@ export default function EditAttendance() {
                     <label htmlFor="courseField">Course</label>
                     <Field as="select" name="courseField">
                         <option value=""></option>
-                        {courseList.map((course) => <option value={course._id}>{course.name} {course.yearOfEntry}</option>)}
+                        {courseList.map((course) => <option value={course._id}>{course.name} | Year: {course.yearOfEntry}</option>)}
                     </Field>
                     <label htmlFor="moduleField">Module</label>
                     <Field as="select" name="moduleField">
                         <option value=""></option>
-                        {courseList.map((course) => (course.modules.map((module) => ( <option value={module._id}>{module.name} {module.semester}</option>))))}
+                        {courseList.map((course) => (course.modules.map((module) => ( <option value={module._id}>{module.name} | Semester {module.semester}</option>))))}
                     </Field>
                     <label htmlFor="sessionField">Session</label>
                     <Field as="select" name="sessionField">
                         <option value=""></option>
-                        {sessionList.map((session) => <option value={session._id}>{session.type} {session.startDateTime}</option>)}
+                        {sessionList.map((session) => <option value={session._id}>{session.type} | Date & Time: {session.startDateTime}</option>)}
                     </Field>
                     <label htmlFor="studentField">Student</label>
                     <Field as="select" name="studentField">
