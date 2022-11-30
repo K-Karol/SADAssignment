@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 
 import { useSelector } from "react-redux";
+import Logout from "./Logout";
 
 export default function Main() {
   const user = useSelector((state) => state.user);
@@ -19,7 +20,8 @@ export default function Main() {
             What would you like to do today?
           </h2>
         </Grid>
-      </Grid>
+    </Grid>
+    <Logout/>
     </div>
   );
 }

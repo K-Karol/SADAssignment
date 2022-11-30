@@ -23,6 +23,10 @@ function reducer(state = initialState, action){
         localStorage.setItem('token', JSON.stringify(action.payload.tokenDetails));
         return {...state, isLoggedIn: true, roles: action.payload.tokenDetails.roles, user: action.payload.userDetails}
     }
+    if(action.type === "logout") {
+        localStorage.setItem('token', JSON.stringify(""));
+        return {...state, isLoggedIn: false, roles: [], user: undefined}
+    }
     if(action.type === "fetchUsers") {
         return {...state, users: action.payload.users, pagesAvailable: action.payload.pagesAvailable, totalRecords: action.payload.totalRecords}
     }

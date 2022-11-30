@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "SAD Attendance System",
+  "name": "SAD Attendance System Application",
+  "description": "This is our Software Architecture and Design attendance system for our group assignment.",
   "icons": [
     {
       "src": "favicon.ico",

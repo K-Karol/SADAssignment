@@ -3,13 +3,14 @@ import { AppBar, Box, Container, Grid, IconButton, Menu, MenuItem, Toolbar, Typo
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import styles from '../pages/GenerateCode/GenerateCode.module.css';
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 
 // being added back in SAD-005 when I've made it persist - easy fix but wanted to get 004 up to source control first.
 // Needs serious prettying up
 
 // set restrictedroles and check for them on return??
+// Fix spacing between buttons
 
 function NavMenu() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -30,7 +31,7 @@ function NavMenu() {
   };
 
 
-  const pages =  [<Grid container direction="row"  justifyContent="left" alignItems="left" spacing={{ xs: 1, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+  const pages =  [<Grid container direction="row"  justifyContent="left" alignItems="left" spacing={{ xs: 1, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} rows={{ xs: 2, sm: 4, md: 12}}>
   <Grid item xs={2} sm={4} md={4}>
     <Link to="/">
       <Button variant ="contained"> Home</Button>
@@ -46,15 +47,9 @@ function NavMenu() {
       <Button variant ="contained"> Generate Code</Button>
     </Link>
   </Grid>
-  
   <Grid item xs={2} sm={4} md={4}>
     <Link to="/viewOverallAttendance">
       <Button variant ="contained"> View Overall Attendance</Button>
-    </Link>
-  </Grid>
-  <Grid item xs={2} sm={4} md={4}>
-    <Link to="/login">
-      <Button variant ="contained"> Login</Button>
     </Link>
   </Grid>
   <Grid item xs={2} sm={4} md={4}>
@@ -64,7 +59,7 @@ function NavMenu() {
   </Grid>
   <Grid item xs={2} sm={4} md={4}>
     <Link to="/users">
-      <Button variant ="contained"> Users</Button>
+      <Button variant ="contained"> View Individual User Attendance</Button>
     </Link>
   </Grid>
 </Grid>]
