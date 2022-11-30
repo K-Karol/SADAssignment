@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react"
 import { fetchToken } from "../store";
 import {Button, Stack} from "@mui/material";
-import {Form, Field, Formik} from "formik";
+import { Field,} from "formik";
 import { useSelector, useDispatch } from "react-redux";
+import {FormEvent} from "react";
 
 export default function EditAttendance() {
 
@@ -15,6 +16,7 @@ export default function EditAttendance() {
     const [studentsList, setStudentsList] = useState([]);
     const [session, setSession] = useState("");
     const [student, setStudent] = useState("");
+    var [moduleid, setModuleID] = useState();
 
     const editAttendance = async () => {
         var newAttendanceRequest = await fetch (`${window.location.origin}/api/sessions/PatchUserAttendence/${sessionID}/${studentID}`, {
@@ -50,8 +52,32 @@ export default function EditAttendance() {
     });
   }, []);
 
-  useEffect(() => {
-    fetch(`${window.location.origin}/api/sessions/resource?joinStudents=true`,
+//{"module" : "ObjectID(63866a3fe3ddc3104189ef39)"}
+
+  const GetSessions = async () => {
+      sessionID = "63866a3fe3ddc3104189ef39";
+      var url = new URL(`${window.location.origin}/api/sessions/resource?joinStudents=true`);
+      url.searchParams.append("filter", '{"module" : "ObjectID(' + moduleid + ')"}');
+      fetch(url,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${fetchToken().token}`
+        },
+      }).then((res) => res.json())
+      .then((sessions) => {
+        if (sessions.Success) {
+          setSessionList(sessions.Response.sessions);
+        }
+      });
+  }
+
+  const GetStudents = async () => {
+    sessionID = "63866a3fe3ddc3104189ef39";
+    var url = new URL(`${window.location.origin}/api/sessions/resource?joinStudents=true`);
+    url.searchParams.append("filter", '{"_id" : "ObjectID(' + sessionID + ')"}');
+    fetch(url,
     {
       method: "GET",
       headers: {
@@ -59,17 +85,39 @@ export default function EditAttendance() {
         Authorization: `Bearer ${fetchToken().token}`
       },
     }).then((res) => res.json())
-    .then((sessions) => {
-      if (sessions.Success) {
-        setSessionList(sessions.Response.sessions);
+    .then((students) => {
+      if (students.Success) {
+        setStudentsList(students.Response.students);
       }
     });
-  }, []);
+}
+
+  const handleSubmit = async e => {
+    var c = await editAttendance();
+  }
+
+  const handleChangeModule = event => {
+    setModuleID(event.target.value)
+    var c = GetSessions();
+  }
+
+  const handleChangeSession = event => {
+    setSessionID(event.target.value)
+  }
+
+  const handleChangeStudent = event => {
+    setStudentID(event.target.value)
+  }
+
+  const handleChangeAttendance = event => {
+    setAttendance(event.target.value)
+    var c = GetStudents();
+  }
  
 
     return (
 
-    <div className="EditAttendance">
+    /*<div className="EditAttendance">
         <Formik
             initialValues={{
                 sessionField: '',
@@ -85,7 +133,7 @@ export default function EditAttendance() {
             }}
         >
 
-            <Form>
+            <Form onChange={handleOnChange}>
                 <Stack spacing={1}>
                     <label htmlFor="courseField">Course</label>
                     <Field as="select" name="courseField">
@@ -109,6 +157,7 @@ export default function EditAttendance() {
                     </Field>
                     <label htmlFor="attendanceField">Attendance</label>
                     <Field as="select" name="attendanceField">
+                        <option value=""></option>
                         <option value="late">Late</option>
                         <option value="not">Not</option>
                         <option value="full">Full</option>
@@ -116,7 +165,40 @@ export default function EditAttendance() {
                     <button type="submit"> Edit Attendance </button>
                 </Stack>
             </Form>
-        </Formik>
+        </Formik>*/
+<div className="EditAttendance">
+        <form onSubmit={handleSubmit}>
+          <Stack spacing={1}>
+                    <label htmlFor="courseField">Course</label>
+                    <select>
+                      <option value=""></option>
+                      {courseList.map((course) => <option value={course._id}>{course.name} | Year: {course.yearOfEntry}</option>)}
+                    </select >
+                    <label htmlFor="moduleField">Module</label>
+                    <select onChange={handleChangeModule}>
+                      <option value=""></option>
+                      {courseList.map((course) => (course.modules.map((module) => ( <option key={module._id} value={module._id}>{module.name} | Semester {module.semester}</option>))))}
+                    </select>
+                    <label htmlFor="sessionField">Session</label>
+                    <select onChange={handleChangeSession}>
+                      <option value=""></option>
+                      {sessionList.map((session) => <option value={session._id}>{session.type} | Date & Time: {session.startDateTime}</option>)}
+                    </select>
+                    <label htmlFor="studentField">Student</label>
+                    <select onChange={handleChangeStudent}>
+                      <option value=""></option>
+                      {studentsList.map((session) => (session.cohort.students.map((students) => <option value={students.student._id}>{students.student.fullname.firstname} {students.student.fullname.lastname}</option>)))}
+                    </select>
+                    <label htmlFor="attendanceField">Attendance</label>
+                    <select onChange={handleChangeAttendance}>
+                      <option value=""></option>
+                      <option value="late">Late</option>
+                      <option value="not">Not</option>
+                      <option value="full">Full</option>
+                    </select>
+                    <button type="submit"> Edit Attendance </button>
+                </Stack>
+        </form>
     </div>
     );
 }
