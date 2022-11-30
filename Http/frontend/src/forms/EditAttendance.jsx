@@ -2,17 +2,21 @@ import { useState, useEffect } from "react"
 import { fetchToken } from "../store";
 import {Button, Stack} from "@mui/material";
 import {Form, Field, Formik} from "formik";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function EditAttendance() {
 
-    const [sessionID, setSessionID] = useState();
-    const [studentID, setStudentID] = useState();
-    const [attendance, setAttendance] = useState();
+    var [sessionID, setSessionID] = useState();
+    var [studentID, setStudentID] = useState();
+    var [attendance, setAttendance] = useState();
+    const [courseList, setCourseList] = useState([]);
+    const [moduleList, setModuleList] = useState([]);
     const [sessionList, setSessionList] = useState([]);
     const [studentsList, setStudentsList] = useState([]);
     const [session, setSession] = useState("");
     const [student, setStudent] = useState("");
-
+    const dispatch = useDispatch();
+    const courseArray = useSelector((state) => state.courses);
 
     const editAttendance = async () => {
         var newAttendanceRequest = await fetch (`${window.location.origin}/api/sessions/PatchUserAttendence/${sessionID}/${studentID}`, {
@@ -31,7 +35,26 @@ export default function EditAttendance() {
     };
 
     console.log(`Bearer ${fetchToken().token}`);
-  
+
+  useEffect(() => {
+    fetch(`${window.location.origin}/api/courses/resource`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${fetchToken().token}`
+      },
+        body : JSON.stringify({
+            joinModules : true
+          })
+    }).then((res) => res.json())
+    .then((courses) => {
+      if (courses.Success) {
+        setCourseList(courses.Response.courses);
+      }
+    });
+  }, []);
+
   useEffect(() => {
     fetch(`${window.location.origin}/api/sessions/resource`,
     {
@@ -40,6 +63,14 @@ export default function EditAttendance() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${fetchToken().token}`
       },
+      params: {
+        body: JSON.stringify({
+            filter : {
+                module : "ObjectID(63866a3fe3ddc3104189ef39)"
+            },
+            joinStudents : true
+          })
+      }
     }).then((res) => res.json())
     .then((sessions) => {
       if (sessions.Success) {
@@ -47,6 +78,7 @@ export default function EditAttendance() {
       }
     });
   }, []);
+ 
 
     return (
 
@@ -58,7 +90,6 @@ export default function EditAttendance() {
                 attendanceField: ''
             }}
             onSubmit={async (values) => {
-                console.log("test");
                 await new Promise((r) => setTimeout(r, 500));
                 sessionID = values.sessionField;
                 studentID = values.studentField;
@@ -69,15 +100,25 @@ export default function EditAttendance() {
 
             <Form>
                 <Stack spacing={1}>
+                    <label htmlFor="courseField">Course</label>
+                    <Field as="select" name="courseField">
+                        <option value=""></option>
+                        {courseList.map((course) => <option value={course._id}>{course.name} {course.yearOfEntry}</option>)}
+                    </Field>
+                    <label htmlFor="moduleField">Module</label>
+                    <Field as="select" name="moduleField">
+                        <option value=""></option>
+                        {courseList.map((module) => <option value={module.modules}>{module.modules}</option>)}
+                    </Field>
                     <label htmlFor="sessionField">Session</label>
                     <Field as="select" name="sessionField">
                         <option value=""></option>
-                        {sessionList.map((session) => <option value={session._id}>{session._id}</option>)}
+                        {sessionList.map((session) => <option value={session._id}>{session.type} {session.startDateTime}</option>)}
                     </Field>
                     <label htmlFor="studentField">Student</label>
                     <Field as="select" name="studentField">
                         <option value=""></option>
-                        {studentsList.map((student) => <option value={student._id}>{student._id}</option>)}
+                        {sessionList.map((session) => <option value={session.students}>{session.cohort.students._id}</option>)}
                     </Field>
                     <label htmlFor="attendanceField">Attendance</label>
                     <Field as="select" name="attendanceField">
