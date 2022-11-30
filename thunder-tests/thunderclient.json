@@ -302,17 +302,27 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
     "name": "Get Users",
-    "url": "users/resource",
+    "url": "users/resource?joinCourses=true&filter={\"username\" : \"Admin\"}",
     "method": "GET",
     "sortNum": 30000,
     "created": "2022-11-14T11:14:33.035Z",
-    "modified": "2022-11-19T16:48:14.500Z",
+    "modified": "2022-11-30T17:09:20.192Z",
     "headers": [],
     "params": [
       {
         "name": "page",
         "value": "21",
         "isDisabled": true,
+        "isPath": false
+      },
+      {
+        "name": "joinCourses",
+        "value": "true",
+        "isPath": false
+      },
+      {
+        "name": "filter",
+        "value": "{\"username\" : \"Admin\"}",
         "isPath": false
       }
     ],
@@ -440,13 +450,19 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
     "name": "Get All sessions for student",
-    "url": "sessions/GetSessionsForStudent/6384f10c890aaedff397a36f",
+    "url": "sessions/GetSessionsForStudent/6384f10d890aaedff397a395?filter={\"module\" : \"ObjectID(6384f186890aaedff397a3asad8)\"}",
     "method": "GET",
     "sortNum": 100000,
     "created": "2022-11-14T15:56:02.634Z",
-    "modified": "2022-11-28T17:52:20.301Z",
+    "modified": "2022-11-30T17:12:07.964Z",
     "headers": [],
-    "params": [],
+    "params": [
+      {
+        "name": "filter",
+        "value": "{\"module\" : \"ObjectID(6384f186890aaedff397a3asad8)\"}",
+        "isPath": false
+      }
+    ],
     "body": {
       "type": "json",
       "raw": "{\n\n}",
@@ -527,11 +543,11 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "870408ec-c098-4f3c-85c1-7bf856026fb5",
     "name": "Get Modules",
-    "url": "modules/resource?page=1&limit=20",
+    "url": "modules/resource?page=1&limit=20&joinStudents=true&filter={\"moduleLeader\" : \"ObjectID(6384f179890aaedff397a3b1)\"}",
     "method": "GET",
     "sortNum": 130000,
     "created": "2022-11-16T19:37:02.922Z",
-    "modified": "2022-11-16T19:53:36.126Z",
+    "modified": "2022-11-30T16:47:24.228Z",
     "headers": [],
     "params": [
       {
@@ -543,13 +559,18 @@
         "name": "limit",
         "value": "20",
         "isPath": false
+      },
+      {
+        "name": "joinStudents",
+        "value": "true",
+        "isPath": false
+      },
+      {
+        "name": "filter",
+        "value": "{\"moduleLeader\" : \"ObjectID(6384f179890aaedff397a3b1)\"}",
+        "isPath": false
       }
     ],
-    "body": {
-      "type": "json",
-      "raw": "{\n  \"joinStudents\" : true\n\n}",
-      "form": []
-    },
     "tests": []
   },
   {
@@ -751,18 +772,59 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
     "name": "Get Sessions",
-    "url": "sessions/resource",
+    "url": "sessions/resource?joinActiveSessions=true&filter={ \"$expr\": { \"$in\": [ \"ObjectID(6384f10d890aaedff397a395)\", \"$cohort.students.student\" ] }, \"$nor\" : [ {\"activeSessions\" : {\"$exists\" : false}}, {\"activeSessions\" : {\"$size\" : 0}} ] }",
     "method": "GET",
     "sortNum": 270000,
     "created": "2022-11-28T14:39:05.788Z",
-    "modified": "2022-11-28T21:02:38.862Z",
+    "modified": "2022-11-30T17:10:18.085Z",
     "headers": [],
-    "params": [],
+    "params": [
+      {
+        "name": "joinActiveSessions",
+        "value": "true",
+        "isPath": false
+      },
+      {
+        "name": "filter",
+        "value": "{ \"$expr\": { \"$in\": [ \"ObjectID(6384f10d890aaedff397a395)\", \"$cohort.students.student\" ] }, \"$nor\" : [ {\"activeSessions\" : {\"$exists\" : false}}, {\"activeSessions\" : {\"$size\" : 0}} ] }",
+        "isPath": false
+      }
+    ],
     "body": {
       "type": "json",
       "raw": "{\n  \"filter\": {\n    \"$expr\": {\n      \"$in\": [\n        \"ObjectID(6384f10d890aaedff397a395)\",\n        \"$cohort.students.student\"\n      ]\n    },\n   \"$nor\" : [\n    {\"activeSessions\" : {\"$exists\" : false}},\n    {\"activeSessions\" : {\"$size\" : 0}}\n    ]\n  },\n  \"joinActiveSessions\": true\n}",
       "form": []
     },
+    "tests": []
+  },
+  {
+    "_id": "e8b9e92a-3f52-4713-83bf-7e7fde1027b9",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "83a72f30-0839-4dcb-9768-658d5c585bb0",
+    "name": "Get Courses",
+    "url": "courses/resource?joinModules=true&joinStudents=True&filter={\"yearOfEntry\" : \"2022\"}",
+    "method": "GET",
+    "sortNum": 280000,
+    "created": "2022-11-30T17:12:55.256Z",
+    "modified": "2022-11-30T17:14:40.294Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "joinModules",
+        "value": "true",
+        "isPath": false
+      },
+      {
+        "name": "joinStudents",
+        "value": "True",
+        "isPath": false
+      },
+      {
+        "name": "filter",
+        "value": "{\"yearOfEntry\" : \"2022\"}",
+        "isPath": false
+      }
+    ],
     "tests": []
   }
 ]
