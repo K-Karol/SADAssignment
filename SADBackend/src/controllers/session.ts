@@ -568,4 +568,4 @@ export default class SessionController {
     }
   }
 };
-}
+
