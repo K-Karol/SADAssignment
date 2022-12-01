@@ -34,6 +34,11 @@ function NavMenu() {
     </Link>
   </Grid>
   <Grid item xs={2} sm={4} md={4}>
+    <Link to="/registerAttendance">
+      <Button variant ="contained"> Register Attendance</Button>
+    </Link>
+  </Grid>
+  <Grid item xs={2} sm={4} md={4}>
     <Link to="/generateCode">
       <Button variant ="contained"> Generate Code</Button>
     </Link>
