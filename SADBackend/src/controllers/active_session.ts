@@ -77,6 +77,9 @@ export default class ActiveSessionController {
             var succesfullyUpdated = false;
             var maxStack = 16;
             var stackCount = 0;
+
+            var currentDateTime = new Date();
+
             while(!succesfullyUpdated && stackCount < maxStack){
                 stackCount++;
                 const currentActiveSession = await ActiveSession.findOne({code: requestDetails.code});
@@ -85,6 +88,8 @@ export default class ActiveSessionController {
                     throw new HttpException(400, "Active Session not found");
                 }
     
+                
+
                 const session = await Session.findById(currentActiveSession.session);
 
                 if(!session){
@@ -103,7 +108,21 @@ export default class ActiveSessionController {
                     throw new HttpException(400, "You have previously recorded your attendance");
                 }
 
-                foundSessionAttendance.attendance = "full";
+                var msDiffEOS = currentDateTime.getTime() - session.endDateTime.getTime();
+
+                if(Math.round(((msDiffEOS) / 1000) / 60) >= 0.0){
+                    throw new HttpException(400, "The session has already ended");
+                }
+
+                var msDiffLate = currentDateTime.getTime() - ((currentActiveSession as any)["createdAt"] as Date).getTime();
+
+                if(Math.round(((msDiffLate) / 1000) / 60) > 5.0){
+                    foundSessionAttendance.attendance = "late";
+                } else{
+                    foundSessionAttendance.attendance = "full";
+                }
+
+                
     
                 try{
                     session.save();
