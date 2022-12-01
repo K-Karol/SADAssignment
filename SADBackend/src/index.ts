@@ -65,23 +65,23 @@ app.get("/api", (req, res) => {res.send("Root of the API")})
 
 app.use(ErrorHandler);
 
-if(process.env.ENV === "DEV"){
-  const swaggerOptions = {
-    failOnErrors: true, // Whether or not to throw when parsing errors. Defaults to false.
-    definition: {
-      openapi: '3.0.2',
-      info: {
-        title: 'SADBackend REST API',
-        description: "NodeJS + TypeScript API for the SAD Attendance System.",
-        version: '1.0.0',
-      },
-    },
-    apis: ['swagger.yaml'],
-  };
+// if(process.env.ENV === "DEV"){
+//   const swaggerOptions = {
+//     failOnErrors: true, // Whether or not to throw when parsing errors. Defaults to false.
+//     definition: {
+//       openapi: '3.0.2',
+//       info: {
+//         title: 'SADBackend REST API',
+//         description: "NodeJS + TypeScript API for the SAD Attendance System.",
+//         version: '1.0.0',
+//       },
+//     },
+//     apis: ['swagger.yaml'],
+//   };
   
-  const specs = swaggerJSDoc(swaggerOptions);
-  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(specs));
-}
+//   const specs = swaggerJSDoc(swaggerOptions);
+//   app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(specs));
+// }
 
 
 app.listen(PORT, () => log.info("Server is up and running"));
