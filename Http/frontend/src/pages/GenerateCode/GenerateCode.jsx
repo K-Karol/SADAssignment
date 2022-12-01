@@ -1,4 +1,3 @@
-import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { fetchToken } from "../../store";
 import { Form, Field, Formik } from "formik";
@@ -6,14 +5,13 @@ import dayjs from 'dayjs';
 import { TextField, Stack } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { StaticTimePicker, DesktopTimePicker } from '@mui/x-date-pickers';
+import { DesktopTimePicker } from '@mui/x-date-pickers';
 
 export default function GenerateCode() {
   const [code, setCode] = useState("");
   const [isShown, setIsShown] = useState(false);
   const [moduleList, setModuleList] = useState([]);
   const [cohortsList, setCohortsList] = useState([]);
-  const [module, setmodule] = useState("");
   const [startTime, setStartTime] = useState(dayjs());
   const [endTime, setEndTime] = useState(dayjs());
 
