@@ -450,16 +450,16 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
     "name": "Get All sessions for student",
-    "url": "sessions/GetSessionsForStudent/6384f10d890aaedff397a395?filter={\"module\" : \"ObjectID(6384f186890aaedff397a3asad8)\"}",
+    "url": "sessions/GetSessionsForStudent/63880a7e75e2ee664ec40560?joinModule=true",
     "method": "GET",
     "sortNum": 100000,
     "created": "2022-11-14T15:56:02.634Z",
-    "modified": "2022-11-30T17:12:07.964Z",
+    "modified": "2022-12-01T09:52:23.987Z",
     "headers": [],
     "params": [
       {
-        "name": "filter",
-        "value": "{\"module\" : \"ObjectID(6384f186890aaedff397a3asad8)\"}",
+        "name": "joinModule",
+        "value": "true",
         "isPath": false
       }
     ],
@@ -496,19 +496,12 @@
     "name": "Create Module",
     "url": "modules/resource",
     "method": "POST",
-<<<<<<< HEAD
-=======
     "modified": "2022-11-24T14:10:21.187Z",
->>>>>>> 13831d6 (All CHAI tests done)
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-<<<<<<< HEAD
-      "raw": "{\n  \"name\" : \"Awesome Science 24\",\n  \"yearOfEntry\" : \"2022\",\n  \"courseLeader\" : \"6376526c429a15adc3184fe5\",\n  \"modules\" : [\"63766378136363abb643fae2\"],\n  \"students\" : [\"6376526c429a15adc3184fe5\"]\n}",
-=======
       "raw": "{\n    \"name\" : \"Awesome Science 245\",\n    \"year\": \"2022\",\n    \"semester\": \"SEM1\",\n    \"students\": [\"637dfab875f042c13c3aa209\"],\n    \"cohorts\": [{\n      \"identifier\": \"A1\",\n      \"students\": [\"637dfab875f042c13c3aa209\"]\n    }],\n    \"moduleLeader\": \"636cf8b4e79b126d6d2989c1\",\n    \"instructors\": [\"636cf8b4e79b126d6d2989c1\"]\n}",
->>>>>>> 13831d6 (All CHAI tests done)
       "form": []
     },
     "tests": []
@@ -546,7 +539,6 @@
     "tests": []
   },
   {
-<<<<<<< HEAD
     "_id": "a554b736-9363-4049-81fb-bbae78a53083",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
@@ -594,8 +586,6 @@
     "tests": []
   },
   {
-=======
->>>>>>> 13831d6 (All CHAI tests done)
     "_id": "b6bef16a-04f5-4708-b6a9-8e9b416e10b4",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "870408ec-c098-4f3c-85c1-7bf856026fb5",
@@ -698,7 +688,6 @@
     "tests": []
   },
   {
-<<<<<<< HEAD
     "_id": "c560084d-5ad7-4324-aca4-514faf966094",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "83a72f30-0839-4dcb-9768-658d5c585bb0",
@@ -719,9 +708,6 @@
   },
   {
     "_id": "38e450a6-09c7-44f5-8f4b-ef0f84fbc18d",
-=======
-    "_id": "639570c1-bb9c-4fd4-97a4-366fc36907a2",
->>>>>>> 13831d6 (All CHAI tests done)
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "870408ec-c098-4f3c-85c1-7bf856026fb5",
     "name": "Delete Module",
@@ -735,39 +721,6 @@
     "tests": []
   },
   {
-<<<<<<< HEAD
-    "_id": "b7ae0da2-85d6-4a18-9fbb-20624433efe8",
-    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
-    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
-    "name": "Find User Attendence",
-    "url": "sessions/GetUserAttendence/637f7ee41033a2dd0c455ac7/636cf6dce79b126d6d2989bd",
-    "method": "GET",
-    "sortNum": 190000,
-    "created": "2022-11-24T14:32:47.344Z",
-    "modified": "2022-11-24T14:42:31.550Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "2153950e-85dd-4f0a-bf8e-2d8b0e4f9fba",
-    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
-    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
-    "name": "Patch Attendence ",
-    "url": "sessions/PatchUserAttendence/637f7ee41033a2dd0c455ac7/636cf6dce79b126d6d2989bd",
-    "method": "PATCH",
-    "sortNum": 200000,
-    "created": "2022-11-24T14:42:00.532Z",
-    "modified": "2022-11-24T14:42:00.532Z",
-    "headers": [],
-    "params": [],
-    "body": {
-      "type": "json",
-      "raw": "{\n  \"attendance\" : \"late\"\n}",
-      "form": []
-    },
-    "tests": []
-=======
     "_id": "3ad4786e-bbea-4ca6-b209-de3963bb7b94",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
@@ -862,6 +815,39 @@
     "tests": []
   },
   {
+    "_id": "b7ae0da2-85d6-4a18-9fbb-20624433efe8",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Find User Attendence",
+    "url": "sessions/GetUserAttendence/637f7ee41033a2dd0c455ac7/636cf6dce79b126d6d2989bd",
+    "method": "GET",
+    "sortNum": 190000,
+    "created": "2022-11-24T14:32:47.344Z",
+    "modified": "2022-11-24T14:42:31.550Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "2153950e-85dd-4f0a-bf8e-2d8b0e4f9fba",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Patch Attendence ",
+    "url": "sessions/PatchUserAttendence/637f7ee41033a2dd0c455ac7/636cf6dce79b126d6d2989bd",
+    "method": "PATCH",
+    "sortNum": 200000,
+    "created": "2022-11-24T14:42:00.532Z",
+    "modified": "2022-11-24T14:42:00.532Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"attendance\" : \"late\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
     "_id": "2153950e-85dd-4f0a-bf8e-2d8b0e4f9fba",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
@@ -885,11 +871,11 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
     "name": "Get Sessions",
-    "url": "sessions/resource?joinActiveSessions=true&filter={\"_id\" : \"ObjectID(63880b0075e2ee664ec40642)\"}&joinStudents=true",
+    "url": "sessions/resource?joinActiveSessions=true&joinStudents=true",
     "method": "GET",
     "sortNum": 270000,
     "created": "2022-11-28T14:39:05.788Z",
-    "modified": "2022-12-01T02:02:38.978Z",
+    "modified": "2022-12-01T09:47:15.151Z",
     "headers": [],
     "params": [
       {
@@ -900,6 +886,7 @@
       {
         "name": "filter",
         "value": "{\"_id\" : \"ObjectID(63880b0075e2ee664ec40642)\"}",
+        "isDisabled": true,
         "isPath": false
       },
       {
@@ -952,26 +939,13 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
     "name": "Get My Sessions",
-    "url": "sessions/GetMySession",
+    "url": "sessions/GetMySessions",
     "method": "GET",
     "sortNum": 290000,
     "created": "2022-12-01T02:19:52.168Z",
-    "modified": "2022-12-01T02:39:03.362Z",
+    "modified": "2022-12-01T10:09:17.948Z",
     "headers": [],
-    "params": [
-      {
-        "name": "filter",
-        "value": "",
-        "isDisabled": true,
-        "isPath": false
-      },
-      {
-        "name": "joinModule",
-        "value": "true",
-        "isDisabled": true,
-        "isPath": false
-      }
-    ],
+    "params": [],
     "tests": []
   }
 ]

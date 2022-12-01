@@ -87,6 +87,11 @@ export class GetSessionsForStudentQuery{
     @IsOptional()
     @Type(() => Object)
     filter?: object
+
+    @IsBoolean()
+    @Transform(({ value} ) => value === 'true' || value === 'True')
+    @IsOptional()
+    joinModule?: boolean;
 }
 
 export class GetMySessionsQuery{
