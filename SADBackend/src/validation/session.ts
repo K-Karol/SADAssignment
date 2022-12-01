@@ -89,6 +89,31 @@ export class GetSessionsForStudentQuery{
     filter?: object
 }
 
+export class GetMySessionsQuery{
+    @IsInt()
+    @IsOptional()
+    @Type(() => Number)
+    page?: number;
+    @IsInt()
+    @IsOptional()
+    @Type(() => Number)
+    limit?: number;
+
+    @IsOptional()
+    @Type(() => Object)
+    filter?: object
+
+    // @IsBoolean()
+    // @Transform(({ value} ) => value === 'true' || value === 'True')
+    // @IsOptional()
+    // joinActiveSessions?: boolean;
+
+    @IsBoolean()
+    @Transform(({ value} ) => value === 'true' || value === 'True')
+    @IsOptional()
+    joinModule?: boolean;
+}
+
 
 export class GetSessionsQuery{
     @IsInt()

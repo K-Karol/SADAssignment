@@ -1,13 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import mongoose, { AggregatePaginateModel, isValidObjectId, model, Schema, Types } from "mongoose";
 import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException, RemoveUndefinedFieldsRoot } from "../helpers";
-import { GetSessionForStudentParams_ControllerStage,  GetSessionsForStudentQuery, SessionPostRequest_ControllerStage, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody, GetAttendenceForSessionParams, GetSessionByID_ControllerStage, SessionPutRequest_ControllerStage, GetSessionsQuery } from "../validation/session";
+import { GetSessionForStudentParams_ControllerStage,  GetSessionsForStudentQuery, SessionPostRequest_ControllerStage, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody, GetAttendenceForSessionParams, GetSessionByID_ControllerStage, SessionPutRequest_ControllerStage, GetSessionsQuery, GetMySessionsQuery } from "../validation/session";
 import { Module } from "../models/module";
 import { ICohortWithAttendance, ISession, IStudentWithAttendance } from "../interfaces/session";
 import { Session, SessionPaginate } from "../models/session";
 import { GenerateBaseExcludes as UserGenerateBaseExcludes } from "../models/user";
 import { plainToInstance } from "class-transformer";
 import { User } from "../models/user";
+import { IAuthenticatedRequest } from "../interfaces/auth";
 // import {aggregate} from 'mongoose-aggregate-paginate-v2';
 
 export default class SessionController {
@@ -280,7 +281,142 @@ export default class SessionController {
       SessionPaginate.aggregatePaginate(myAggregate, options)
         .then((result) => res.status(200).json(GenerateAPIResult(true, result)))
         .catch((err) => {
-          next(new HttpException(500, "Failed to fetch users", undefined, err));
+          next(new HttpException(500, "Failed to fetch sessions", undefined, err));
+        });
+
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  public GetMySessions = async (req: IAuthenticatedRequest, res: Response, next: NextFunction) => {
+    try {
+      var reqQuery: GetMySessionsQuery = plainToInstance(GetMySessionsQuery, (req['query'] as any), {});
+
+      if (reqQuery.filter) {
+        try {
+          reqQuery.filter = JSON.parse((reqQuery.filter as unknown as string));
+        } catch (err) {
+          throw new HttpException(400, "Cannot convert the filter to a JSON object", undefined, err as Error);
+        }
+        GoThroughJSONAndReplaceObjectIDs(reqQuery.filter);
+      }
+
+      let aggregate_options = [];
+
+      var temp = req.query.page;
+
+      let page = 1;
+      let limit = 20;
+
+      if (reqQuery.page) {
+        page = reqQuery.page;
+      }
+
+      if (reqQuery.limit) {
+        limit = reqQuery.limit;
+      }
+
+      const options = {
+        page,
+        limit,
+        collation: { locale: "en" },
+        customLabels: {
+          totalDocs: "totalResults",
+          docs: "sessions",
+        },
+      };
+
+      aggregate_options.push(
+        {
+          $match: {
+            $expr: {
+              $in: [(((req.User! as typeof User) as any)["_id"] as Types.ObjectId), "$cohort.students.student"]
+            }
+          }
+        }, {
+        $unwind: {
+          path: "$cohort.students"
+        }
+      },
+        {
+          $match: {
+            "cohort.students.student": (((req.User! as typeof User) as any)["_id"] as Types.ObjectId)
+          }
+        },
+        {
+          $set: {
+            "student": "$cohort.students.student",
+            "attendance" : "$cohort.students.attendance",
+            "cohortIdentifier" : "$cohort.identifier" 
+          }
+        },
+        { $unset: 'cohort' }
+      );
+
+      //remove irrelevant students
+
+      if (reqQuery.joinModule) {
+        aggregate_options.push({
+          '$lookup': {
+            'from': 'modules',
+            'localField': 'module',
+            'foreignField': '_id',
+            'as': 'module'
+          }
+        }, {
+          '$set': {
+            'module': {
+              '$arrayElemAt': [
+                '$module', 0
+              ]
+            }
+          }
+        }
+        );
+
+        aggregate_options.push({$project : {"module.students" : 0 }});
+        aggregate_options.push({$project : {"module.cohorts" : 0 }});
+        aggregate_options.push({$project : {"module.moduleLeader" : 0 }});
+        aggregate_options.push({$project : {"module.instructors" : 0 }});
+      }
+
+
+
+
+      // if (reqQuery.joinActiveSessions) {
+      //   aggregate_options.push(
+      //     {
+      //       '$lookup': {
+      //         'from': 'activesessions',
+      //         'let': {
+      //           'session_id': '$_id'
+      //         },
+      //         'pipeline': [
+      //           {
+      //             '$match': {
+      //               '$expr': {
+      //                 '$eq': [
+      //                   '$$session_id', '$session'
+      //                 ]
+      //               }
+      //             }
+      //           }
+      //         ],
+      //         'as': 'activeSessions'
+      //       }
+      //     }
+      //   );
+      // }
+
+      if (reqQuery.filter) aggregate_options.push({ $match: reqQuery.filter });
+
+      const myAggregate = SessionPaginate.aggregate(aggregate_options);
+
+      SessionPaginate.aggregatePaginate(myAggregate, options)
+        .then((result) => res.status(200).json(GenerateAPIResult(true, result)))
+        .catch((err) => {
+          next(new HttpException(500, "Failed to fetch sessions", undefined, err));
         });
 
     } catch (err) {
