@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import GenerateCode from "./GenerateCode";
 

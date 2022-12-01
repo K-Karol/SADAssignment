@@ -1,33 +1,28 @@
-import React, { useState } from "react";
-import { AppBar, Box, Container, Grid, IconButton, Menu, MenuItem, Toolbar, Typography, Button, Stack } from '@mui/material';
+import { useState } from "react";
+import { AppBar, Box, Container, Grid, IconButton, Menu, MenuItem, Toolbar, Typography, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
-import styles from '../pages/GenerateCode/GenerateCode.module.css';
-
-
-// being added back in SAD-005 when I've made it persist - easy fix but wanted to get 004 up to source control first.
-// Needs serious prettying up
+import { useSelector } from "react-redux";
 
 function NavMenu() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const [anchorNav, setAnchorNav] = useState(null);
+  const [anchorUser, setAnchorUser] = useState(null);
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
+    setAnchorNav(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+    setAnchorNav(null);
   };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    setAnchorUser(null);
   };
 
-  const pages =  [<Grid container direction="row"  justifyContent="left" alignItems="left" spacing={{ xs: 1, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+  const roles = useSelector((state) => state.roles);
+  const user = useSelector((state) => state.user);
+
+  const pages =  [<Grid container direction="row"  justifyContent="left" alignItems="left" spacing={{ xs: 1, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} rows={{ xs: 2, sm: 4, md: 12}}>
   <Grid item xs={2} sm={4} md={4}>
     <Link to="/">
       <Button variant ="contained"> Home</Button>
@@ -44,36 +39,31 @@ function NavMenu() {
     </Link>
   </Grid>
   <Grid item xs={2} sm={4} md={4}>
-    <Link to="/viewAttendance">
+    <Link to="/users">
       <Button variant ="contained"> View Attendance</Button>
     </Link>
   </Grid>
   <Grid item xs={2} sm={4} md={4}>
-    <Link to="/generateReport">
-      <Button variant ="contained"> Generate Report</Button>
+    <Link to="/myAttendance">
+      <Button variant ="contained"> My Attendance</Button>
     </Link>
   </Grid>
   <Grid item xs={2} sm={4} md={4}>
-    <Link to="/databaseTest">
-      <Button variant ="contained"> Databases</Button>
+    <Link to="/logout">
+      <Button variant ="contained"> Logout</Button>
     </Link>
   </Grid>
   <Grid item xs={2} sm={4} md={4}>
-    <Link to="/login">
-      <Button variant ="contained"> Login</Button>
-    </Link>
-  </Grid>
-  <Grid item xs={2} sm={4} md={4}>
-    <Link to="/register">
-      <Button variant ="contained"> Register</Button>
-    </Link>
+    <Typography component={'span'}>
+      Current User: {user.fullname.firstname} {user.fullname.lastname} ({roles[0] ?? "Student"})
+    </Typography>
   </Grid>
 </Grid>]
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography variant ="h6" className={styles.rainbow_text_animated} noWrap             sx={{
+          <Typography component={'span'} variant ="h6" noWrap sx={{
               mr: 2,
               display: { xs: 'flex', md: 'flex' },
               fontWeight: 700,
@@ -93,7 +83,7 @@ function NavMenu() {
             </IconButton>
             <Menu
               id="menu-appbar"
-              anchorEl={anchorElNav}
+              anchorEl={anchorNav}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'left',
@@ -103,7 +93,7 @@ function NavMenu() {
                 vertical: 'top',
                 horizontal: 'left',
               }}
-              open={Boolean(anchorElNav)}
+              open={Boolean(anchorNav)}
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: 'block', md: 'none' },
@@ -111,7 +101,7 @@ function NavMenu() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography component={'span'} textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -119,6 +109,7 @@ function NavMenu() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
+                component="span"
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
@@ -127,12 +118,11 @@ function NavMenu() {
               </Button>
             ))}
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
-              anchorEl={anchorElUser}
+              anchorEl={anchorUser}
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
@@ -142,7 +132,7 @@ function NavMenu() {
                 vertical: 'top',
                 horizontal: 'right',
               }}
-              open={Boolean(anchorElUser)}
+              open={Boolean(anchorUser)}
               onClose={handleCloseUserMenu}
             >
             </Menu>
@@ -152,36 +142,4 @@ function NavMenu() {
     </AppBar>
       );
 };
-/*     //       <div className="navigation-links">
-    //       <Stack direction="row" spacing={2}>
-    //                 <Link to="/">
-    //                     <Button variant ="contained"> Home</Button>
-    //                 </Link>
-    //                 <Link to="/editAttendance">
-    //                     <Button variant ="contained"> Edit Attendance</Button>
-    //                 </Link>
-    //                 <Link to="/generateCode">
-    //                     <Button variant ="contained"> Generate Code</Button>
-    //                 </Link>
-    //                 <Link to="/viewAttendance">
-    //                     <Button variant ="contained"> View Attendance</Button>
-    //                 </Link>
-    //                 <Link to="/generateReport">
-    //                     <Button variant ="contained"> Generate Report</Button>
-    //                 </Link>
-    //                 <Link to="/databaseTest">
-    //                     <Button variant ="contained"> Databases</Button>
-    //                 </Link>
-    //                 <Link to="/login">
-    //                     <Button variant ="contained"> Login</Button>
-    //                 </Link>
-    //                 <Link to="/register">
-    //                   <Button variant ="contained"> Register</Button>
-    //                 </Link>
-    //         </Stack>       
-    //       </div>
-    //     </Toolbar>
-    //   </Container>
-    // </AppBar> */
-
 export default NavMenu;

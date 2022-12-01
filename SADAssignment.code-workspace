@@ -19,7 +19,18 @@
 				"remoteRoot": "/app/src",
 				"sourceMaps": true,
 				"protocol": "inspector",
-			}
+			},
+			{
+				"type": "chrome",
+				"request": "launch",
+				"name": "Launch Chrome against fronend",
+				"url": "https://localhost",
+				"webRoot": "${workspaceFolder}/Http/frontend",
+				"pathMapping": {
+					"localRoot": "${workspaceFolder}/Http/frontend/src",
+            		"remoteRoot": "/app/src"
+				}
+			  }
 		]
 	}
 }
