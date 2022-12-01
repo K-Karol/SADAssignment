@@ -14,6 +14,7 @@ import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import ViewMyAttendance from './pages/VisualiseAttendance/ViewMyAttendance.jsx';
+import RegisterAttendance from './pages/RegisterAttendance.jsx';
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
               <Route path='/editAttendance' element={<EditAttendance/>}/>
               <Route path='/generateCode' element={<GenerateCode/>}/>
               <Route path='/viewAttendance' element={<ViewAttendance/>}/> 
+              <Route path='/registerAttendance' element={<RegisterAttendance/>}/> 
               <Route path='/myAttendance' element={<ViewMyAttendance/>}/> 
               <Route path='/logout' element={<Logout/>}/>
               <Route path='/users' element={<UserTable/>}/>
