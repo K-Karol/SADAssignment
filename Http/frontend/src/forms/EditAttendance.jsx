@@ -1,65 +1,286 @@
-import { useState } from "react"
+import { useState, useEffect } from "react";
 import { fetchToken } from "../store";
-import {Button} from "@mui/material";
-
+import {
+  Button,
+  FormControl,
+  MenuItem,
+  TextField,
+} from "@mui/material";
 export default function EditAttendance() {
+  const [form_course, setCourse] = useState(null);
+  const [form_module, setModule] = useState(null);
+  const [form_session, setSession] = useState(null);
+  const [form_student, setStudent] = useState(null);
+  const [form_attendance, setAttendance] = useState("not");
 
-    const [sessionID, setSessionID] = useState();
-    const [studentID, setStudentID] = useState();
-    const [attendance, setAttendance] = useState();
+  const [courseList, setCourseList] = useState([]);
+  const [moduleList, setModuleList] = useState([]);
+  const [sessionList, setSessionsList] = useState([]);
+  const [studentList, setStudentList] = useState([]);
 
-    const editAttendance = async () => {
-        console.log(attendance)
-        var newAttendanceRequest = await fetch (`${window.location.origin}/api/sessions/PatchUserAttendence/${sessionID}/${studentID}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${fetchToken().token}`,
-            },
-            body: JSON.stringify({
-                attendance: attendance,
-            })
-        })
-        .then(response => {console.log(response.status)
-            return response.json();})
-        .then(data=> console.log(data));
-        var newAttendance = await newAttendanceRequest.json();
-    };
 
-    const handleSubmit = async e => {
-        var c = await editAttendance();
+  const [moduleDisabled, setModuleDisabled] = useState(true);
+  const [sessionDisabled, setSessionDisabled] = useState(true);
+  const [studentDisabled, setStudentDisabled] = useState(true);
+  const [attendanceDisabled, setAttendanceDisabled] = useState(true);
+
+  const [submitColourButton, setSubmitColourButton] = useState("primary")
+
+  console.log(`Bearer ${fetchToken().token}`);
+
+  const getAllCourses = async () => {
+    var page = 1;
+    var courses = [];
+    var hasNextPage = true;
+    while (hasNextPage) {
+      var url = new URL(`${window.location.origin}/api/courses/resource`);
+      url.searchParams.append("joinModules", true);
+      url.searchParams.append("page", page);
+      var request = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${fetchToken().token}`,
+        },
+      });
+
+      var requestBody = await request.json();
+      if (requestBody.Success) {
+        courses = courses.concat(requestBody.Response.courses);
+        hasNextPage = requestBody.Response.hasNextPage;
+        page++;
+      }
     }
 
-    return (
-        <div className="EditAttendance">
-            <h1> Manually edit attendance, form goes here</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    <p>Session ID</p>
-                    <input type="text" onChange={e => setSessionID(e.target.value)}/>
-                </label>
-                <label>
-                    <p>Student ID</p>
-                    <input type="text" onChange={e => setStudentID(e.target.value)}/>
-                </label>
-                <label>
-                    <p>Attendance</p>
-                    <select name="Attendance" onChange={e => setAttendance(e.target.value)}>Attendance
-                        <option value="late">Late</option>
-                        <option value="not">Not</option>
-                        <option value="full">Full</option>
-                    </select>
-                </label>
-                <div>
-                    <Button variant="contained" type="submit">Submit</Button>
-                </div>
-            </form>
-        </div>
+    setCourseList(courses);
+  };
 
-    )
+  useEffect(() => {
+    getAllCourses();
+  }, []);
+
+  const getSessionsForModule = async (module) => {
+    var page = 1;
+    var sessions = [];
+    var hasNextPage = true;
+    while (hasNextPage) {
+      var url = new URL(`${window.location.origin}/api/sessions/resource`);
+      url.searchParams.append("joinStudents", true);
+      url.searchParams.append("page", page);
+      url.searchParams.append(
+        "filter",
+        JSON.stringify({ module: `ObjectID(${module._id})` })
+      );
+      var request = await fetch(
+        url,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${fetchToken().token}`,
+          },
+        }
+      );
+
+      var requestBody = await request.json();
+      if (requestBody.Success) {
+        sessions = sessions.concat(requestBody.Response.sessions);
+        hasNextPage = requestBody.Response.hasNextPage;
+      }
+    }
+
+    setSessionsList(sessions);
+  };
+
+  const submitAttendanceData = async () => {
+    var url = new URL(`${window.location.origin}/api/sessions/PatchUserAttendence/${form_session._id}/${form_student.student._id}`);
+    var request = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${fetchToken().token}`,
+      },
+      body: JSON.stringify({
+        attendance: form_attendance
+      })
+    });
+
+    var body = await request.json();
+    if (!body.Success) {
+      return false;
+    }
+
+    return true;
+
+  }
+
+  const handleCourseChange = (event) => {
+    if (!form_course || form_course._id != event.target.value._id) {
+      setCourse(event.target.value);
+      setModule(null);
+      setModuleList(event.target.value.modules);
+      setModuleDisabled(false);
+      setSessionDisabled(true);
+      setStudentDisabled(true);
+      setAttendanceDisabled(true);
+      setSession(null);
+      setSessionsList([]);
+      setStudent(null);
+      setStudentList([]);
+      setAttendance("not");
+    } else {
+      setCourse(event.target.value);
+    }
+  };
+
+  const handleModuleChange = async (event) => {
+    if (!form_module || form_module._id != event.target.value._id) {
+      setModule(event.target.value);
+      setSessionDisabled(false);
+      setSession(null);
+      await getSessionsForModule(event.target.value);
+      setStudentDisabled(true);
+      setStudent(null);
+      setStudentList([]);
+      setAttendanceDisabled(true);
+      setAttendance("not");
+    } else {
+      setModule(event.target.value);
+    }
+  };
+
+  const handleSessionChange = async (event) => {
+    if (!form_session || form_session._id != event.target.value._id) {
+      setSession(event.target.value);
+      setStudentDisabled(false);
+      setStudent(null);
+      setStudentList(event.target.value.cohort.students);
+      setAttendanceDisabled(true);
+      setAttendance("not");
+    } else {
+      setSession(event.target.value);
+    }
+  };
+
+  const handleStudentChange = async (event) => {
+    if (!form_student || form_student.student._id != event.target.value._id) {
+      setStudent(event.target.value);
+      setAttendanceDisabled(false);
+      setAttendance(event.target.value.attendance);
+    } else {
+      setStudent(event.target.value);
+    }
+  };
+
+  const handleAttendanceChange = async (event) => {
+    if (!form_attendance || form_attendance != event.target.value) {
+      setAttendance(event.target.value);
+    } else {
+      setAttendance(form_attendance);
+    }
+  };
+
+  const onSubmit = async () => {
+    setSubmitColourButton("primary");
+    if (!form_course || !form_module || !form_session || !form_student || !form_attendance) {
+      setSubmitColourButton("error");
+      alert("All fields must not be empty");
+    } else {
+      var res = await submitAttendanceData();
+      if (res) {
+        setSubmitColourButton("success");
+      } else {
+        setSubmitColourButton("error");
+      }
+
+    }
+  };
+
+  return (
+    <div className="EditAttendance">
+      <FormControl
+        style={{
+          marginTop: 20,
+          display: "flex",
+          flexDirection: "column",
+          rowGap: "20px",
+        }}
+      >
+        <TextField
+          label="Course"
+          id="select-course"
+          sx={{ width: 300 }}
+          value={form_course}
+          select
+          onChange={handleCourseChange}
+        >
+          {courseList.map((course) => (
+            <MenuItem value={course}>
+              {course.name} | Year: {course.yearOfEntry}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          id="select-module"
+          label="Module"
+          value={form_module}
+          sx={{ width: 300 }}
+          onChange={handleModuleChange}
+          select
+          disabled={moduleDisabled}
+        >
+          {moduleList.map((module) => (
+            <MenuItem value={module}>
+              {module.name} | Semester {module.semester}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          id="select-session"
+          label="Session"
+          value={form_session}
+          sx={{ width: 300 }}
+          onChange={handleSessionChange}
+          select
+          disabled={sessionDisabled}
+        >
+          {sessionList.map((session) => (
+            <MenuItem value={session}>
+              {session.type} | Date & Time: {session.startDateTime}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          id="select-student"
+          label="Student"
+          value={form_student}
+          sx={{ width: 300 }}
+          onChange={handleStudentChange}
+          select
+          disabled={studentDisabled}
+        >
+          {studentList.map((studentAttendance) => (
+            <MenuItem value={studentAttendance}>
+              {studentAttendance.student.fullname.firstname} {studentAttendance.student.fullname.lastname}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          id="select-attendance"
+          label="Attendance"
+          value={form_attendance}
+          sx={{ width: 300 }}
+          onChange={handleAttendanceChange}
+          select
+          disabled={attendanceDisabled}
+        >
+          <MenuItem value="not">Not</MenuItem>
+          <MenuItem value="late">Late</MenuItem>
+          <MenuItem value="full">Full</MenuItem>
+
+        </TextField>
+        <Button sx={{ width: 300 }} variant="outlined" color={submitColourButton} onClick={onSubmit}>Submit</Button>
+      </FormControl>
+    </div>
+  );
 }
-// do the extend period thing here
-// extenuating circumstances etc - easy to do with API call
-// could also include change status of session too 
-// with RBAC we limit his edit access
-// get the roles from the token, and that governs what can be done
