@@ -6,12 +6,8 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",
-<<<<<<< HEAD
     "dev": "nodemon src/index.ts --legacy-watch",
     "test": "mocha --inspect=0.0.0.0:9229 -r ts-node/register 'src/**/*.ts'"
-=======
-    "dev": "nodemon src/index.ts --legacy-watch"
->>>>>>> d03900a (changed the scripts and dockerfile to build backend during composing (build) and run the built files instead of nodemon so it is less taxing during frontend since debugging backend is not needed.)
   },
   "keywords": [],
   "author": "",
