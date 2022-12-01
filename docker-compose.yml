@@ -4,7 +4,7 @@ services:
   sad-backend:
     build:
       context: SADBackend/.
-      target: prod-builder
+      target: dist-builder
       dockerfile: Dockerfile
     container_name: sad-backend
     expose:

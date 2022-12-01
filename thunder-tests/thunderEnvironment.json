@@ -5,14 +5,7 @@
     "default": true,
     "sortNum": 10000,
     "created": "2022-11-03T10:53:35.009Z",
-<<<<<<< HEAD
     "modified": "2022-11-19T16:40:46.341Z",
-    "data": [
-      {
-        "name": "access-token",
-        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiI2Mzc5MDJjNTdmZTVjMDE5NzQ4OTU3YTgiLCJpYXQiOjE2Njg4NzYwNDYsImV4cCI6MTY2ODg4MzI0Nn0.kt5PKt7BISLvxeimx3tAs_TuXj0vPQQGH_e3AWgzghg"
-=======
-    "modified": "2022-11-24T13:54:47.857Z",
     "data": [
       {
         "name": "access-token",
