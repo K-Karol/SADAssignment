@@ -6,7 +6,6 @@ import LoginForm from './forms/LoginForm';
 import EditAttendance from './forms/EditAttendance.jsx';
 import GenerateCode from './pages/GenerateCode/GenerateCode.jsx';
 import ViewAttendance from './pages/VisualiseAttendance/ViewAttendance.jsx';
-import RegisterForm from './forms/RegisterForm.jsx';
 import Logout from './pages/Logout.jsx';
 import { useSelector } from 'react-redux'
 import UserTable from './pages/VisualiseAttendance/UserTable.jsx';
@@ -25,11 +24,9 @@ function App() {
           <Routes>
             <Route exact path="/" element={<Main/>} />
             <Route path='/login' element={<LoginForm/>} />
-            {/* <Route path='/register' element={<RegisterForm/>} /> */}
             <Route path='/editAttendance' element={<EditAttendance/>}/>
             <Route path='/generateCode' element={<GenerateCode/>}/>
             <Route path='/viewAttendance' element={<ViewAttendance/>}/> 
-            {/* <Route path="/viewOverallAttendance" element={<ViewOverallAttendance/>}/>   */}
             <Route path='/logout' element={<Logout/>}/>
             <Route path='/users' element={<UserTable/>}/>
           </Routes>

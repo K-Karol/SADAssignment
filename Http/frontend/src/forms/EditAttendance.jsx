@@ -294,7 +294,4 @@ export default function EditAttendance() {
   return(
     <Unauthorised/>
   )
-
-
-
 }

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { AppBar, Box, Container, Grid, IconButton, Menu, MenuItem, Toolbar, Typography, Button, Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
-import styles from '../pages/GenerateCode/GenerateCode.module.css';
 import { useSelector } from "react-redux";
 
 
@@ -62,7 +61,7 @@ function NavMenu() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography variant ="h6" className={styles.rainbow_text_animated} noWrap             sx={{
+          <Typography variant ="h6" noWrap sx={{
               mr: 2,
               display: { xs: 'flex', md: 'flex' },
               fontWeight: 700,
