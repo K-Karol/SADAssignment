@@ -60,7 +60,10 @@ export default function EditAttendance() {
   };
 
   useEffect(() => {
-    getAllCourses();
+    if(roles.includes(adminRoles)){
+      getAllCourses();
+    }
+    
   }, []);
 
   const getSessionsForModule = async (module) => {
@@ -199,7 +202,7 @@ export default function EditAttendance() {
 
     }
   };
-  if(roles.toString() === adminRoles) {
+  if(roles.includes(adminRoles)) {
     return (
       <div className="EditAttendance">
         <FormControl
