@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { fetchToken } from "../store";
+import { useSelector } from "react-redux";
 import {
   Button,
   FormControl,
   MenuItem,
   TextField,
 } from "@mui/material";
+import Unauthorised from "../pages/Unauthorised"
+
 export default function EditAttendance() {
   const [form_course, setCourse] = useState(null);
   const [form_module, setModule] = useState(null);
@@ -25,6 +28,9 @@ export default function EditAttendance() {
   const [attendanceDisabled, setAttendanceDisabled] = useState(true);
 
   const [submitColourButton, setSubmitColourButton] = useState("primary")
+
+  const roles = useSelector((state) => state.roles);
+  const adminRoles = "Admin";
 
   console.log(`Bearer ${fetchToken().token}`);
 
@@ -86,6 +92,7 @@ export default function EditAttendance() {
       if (requestBody.Success) {
         sessions = sessions.concat(requestBody.Response.sessions);
         hasNextPage = requestBody.Response.hasNextPage;
+        console.log("HAPPY HAPPY HAPPY");
       }
     }
 
@@ -195,92 +202,99 @@ export default function EditAttendance() {
 
     }
   };
+  if(roles.toString() === adminRoles) {
+    return (
+      <div className="EditAttendance">
+        <FormControl
+          style={{
+            marginTop: 20,
+            display: "flex",
+            flexDirection: "column",
+            rowGap: "20px",
+          }}
+        >
+          <TextField
+            label="Course"
+            id="select-course"
+            sx={{ width: 300 }}
+            value={form_course}
+            select
+            onChange={handleCourseChange}
+          >
+            {courseList.map((course) => (
+              <MenuItem value={course}>
+                {course.name} | Year: {course.yearOfEntry}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            id="select-module"
+            label="Module"
+            value={form_module}
+            sx={{ width: 300 }}
+            onChange={handleModuleChange}
+            select
+            disabled={moduleDisabled}
+          >
+            {moduleList.map((module) => (
+              <MenuItem value={module}>
+                {module.name} | Semester {module.semester}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            id="select-session"
+            label="Session"
+            value={form_session}
+            sx={{ width: 300 }}
+            onChange={handleSessionChange}
+            select
+            disabled={sessionDisabled}
+          >
+            {sessionList.map((session) => (
+              <MenuItem value={session}>
+                {session.type} | Date & Time: {session.startDateTime}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            id="select-student"
+            label="Student"
+            value={form_student}
+            sx={{ width: 300 }}
+            onChange={handleStudentChange}
+            select
+            disabled={studentDisabled}
+          >
+            {studentList.map((studentAttendance) => (
+              <MenuItem value={studentAttendance}>
+                {studentAttendance.student.fullname.firstname} {studentAttendance.student.fullname.lastname}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            id="select-attendance"
+            label="Attendance"
+            value={form_attendance}
+            sx={{ width: 300 }}
+            onChange={handleAttendanceChange}
+            select
+            disabled={attendanceDisabled}
+          >
+            <MenuItem value="not">Not</MenuItem>
+            <MenuItem value="late">Late</MenuItem>
+            <MenuItem value="full">Full</MenuItem>
+  
+          </TextField>
+          <Button sx={{ width: 300 }} variant="outlined" color={submitColourButton} onClick={onSubmit}>Submit</Button>
+        </FormControl>
+      </div>
+    );
+  }
+  return(
+    <Unauthorised/>
+  )
 
-  return (
-    <div className="EditAttendance">
-      <FormControl
-        style={{
-          marginTop: 20,
-          display: "flex",
-          flexDirection: "column",
-          rowGap: "20px",
-        }}
-      >
-        <TextField
-          label="Course"
-          id="select-course"
-          sx={{ width: 300 }}
-          value={form_course}
-          select
-          onChange={handleCourseChange}
-        >
-          {courseList.map((course) => (
-            <MenuItem value={course}>
-              {course.name} | Year: {course.yearOfEntry}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          id="select-module"
-          label="Module"
-          value={form_module}
-          sx={{ width: 300 }}
-          onChange={handleModuleChange}
-          select
-          disabled={moduleDisabled}
-        >
-          {moduleList.map((module) => (
-            <MenuItem value={module}>
-              {module.name} | Semester {module.semester}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          id="select-session"
-          label="Session"
-          value={form_session}
-          sx={{ width: 300 }}
-          onChange={handleSessionChange}
-          select
-          disabled={sessionDisabled}
-        >
-          {sessionList.map((session) => (
-            <MenuItem value={session}>
-              {session.type} | Date & Time: {session.startDateTime}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          id="select-student"
-          label="Student"
-          value={form_student}
-          sx={{ width: 300 }}
-          onChange={handleStudentChange}
-          select
-          disabled={studentDisabled}
-        >
-          {studentList.map((studentAttendance) => (
-            <MenuItem value={studentAttendance}>
-              {studentAttendance.student.fullname.firstname} {studentAttendance.student.fullname.lastname}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          id="select-attendance"
-          label="Attendance"
-          value={form_attendance}
-          sx={{ width: 300 }}
-          onChange={handleAttendanceChange}
-          select
-          disabled={attendanceDisabled}
-        >
-          <MenuItem value="not">Not</MenuItem>
-          <MenuItem value="late">Late</MenuItem>
-          <MenuItem value="full">Full</MenuItem>
 
-        </TextField>
-        <Button sx={{ width: 300 }} variant="outlined" color={submitColourButton} onClick={onSubmit}>Submit</Button>
-      </FormControl>
-    </div>
-  );
+
 }
