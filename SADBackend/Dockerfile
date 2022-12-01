@@ -12,6 +12,13 @@ FROM builder as dev-builder
 
 CMD ["npm", "run", "dev"]
 
+# Development build stage
+FROM builder as test-builder
+
+#ENV NODE_ENV development
+
+CMD ["npm", "run", "test"]
+
 # Production build stage
 FROM builder as dist-builder
 

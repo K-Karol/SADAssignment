@@ -20,7 +20,16 @@ const { SECRET = "secret" } = process.env;
 export default class AuthController{
 
     public login = async (req: Request, res: Response, next: NextFunction) => {
+
+        const { SECRET } = process.env;
+
         try{
+
+            if (!SECRET) {
+                next(new HttpException(500, "Internal server error", undefined, new Error("SECRET .env value undefined")));
+                return;
+            }
+
             const loginRequest: LoginRequest = req.body;
             const user = await User.findOne({username: loginRequest.username}).populate("roles");
             if(user){

@@ -369,12 +369,12 @@
     "method": "POST",
     "sortNum": 50000,
     "created": "2022-11-14T11:16:36.135Z",
-    "modified": "2022-11-16T21:44:48.561Z",
+    "modified": "2022-11-23T10:56:21.458Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"username\": \"awesomeStaff2\",\n  \"password\": \"123\",\n  \"roles\" : [\"Staff\"],\n  \"fullname\": {\n    \"firstname\": \"Staff\",\n    \"lastname\": \"Member\"\n  },\n  \"address\": {\n    \"addressLine1\": \"addressLine1\",\n    \"postcode\": \"abcde\",\n    \"city\": \"sheffield\",\n    \"country\": \"UK\"\n  }\n}",
+      "raw": "{\n  \"username\": \"awesomeStaff5\",\n  \"password\": \"123\",\n  \"roles\" : [\"Staff\"],\n  \"fullname\": {\n    \"firstname\": \"Staff\",\n    \"lastname\": \"Member\"\n  },\n  \"address\": {\n    \"addressLine1\": \"addressLine1\",\n    \"postcode\": \"abcde\",\n    \"city\": \"sheffield\",\n    \"country\": \"UK\"\n  }\n}",
       "form": []
     },
     "tests": []
@@ -384,11 +384,11 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
     "name": "Update User",
-    "url": "/users/63700829aa6cfe69aee07163",
+    "url": "users/resource/6377759ec20dd85de6dc09d1",
     "method": "PUT",
     "sortNum": 60000,
     "created": "2022-11-14T11:17:34.973Z",
-    "modified": "2022-11-14T11:18:20.354Z",
+    "modified": "2022-11-23T11:05:17.729Z",
     "headers": [],
     "params": [],
     "body": {
@@ -403,11 +403,11 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b45edbe0-3b9a-4b41-84e0-34af974abf59",
     "name": "Delete User",
-    "url": "/users/63700829aa6cfe69aee07163",
+    "url": "users/resource/637dfc554bbb5e7d31966930",
     "method": "DELETE",
     "sortNum": 70000,
     "created": "2022-11-14T11:20:02.424Z",
-    "modified": "2022-11-14T11:20:23.761Z",
+    "modified": "2022-11-23T10:58:56.046Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -539,53 +539,6 @@
     "tests": []
   },
   {
-    "_id": "a554b736-9363-4049-81fb-bbae78a53083",
-    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
-    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
-    "name": "Get All Attendence For Session",
-    "url": "sessions/GetSessionAttendence/637903df7fe5c01974896038",
-    "method": "GET",
-    "sortNum": 110000,
-    "created": "2022-11-15T18:05:58.257Z",
-    "modified": "2022-11-19T16:27:46.063Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "76b6ebfc-2f4f-4fc1-8d92-3276816b8453",
-    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
-    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
-    "name": "Get User Attendence",
-    "url": "sessions/GetUserAttendence/6374eceadb31e5f26ef6e6e2/636cf6dce79b126d6d2989bd",
-    "method": "GET",
-    "sortNum": 120000,
-    "created": "2022-11-16T18:33:42.323Z",
-    "modified": "2022-11-16T18:46:46.241Z",
-    "headers": [],
-    "params": [],
-    "tests": []
-  },
-  {
-    "_id": "b2381a04-6967-4e05-af5b-6acaba303b44",
-    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
-    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
-    "name": "Update Course",
-    "url": "courses/resource/6376639d45d8afa6bfb9a515",
-    "method": "PUT",
-    "sortNum": 117500,
-    "created": "2022-11-16T19:06:02.904Z",
-    "modified": "2022-11-17T17:01:03.853Z",
-    "headers": [],
-    "params": [],
-    "body": {
-      "type": "json",
-      "raw": "{\n  \"name\" : \"Awesome Science 123123\",\n  \"yearOfEntry\" : \"2019\",\n  \"modules\": [\n      \"63766378136363abb643fae\"\n    ]\n}",
-      "form": []
-    },
-    "tests": []
-  },
-  {
     "_id": "b6bef16a-04f5-4708-b6a9-8e9b416e10b4",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "870408ec-c098-4f3c-85c1-7bf856026fb5",
@@ -688,36 +641,224 @@
     "tests": []
   },
   {
-    "_id": "c560084d-5ad7-4324-aca4-514faf966094",
+    "_id": "639570c1-bb9c-4fd4-97a4-366fc36907a2",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
-    "containerId": "83a72f30-0839-4dcb-9768-658d5c585bb0",
-    "name": "Get Courses",
-    "url": "courses/resource",
-    "method": "GET",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Delete Session",
+    "url": "sessions/DeleteSession/6374e8564ea4b2e2b463d3b8",
+    "method": "DELETE",
     "sortNum": 180000,
-    "created": "2022-11-19T16:12:15.701Z",
-    "modified": "2022-11-19T16:12:51.934Z",
+    "created": "2022-11-23T13:01:20.027Z",
+    "modified": "2022-11-23T13:26:56.067Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "3ad4786e-bbea-4ca6-b209-de3963bb7b94",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Delete Session",
+    "url": "sessions/resource/6384f1c9890aaedff397a45f",
+    "method": "DELETE",
+    "sortNum": 210000,
+    "created": "2022-11-23T15:46:46.612Z",
+    "modified": "2022-11-28T20:40:31.090Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "965897ee-ed6f-411f-8cb3-2a8f95170d8a",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "870408ec-c098-4f3c-85c1-7bf856026fb5",
+    "name": "Update Module",
+    "url": "modules/resource/637e5edd0745e72469a92d3e",
+    "method": "PUT",
+    "sortNum": 230000,
+    "created": "2022-11-23T17:40:06.036Z",
+    "modified": "2022-11-23T17:58:04.233Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"joinModules\" : true,\n  \"joinStudents\" : true\n}",
+      "raw": "{\n  \"name\" : \"Awesome Science 23\",\n  \"year\" : \"2023\",\n  \"semester\" : \"2\",\n  \"students\" : [\"636e720ce404fad7cacacf95\"],\n  \"cohorts\" : [{\n    \"identifier\": \"2\",\n    \"students\": [\"636e720ce404fad7cacacf95\"]\n  }],\n  \"moduleLeader\" : \"636e720ce404fad7cacacf97\",\n  \"instructors\" : [\"636e720ce404fad7cacacf97\"]\n}",
       "form": []
     },
     "tests": []
   },
   {
-    "_id": "38e450a6-09c7-44f5-8f4b-ef0f84fbc18d",
+    "_id": "fbfdbce9-40db-4b04-988a-38663e63edd2",
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "870408ec-c098-4f3c-85c1-7bf856026fb5",
-    "name": "Delete Module",
-    "url": "modules/resource/637e24681d9478a2b9a566f4",
-    "method": "DELETE",
-    "sortNum": 200000,
-    "created": "2022-11-23T13:44:12.752Z",
-    "modified": "2022-11-23T13:47:31.217Z",
+    "name": "Get Module",
+    "url": "modules/resource/637e5edd0745e72469a92d3e",
+    "method": "GET",
+    "sortNum": 240000,
+    "created": "2022-11-23T18:00:13.269Z",
+    "modified": "2022-11-23T18:02:30.079Z",
     "headers": [],
     "params": [],
+    "tests": []
+  },
+  {
+    "_id": "096c209e-914e-4413-869c-ddc367cc6e57",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Get Session",
+    "url": "sessions/resource/637e82b3dd5f70eded40af28",
+    "method": "GET",
+    "sortNum": 250000,
+    "created": "2022-11-23T20:20:10.334Z",
+    "modified": "2022-11-23T20:37:02.397Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "eed4b0c0-b68a-4726-aa82-dfa14ecfd8e2",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Update Session",
+    "url": "sessions/resource/6383938aa29553d4f368b97e",
+    "method": "PUT",
+    "sortNum": 260000,
+    "created": "2022-11-23T20:21:09.812Z",
+    "modified": "2022-11-28T14:41:02.921Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"type\": \"seminar\",\n  \"cohort\": {\n    \"identifier\": \"All\",\n    \"students\": [\n      {\n        \"student\": \"638357cdf850b555be712972\",\n        \"attendance\": \"full\",\n        \"_id\": \"6383938aa29553d4f368b97f\"\n      },\n      {\n        \"student\": \"638357cdf850b555be712974\",\n        \"attendance\": \"not\",\n        \"_id\": \"6383938aa29553d4f368b980\"\n      }\n    ]\n  },\n  \"startDateTime\": \"2022-11-24T20:08:53.000Z\",\n  \"endDateTime\": \"2022-11-24T20:11:53.000Z\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "b7ae0da2-85d6-4a18-9fbb-20624433efe8",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Find User Attendence",
+    "url": "sessions/GetUserAttendence/637f7ee41033a2dd0c455ac7/636cf6dce79b126d6d2989bd",
+    "method": "GET",
+    "sortNum": 190000,
+    "created": "2022-11-24T14:32:47.344Z",
+    "modified": "2022-11-24T14:42:31.550Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  },
+  {
+    "_id": "2153950e-85dd-4f0a-bf8e-2d8b0e4f9fba",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Patch Attendence ",
+    "url": "sessions/PatchUserAttendence/637f7ee41033a2dd0c455ac7/636cf6dce79b126d6d2989bd",
+    "method": "PATCH",
+    "sortNum": 200000,
+    "created": "2022-11-24T14:42:00.532Z",
+    "modified": "2022-11-24T14:42:00.532Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"attendance\" : \"late\"\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "4de55f7e-b748-43ad-be7a-2f4638da1d61",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Get Sessions",
+    "url": "sessions/resource?joinActiveSessions=true&filter={\"_id\" : \"ObjectID(63880b0075e2ee664ec40642)\"}&joinStudents=true",
+    "method": "GET",
+    "sortNum": 270000,
+    "created": "2022-11-28T14:39:05.788Z",
+    "modified": "2022-12-01T02:02:38.978Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "joinActiveSessions",
+        "value": "true",
+        "isPath": false
+      },
+      {
+        "name": "filter",
+        "value": "{\"_id\" : \"ObjectID(63880b0075e2ee664ec40642)\"}",
+        "isPath": false
+      },
+      {
+        "name": "joinStudents",
+        "value": "true",
+        "isPath": false
+      }
+    ],
+    "body": {
+      "type": "json",
+      "raw": "{\n  \"filter\": {\n    \"$expr\": {\n      \"$in\": [\n        \"ObjectID(6384f10d890aaedff397a395)\",\n        \"$cohort.students.student\"\n      ]\n    },\n   \"$nor\" : [\n    {\"activeSessions\" : {\"$exists\" : false}},\n    {\"activeSessions\" : {\"$size\" : 0}}\n    ]\n  },\n  \"joinActiveSessions\": true\n}",
+      "form": []
+    },
+    "tests": []
+  },
+  {
+    "_id": "e8b9e92a-3f52-4713-83bf-7e7fde1027b9",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "83a72f30-0839-4dcb-9768-658d5c585bb0",
+    "name": "Get Courses",
+    "url": "courses/resource?filter={\"yearOfEntry\" : \"2022\"}",
+    "method": "GET",
+    "sortNum": 280000,
+    "created": "2022-11-30T17:12:55.256Z",
+    "modified": "2022-12-01T02:00:39.051Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "joinModules",
+        "value": "true",
+        "isDisabled": true,
+        "isPath": false
+      },
+      {
+        "name": "joinStudents",
+        "value": "True",
+        "isDisabled": true,
+        "isPath": false
+      },
+      {
+        "name": "filter",
+        "value": "{\"yearOfEntry\" : \"2022\"}",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "1dd5a2c2-3e54-42ce-9e84-2f72e0cb4fcc",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Get My Sessions",
+    "url": "sessions/GetMySession",
+    "method": "GET",
+    "sortNum": 290000,
+    "created": "2022-12-01T02:19:52.168Z",
+    "modified": "2022-12-01T02:39:03.362Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "filter",
+        "value": "",
+        "isDisabled": true,
+        "isPath": false
+      },
+      {
+        "name": "joinModule",
+        "value": "true",
+        "isDisabled": true,
+        "isPath": false
+      }
+    ],
     "tests": []
   },
   {

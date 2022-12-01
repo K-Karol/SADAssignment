@@ -75,10 +75,8 @@
 
             List<Models.UserImportResult> results = new List<Models.UserImportResult>();
 
-
             foreach (var user in data!.Users)
             {
-
                 var detail = new Models.UserImportResult() { UserName = user.username };
                 try
                 {

@@ -407,34 +407,6 @@ export default class SessionController {
         aggregate_options.push({ $project: { "module.instructors": 0 } });
       }
 
-
-
-
-      // if (reqQuery.joinActiveSessions) {
-      //   aggregate_options.push(
-      //     {
-      //       '$lookup': {
-      //         'from': 'activesessions',
-      //         'let': {
-      //           'session_id': '$_id'
-      //         },
-      //         'pipeline': [
-      //           {
-      //             '$match': {
-      //               '$expr': {
-      //                 '$eq': [
-      //                   '$$session_id', '$session'
-      //                 ]
-      //               }
-      //             }
-      //           }
-      //         ],
-      //         'as': 'activeSessions'
-      //       }
-      //     }
-      //   );
-      // }
-
       if (reqQuery.filter) aggregate_options.push({ $match: reqQuery.filter });
 
       const myAggregate = SessionPaginate.aggregate(aggregate_options);
@@ -449,6 +421,8 @@ export default class SessionController {
       next(err);
     }
   }
+
+  
 
   public GetSessionAttendence = async (req: Request, res: Response, next: NextFunction) => {
     try { //get the attendence for all students in a session
