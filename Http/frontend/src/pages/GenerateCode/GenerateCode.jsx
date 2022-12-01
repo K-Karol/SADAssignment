@@ -13,23 +13,10 @@ export default function GenerateCode() {
   const [isShown, setIsShown] = useState(false);
   const [moduleList, setModuleList] = useState([]);
   const [cohortsList, setCohortsList] = useState([]);
-  const [typeOfSession, setTypeOfSession] = useState("");
   const [module, setmodule] = useState("");
-  const [cohortIdentifier, setcohortIdentifier] = useState("");
   const [startTime, setStartTime] = useState(dayjs());
   const [endTime, setEndTime] = useState(dayjs());
 
-  const createSessionRequestOptions = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json", // speech marks needed?
-      Authorization: `Bearer ${fetchToken().token}`,
-    },
-    
-  };
-
-  console.log(`Bearer ${fetchToken().token}`);
-  
   useEffect(() => {
     fetch(`${window.location.origin}/api/modules/resource`,
     {
@@ -38,10 +25,6 @@ export default function GenerateCode() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${fetchToken().token}`
       },
-      // body: JSON.stringify({
-        // joinStudents: ids or whole object
-        // joinStaff: ids or whole object
-      // })
     }).then((res) => res.json())
     .then((modules) => {
       if (modules.Success) {
@@ -63,7 +46,7 @@ export default function GenerateCode() {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json", // speech marks needed?
+          "Content-Type": "application/json",
           Authorization: `Bearer ${fetchToken().token}`,
         },
         body: JSON.stringify(requestBody)
@@ -114,6 +97,7 @@ export default function GenerateCode() {
           setIsShown(true);
       
         }}
+        // TODO: think a key needs to be added to list items
       >
         <Form>
           <Stack spacing={1}>
@@ -134,22 +118,6 @@ export default function GenerateCode() {
               {cohortsList.map((cohort) => <option value={cohort.name}>{cohort.identifier}</option>)}
             </Field>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              {/* <StaticTimePicker
-                renderInput={(props) => <TextField {...props} />}
-                label="Start Time"
-                value={startTime}
-                onChange={(value) => {
-                  setStartTime(value);
-                }}
-              />
-              <StaticTimePicker
-                renderInput={(props) => <TextField {...props} />}
-                label="End Time"
-                value={endTime}
-                onChange={(value) => {
-                  setEndTime(value);
-                }}
-              /> */}
               <DesktopTimePicker
                 renderInput={(props) => <TextField {...props} />}
                 label="Start Time"
@@ -172,7 +140,6 @@ export default function GenerateCode() {
           </Stack>
         </Form>
       </Formik>
-
     </div>
   );
 }
