@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  sad-backend:
+    build:
+      context: SADBackend/.
+      target: test-builder
+      dockerfile: Dockerfile
+    environment:
+      - ENV=DEV
