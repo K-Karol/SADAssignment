@@ -1,5 +1,9 @@
 # Sheffield Hallam SAD Assignment : Attendance System
 
+## Repository Link:
+
+https://github.com/K-Karol/SADAssignment
+
 ## Introduction
 
 This repository contains all of the source code for the attendance system built by **Thu 16-18 Group 3** group which consists of the following members:
@@ -17,6 +21,18 @@ The attendance system is composed of a **React.JS** SPA that utilises a **Node.J
 The system is orchestrated using **Docker** and **Docker Compose**. All relevant parts of the system are containerised and **Nginx** is used as a gateway/reverse proxy and is the only public-facing component which handles serving the SPA files as well as handling SSL connection to the Node.JS server. All connections are HTTPS. The backend server cannot be accessed directly and the database has no external access.
 
 ## Building
+
+### Easiest method to get started
+
+1. Create the `.env` file in the `/SADBackend/` directory based off the example down the page. `SECRET` and `ADMIN_APIKEY` can be set to anything.
+2. Run `docker-compose -f docker-compose.yml -f docker-compose.admin.yml  up --build`. This will build the containers and run them using production configuration with the addition of the admin panel.
+3. If there is an error regarding I/O timeouts, run the command again. If there are any other issues, use `docker-compose up --build`.
+4. Once the server is running, you may access the React app by going to `https://localhost`
+5. To seed the system, navigate to `https://localhost/admin`. Submit the `ADMIN_APIKEY` and navigate to `User tools`.
+6. Use `Create Admin User` to create an Admin user. This will be used to access the frontend.
+7. Use the `Import users using a JSON file` to import both `MOCK_STUDENTS.json` and `MOCK_STAFF.json`. The operation may take a while. Make sure to keep the files that are downloaded at the end of each import.
+8. Navigate to `Module & Course tool`, and supply the files as dictated. You will need to use the result files from the batch imports done in step 7, along with `MOCK_MODULES.json` and `MOCK_COURSES.json`. Submit the files and the system should be seeded.
+9. Navigate to the frontend (`https://localhost`) and you may use the created Admin credentials and any credentials found in `MOCK_STUDENTS.json`.
 
 ### Prerequisites
 
