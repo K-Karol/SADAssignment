@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import mongoose, { AggregatePaginateModel, isValidObjectId, model, Schema, Types } from "mongoose";
 import { GenerateAPIResult, GoThroughJSONAndReplaceObjectIDs, HttpException, RemoveUndefinedFieldsRoot } from "../helpers";
-import { GetSessionForStudentParams_ControllerStage,  GetSessionsForStudentQuery, SessionPostRequest_ControllerStage, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody, GetAttendenceForSessionParams, GetSessionByID_ControllerStage, SessionPutRequest_ControllerStage, GetSessionsQuery, GetMySessionsQuery } from "../validation/session";
+import { GetSessionForStudentParams_ControllerStage, GetSessionsForStudentQuery, SessionPostRequest_ControllerStage, GetAttendenceForStudentParams_ControllerStage, UpdateStudentAttendanceBody, GetAttendenceForSessionParams, GetSessionByID_ControllerStage, SessionPutRequest_ControllerStage, GetSessionsQuery, GetMySessionsQuery } from "../validation/session";
 import { Module } from "../models/module";
 import { ICohortWithAttendance, ISession, IStudentWithAttendance } from "../interfaces/session";
 import { Session, SessionPaginate } from "../models/session";
@@ -266,13 +266,39 @@ export default class SessionController {
         },
         {
           $set: {
-            "cohort.student": "$cohort.students.student"
+            "student": "$cohort.students.student",
+            "attendance": "$cohort.students.attendance",
+            "cohortIdentifier": "$cohort.identifier"
           }
         },
-        { $unset: 'cohort.students' }
+        { $unset: 'cohort' }
       );
 
-      //remove irrelevant students
+      if (reqQuery.joinModule) {
+        aggregate_options.push({
+          '$lookup': {
+            'from': 'modules',
+            'localField': 'module',
+            'foreignField': '_id',
+            'as': 'module'
+          }
+        }, {
+          '$set': {
+            'module': {
+              '$arrayElemAt': [
+                '$module', 0
+              ]
+            }
+          }
+        }
+        );
+
+        aggregate_options.push({ $project: { "module.students": 0 } });
+        aggregate_options.push({ $project: { "module.cohorts": 0 } });
+        aggregate_options.push({ $project: { "module.moduleLeader": 0 } });
+        aggregate_options.push({ $project: { "module.instructors": 0 } });
+      }
+
 
       if (reqQuery.filter) aggregate_options.push({ $match: reqQuery.filter });
 
@@ -347,8 +373,8 @@ export default class SessionController {
         {
           $set: {
             "student": "$cohort.students.student",
-            "attendance" : "$cohort.students.attendance",
-            "cohortIdentifier" : "$cohort.identifier" 
+            "attendance": "$cohort.students.attendance",
+            "cohortIdentifier": "$cohort.identifier"
           }
         },
         { $unset: 'cohort' }
@@ -375,10 +401,10 @@ export default class SessionController {
         }
         );
 
-        aggregate_options.push({$project : {"module.students" : 0 }});
-        aggregate_options.push({$project : {"module.cohorts" : 0 }});
-        aggregate_options.push({$project : {"module.moduleLeader" : 0 }});
-        aggregate_options.push({$project : {"module.instructors" : 0 }});
+        aggregate_options.push({ $project: { "module.students": 0 } });
+        aggregate_options.push({ $project: { "module.cohorts": 0 } });
+        aggregate_options.push({ $project: { "module.moduleLeader": 0 } });
+        aggregate_options.push({ $project: { "module.instructors": 0 } });
       }
 
 

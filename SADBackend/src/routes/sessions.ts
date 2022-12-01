@@ -24,7 +24,7 @@ export default class SessionRoute implements IRoute {
     this.router.get(`${this.path}resource/:sessionID`, AuthenticateRequest, AuthoriseByRoles(["Admin", "Staff"]), ValidationMiddleware(GetSessionByID_ValidationStage, 'params'),  this.sessionController.GetSession);
     this.router.put(`${this.path}resource/:sessionID`, AuthenticateRequest, AuthoriseByRoles(["Admin", "Staff"]), ValidationMiddleware(GetSessionByID_ValidationStage, 'params'), ValidationMiddleware(SessionPutRequest_ValidationStage, 'body'), this.sessionController.UpdateSession);
     this.router.get(`${this.path}resource/`, AuthenticateRequest, AuthoriseByRoles(["Admin", "Staff"]), ValidationMiddleware(GetSessionsQuery, 'query'),  this.sessionController.GetSessions);
-    this.router.get(`${this.path}GetMySession`, AuthenticateRequest, ValidationMiddleware(GetMySessionsQuery, 'query'), this.sessionController.GetMySessions);
+    this.router.get(`${this.path}GetMySessions`, AuthenticateRequest, ValidationMiddleware(GetMySessionsQuery, 'query'), this.sessionController.GetMySessions);
     // this.router.get(`${this.path}resource/`, AuthenticateRequest, ValidationMiddleware(GetUsersQuery, 'query'), ValidationMiddleware(GetUsersQueryBody, 'body'),  this.userController.GetUsers);
     // this.router.get(`${this.path}resource/:id`, AuthenticateRequest, ValidationMiddleware(GetUserByID, 'params'),  this.userController.GetUser);
     // this.router.get(`${this.path}self`, AuthenticateRequest, this.userController.GetCurrentUser);
