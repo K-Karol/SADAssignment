@@ -435,12 +435,12 @@
     "method": "POST",
     "sortNum": 90000,
     "created": "2022-11-14T15:12:41.871Z",
-    "modified": "2022-11-28T20:40:38.288Z",
+    "modified": "2022-12-01T02:01:36.172Z",
     "headers": [],
     "params": [],
     "body": {
       "type": "json",
-      "raw": "{\n  \"type\" : \"lecture\",\n  \"module\" : \"6384f186890aaedff397a3e8\",\n  \"cohortIdentifier\" : \"Group 2\",\n  \"startDateTime\" : \"2022-11-29T11:15\",\n  \"endDateTime\" : \"2022-11-29T12:15\"\n}",
+      "raw": "{\n  \"type\" : \"lecture\",\n  \"module\" : \"63880aae75e2ee664ec405ab\",\n  \"cohortIdentifier\" : \"Group 2\",\n  \"startDateTime\" : \"2022-12-01T02:05\",\n  \"endDateTime\" : \"2022-12-01T02:10\"\n}",
       "form": []
     },
     "tests": []
@@ -617,11 +617,11 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b9826620-6ad2-41cd-902b-e67e5bb17341",
     "name": "Generate New Active Session",
-    "url": "activeSessions/GenerateNewActiveSession/6384f225890aaedff397a4f3",
+    "url": "activeSessions/GenerateNewActiveSession/63880b0075e2ee664ec40642",
     "method": "POST",
     "sortNum": 160000,
     "created": "2022-11-16T21:44:05.873Z",
-    "modified": "2022-11-28T20:49:17.843Z",
+    "modified": "2022-12-01T02:01:43.756Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -631,11 +631,11 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "b9826620-6ad2-41cd-902b-e67e5bb17341",
     "name": "Register Student Attendance",
-    "url": "activeSessions/RecordStudentAttendance/mltFIVsi",
+    "url": "activeSessions/RecordStudentAttendance/wODrndEJ",
     "method": "POST",
     "sortNum": 170000,
     "created": "2022-11-16T22:04:26.924Z",
-    "modified": "2022-11-19T16:28:44.551Z",
+    "modified": "2022-12-01T02:03:14.847Z",
     "headers": [],
     "params": [],
     "tests": []
@@ -772,11 +772,11 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
     "name": "Get Sessions",
-    "url": "sessions/resource?joinActiveSessions=true&filter={ \"$expr\": { \"$in\": [ \"ObjectID(6384f10d890aaedff397a395)\", \"$cohort.students.student\" ] }, \"$nor\" : [ {\"activeSessions\" : {\"$exists\" : false}}, {\"activeSessions\" : {\"$size\" : 0}} ] }",
+    "url": "sessions/resource?joinActiveSessions=true&filter={\"_id\" : \"ObjectID(63880b0075e2ee664ec40642)\"}&joinStudents=true",
     "method": "GET",
     "sortNum": 270000,
     "created": "2022-11-28T14:39:05.788Z",
-    "modified": "2022-11-30T17:10:18.085Z",
+    "modified": "2022-12-01T02:02:38.978Z",
     "headers": [],
     "params": [
       {
@@ -786,7 +786,12 @@
       },
       {
         "name": "filter",
-        "value": "{ \"$expr\": { \"$in\": [ \"ObjectID(6384f10d890aaedff397a395)\", \"$cohort.students.student\" ] }, \"$nor\" : [ {\"activeSessions\" : {\"$exists\" : false}}, {\"activeSessions\" : {\"$size\" : 0}} ] }",
+        "value": "{\"_id\" : \"ObjectID(63880b0075e2ee664ec40642)\"}",
+        "isPath": false
+      },
+      {
+        "name": "joinStudents",
+        "value": "true",
         "isPath": false
       }
     ],
@@ -802,26 +807,55 @@
     "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
     "containerId": "83a72f30-0839-4dcb-9768-658d5c585bb0",
     "name": "Get Courses",
-    "url": "courses/resource?joinModules=true&joinStudents=True&filter={\"yearOfEntry\" : \"2022\"}",
+    "url": "courses/resource?filter={\"yearOfEntry\" : \"2022\"}",
     "method": "GET",
     "sortNum": 280000,
     "created": "2022-11-30T17:12:55.256Z",
-    "modified": "2022-11-30T17:14:40.294Z",
+    "modified": "2022-12-01T02:00:39.051Z",
     "headers": [],
     "params": [
       {
         "name": "joinModules",
         "value": "true",
+        "isDisabled": true,
         "isPath": false
       },
       {
         "name": "joinStudents",
         "value": "True",
+        "isDisabled": true,
         "isPath": false
       },
       {
         "name": "filter",
         "value": "{\"yearOfEntry\" : \"2022\"}",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "1dd5a2c2-3e54-42ce-9e84-2f72e0cb4fcc",
+    "colId": "4de31bff-601f-402e-bdea-2e34f98a7a22",
+    "containerId": "9ba160f9-4c88-4362-adb1-b5cead36e6ab",
+    "name": "Get My Sessions",
+    "url": "sessions/GetMySession",
+    "method": "GET",
+    "sortNum": 290000,
+    "created": "2022-12-01T02:19:52.168Z",
+    "modified": "2022-12-01T02:39:03.362Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "filter",
+        "value": "",
+        "isDisabled": true,
+        "isPath": false
+      },
+      {
+        "name": "joinModule",
+        "value": "true",
+        "isDisabled": true,
         "isPath": false
       }
     ],

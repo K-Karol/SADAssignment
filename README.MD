@@ -92,7 +92,6 @@ Containers:
 * sad-backend
   * Environment variables: `ENV=DEV`
   * Backend will allow the Admin Route
-  * Swagger is enabled
   * Runs backend in 'dev' mode (watch; hot reload; debug)
 * nginx
   * Environment variables: `ENV=DEV`
@@ -119,6 +118,41 @@ Changes in regards to **Production**
   * Backend will allow the Admin Route
 * *nginx* container builds Blazor Admin Panel
 * *nginx* is configured to serve the admin panel area
+
+##### TEST
+
+Changes in regards to **Production**
+* sad-backend
+  * `ENV=DEV`
+  * Will run unit tests instead of running the server
+
+Regarding testing, it is required to start the environment with no prior data (`docker-compose down --volumes`), run the solution normally (if override file is not present, no need to specify config) `docker-compose -f docker-compose.yml  up --build`, let the server initialise, then close the containers down gracefully (do not delete) and start up the containers again using the test configuration using the command `docker-compose -f docker-compose.yml -f docker-compose.test.yml up --build` which will run `mocha`. Expected output example:
+
+```
+sad-backend  |   backend root
+sad-backend  |     ✔ it should return a 200
+sad-backend  |     ✔ it should return a 404 test
+sad-backend  | 
+sad-backend  |   Test Module
+sad-backend  |     ✔ Create a Module
+sad-backend  |     ✔ Delete a Module
+sad-backend  | 
+sad-backend  |   Attendence
+sad-backend  |     ✔ Create Session
+sad-backend  |     ✔ Check User
+sad-backend  |     ✔ Update User
+sad-backend  |     ✔ Delete Session
+sad-backend  |
+sad-backend  |   Users
+sad-backend  |     Test Users
+sad-backend  |       ✔ Create a Staff (73ms)
+sad-backend  |       ✔ Update a Staff
+sad-backend  |       ✔ Delete a Staff
+sad-backend  |
+sad-backend  |
+sad-backend  |   11 passing (1s)
+sad-backend  |
+```
 
 ### Potential errors
 

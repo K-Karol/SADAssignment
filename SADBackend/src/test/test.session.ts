@@ -278,7 +278,7 @@ describe("Attendence", () => {
       "Success": true,
     } */
     chai.request(app)
-      .delete(`/api/sessions/DeleteSession/${sessionid}`) //create the session
+      .delete(`/api/sessions/resource/${sessionid}`) //create the session
       .set({ "Authorization": `Bearer ${bearertoken}` }) // pass the login token from before method
       .end((err, res) => {
         res.should.have.status(200);
