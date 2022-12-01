@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  Grid,
   Table,
   TableRow,
   TableContainer,
@@ -12,22 +13,16 @@ import { fetchToken } from "../../store";
 import { useLocation } from "react-router-dom";
 import dayjs from 'dayjs';
 
-// style this page nicely
-// and use Karol's new endpoint.
-
-// and use conditional rendering as some users will have zero sessions.
-// Pretty this up - we need module names (Endpoint required) and responsiveness in full.
-
 export default function ViewAttendance () {
   let data = useLocation();
   console.log(data.state.row._id);
   const sessions = useSelector((state) => state.sessions);
   const dispatch = useDispatch();
   const currentUser = data.state.row.fullname;
-  console.log(currentUser);
    
   useEffect(() => {
     var url = new URL(`${window.location.origin}/api/sessions/GetSessionsForStudent/${data.state.row._id}`);
+    // url.searchParams.append("joinModules", true);
     //url.searchParams.append("page", currentPage + 1);
     // url.searchParams.append("limit", rowsPerPage);
     fetch(url, {
@@ -39,12 +34,14 @@ export default function ViewAttendance () {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         dispatch({
           type: "fetchSessions",
           payload: {
             sessions: data.Response.sessions,
           }
-        });
+        })
+        ;
       })
       .catch((err) => {
         console.log(err.message);
@@ -52,24 +49,20 @@ export default function ViewAttendance () {
   }, []);
     return (
         <div style={{height: 800}}>
-            <h1> View Attendance for Individual User </h1>
-            {/* <h1> {sessions[0].cohort.student} </h1> */}
-            <h2> User {currentUser.firstname} {currentUser.lastname} has attended {sessions.length} sessions</h2>
-{/*             and the sessions are as follows (table, etc, with length)
-            
- */}        
-
-      <TableContainer component="div">
-        <Table sx={{ minWidth: 650 }} aria-label="simple table" component='div'>
-          <TableHead component='div'>
-            <TableRow component='div'>
-              <TableCell component='div'>Session Type</TableCell>
-              {" "}
-              <TableCell component='div' align="right">Module</TableCell>
-              <TableCell component='div' align="right">Cohort</TableCell>
-              <TableCell component='div' align="right">Start Date+Time</TableCell>
-              <TableCell component='div' align="right">End Date+Time</TableCell>
-              <TableCell component='div' align="right">Session ID</TableCell>
+          <Grid>
+          <h1> View Attendance for Individual User </h1>
+            <h2> User {currentUser.firstname} {currentUser.lastname} has attended {sessions.length} sessions</h2>       
+            <TableContainer component="div">
+              <Table sx={{ minWidth: 650 }} aria-label="simple table" component='div'>
+                <TableHead component='div'>
+                <TableRow component='div'>
+                  <TableCell component='div'>Session Type</TableCell>
+                    {" "}
+                  <TableCell component='div' align="right">Module</TableCell>
+                  <TableCell component='div' align="right">Cohort</TableCell>
+                  <TableCell component='div' align="right">Start Date+Time</TableCell>
+                  <TableCell component='div' align="right">End Date+Time</TableCell>
+                  <TableCell component='div' align="right">Session ID</TableCell>
             </TableRow>
           </TableHead>
           <TableBody component='div'>
@@ -94,6 +87,7 @@ export default function ViewAttendance () {
           </TableBody>
         </Table>
       </TableContainer>
+    </Grid>
     </div>
     )
 }

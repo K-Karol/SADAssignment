@@ -39,6 +39,9 @@ function reducer(state = initialState, action){
     if(action.type === "fetchSessions"){
         return {...state, sessions: action.payload.sessions}
     }
+    if (action.type === "fetchModules") {
+        return {...state, modules: action.payload.modules}
+    }
     return state;
 }
 

@@ -60,9 +60,6 @@ export default function LoginForm()
       //Error handling
     }
   }
-
-  
-
     return (
         <div>
         <h2>Please enter your organisation username and password to access the attendance system.</h2>
@@ -84,6 +81,3 @@ export default function LoginForm()
 
     )
 }
-// LoginForm.propTypes = {
-//   setToken: PropTypes.func.isRequired
-// }

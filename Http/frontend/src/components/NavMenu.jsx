@@ -1,35 +1,30 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { AppBar, Box, Container, Grid, IconButton, Menu, MenuItem, Toolbar, Typography, Button, Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import styles from '../pages/GenerateCode/GenerateCode.module.css';
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 // being added back in SAD-005 when I've made it persist - easy fix but wanted to get 004 up to source control first.
 // Needs serious prettying up
 
-// set restrictedroles and check for them on return??
-// Fix spacing between buttons
-
 function NavMenu() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  // const roles = useSelector((state) => state.roles);
-  // const adminRoles = ["Admin", "User"];
-  // console.log("These are the current user's roles" + roles);
+  const [anchorNav, setAnchorNav] = useState(null);
+  const [anchorUser, setAnchorUser] = useState(null);
   const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
+    setAnchorNav(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
+    setAnchorNav(null);
   };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    setAnchorUser(null);
   };
 
+  const roles = useSelector((state) => state.roles);
 
   const pages =  [<Grid container direction="row"  justifyContent="left" alignItems="left" spacing={{ xs: 1, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} rows={{ xs: 2, sm: 4, md: 12}}>
   <Grid item xs={2} sm={4} md={4}>
@@ -48,19 +43,19 @@ function NavMenu() {
     </Link>
   </Grid>
   <Grid item xs={2} sm={4} md={4}>
-    <Link to="/viewOverallAttendance">
-      <Button variant ="contained"> View Overall Attendance</Button>
-    </Link>
-  </Grid>
-  <Grid item xs={2} sm={4} md={4}>
-    <Link to="/register">
-      <Button variant ="contained"> Register</Button>
-    </Link>
-  </Grid>
-  <Grid item xs={2} sm={4} md={4}>
     <Link to="/users">
-      <Button variant ="contained"> View Individual User Attendance</Button>
+      <Button variant ="contained"> View Attendance</Button>
     </Link>
+  </Grid>
+  <Grid item xs={2} sm={4} md={4}>
+    <Link to="/logout">
+      <Button variant ="contained"> Logout</Button>
+    </Link>
+  </Grid>
+  <Grid item xs={2} sm={4} md={4}>
+    <Typography>
+      Current User Role: {roles[0] ?? "Student"}
+    </Typography>
   </Grid>
 </Grid>]
   return (
@@ -87,7 +82,7 @@ function NavMenu() {
             </IconButton>
             <Menu
               id="menu-appbar"
-              anchorEl={anchorElNav}
+              anchorEl={anchorNav}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'left',
@@ -97,7 +92,7 @@ function NavMenu() {
                 vertical: 'top',
                 horizontal: 'left',
               }}
-              open={Boolean(anchorElNav)}
+              open={Boolean(anchorNav)}
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: 'block', md: 'none' },
@@ -121,12 +116,11 @@ function NavMenu() {
               </Button>
             ))}
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
-              anchorEl={anchorElUser}
+              anchorEl={anchorUser}
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
@@ -136,7 +130,7 @@ function NavMenu() {
                 vertical: 'top',
                 horizontal: 'right',
               }}
-              open={Boolean(anchorElUser)}
+              open={Boolean(anchorUser)}
               onClose={handleCloseUserMenu}
             >
             </Menu>

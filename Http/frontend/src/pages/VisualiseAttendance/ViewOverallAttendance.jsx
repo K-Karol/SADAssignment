@@ -91,10 +91,6 @@ const Line = () => (
           ]}
         />
 );
-const options = [
-    'Class', 'Student', 'Year'
-];
-// to be added with filtering
 
 export default function ViewOverallAttendance () {
     return (
