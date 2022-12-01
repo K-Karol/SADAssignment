@@ -18,7 +18,7 @@ services:
     container_name: nginx
     build:
       context: Http/.
-      dockerfile: DevDockerfile
+      dockerfile: Dockerfile
     ports:
       - target: 80
         published: 80
@@ -32,18 +32,7 @@ services:
       - ENV=PROD
     restart: always
     depends_on:
-      - mongodb
-
-  frontend:
-    container_name: frontend
-    build:
-      context: Http/frontend/.
-      dockerfile: DevDockerfile
-    ports:
-      - "3000:3000" #for nginx and debugging
-    volumes:
-      - ./Http/frontend/src:/app/src
-
+      - sad-backend
   mongodb:
     image: mongo:latest
     command: mongod --port 27017
