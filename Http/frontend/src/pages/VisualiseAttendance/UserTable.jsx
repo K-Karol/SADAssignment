@@ -6,7 +6,6 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  Pagination,
   TablePagination,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
@@ -18,7 +17,7 @@ export default function UserTable() {
   const userArray = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const currentPage = useSelector((state) => state.currentPage);
-  const pagesAvailable = useSelector((state) => state.pagesAvailable);
+  // const pagesAvailable = useSelector((state) => state.pagesAvailable);
   const rowsPerPage = useSelector((state) => state.rowsPerPage);
   const totalRecords = useSelector((state) => state.totalRecords);
 

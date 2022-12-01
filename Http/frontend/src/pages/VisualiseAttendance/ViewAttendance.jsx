@@ -15,7 +15,6 @@ import dayjs from 'dayjs';
 
 export default function ViewAttendance () {
   let data = useLocation();
-  console.log(data.state.row._id);
   const sessions = useSelector((state) => state.sessions);
   const dispatch = useDispatch();
   const currentUser = data.state.row.fullname;
@@ -34,7 +33,6 @@ export default function ViewAttendance () {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         dispatch({
           type: "fetchSessions",
           payload: {
@@ -48,7 +46,7 @@ export default function ViewAttendance () {
       });
   }, []);
     return (
-        <div style={{height: 800}}>
+        <tbody style={{height: 800}}>
           <Grid>
           <h1> View Attendance for Individual User </h1>
             <h2> User {currentUser.firstname} {currentUser.lastname} has attended {sessions.length} sessions</h2>       
@@ -88,7 +86,7 @@ export default function ViewAttendance () {
         </Table>
       </TableContainer>
     </Grid>
-    </div>
+    </tbody>
     )
 }
 

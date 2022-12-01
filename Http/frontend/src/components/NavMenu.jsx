@@ -1,12 +1,8 @@
 import { useState } from "react";
-import { AppBar, Box, Container, Grid, IconButton, Menu, MenuItem, Toolbar, Typography, Button, Stack } from '@mui/material';
+import { AppBar, Box, Container, Grid, IconButton, Menu, MenuItem, Toolbar, Typography, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
-
-
-// being added back in SAD-005 when I've made it persist - easy fix but wanted to get 004 up to source control first.
-// Needs serious prettying up
 
 function NavMenu() {
   const [anchorNav, setAnchorNav] = useState(null);
@@ -24,6 +20,7 @@ function NavMenu() {
   };
 
   const roles = useSelector((state) => state.roles);
+  const user = useSelector((state) => state.user);
 
   const pages =  [<Grid container direction="row"  justifyContent="left" alignItems="left" spacing={{ xs: 1, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} rows={{ xs: 2, sm: 4, md: 12}}>
   <Grid item xs={2} sm={4} md={4}>
@@ -52,8 +49,8 @@ function NavMenu() {
     </Link>
   </Grid>
   <Grid item xs={2} sm={4} md={4}>
-    <Typography>
-      Current User Role: {roles[0] ?? "Student"}
+    <Typography component={'span'}>
+      Current User: {user.fullname.firstname} {user.fullname.lastname} ({roles[0] ?? "Student"})
     </Typography>
   </Grid>
 </Grid>]
@@ -61,7 +58,7 @@ function NavMenu() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography variant ="h6" noWrap sx={{
+          <Typography component={'span'} variant ="h6" noWrap sx={{
               mr: 2,
               display: { xs: 'flex', md: 'flex' },
               fontWeight: 700,
@@ -99,7 +96,7 @@ function NavMenu() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography component={'span'} textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -107,6 +104,7 @@ function NavMenu() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
+                component="span"
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}

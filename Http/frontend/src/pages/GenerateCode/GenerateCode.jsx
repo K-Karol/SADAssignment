@@ -1,4 +1,3 @@
-import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { fetchToken } from "../../store";
 import { Form, Field, Formik } from "formik";
@@ -6,15 +5,9 @@ import dayjs from 'dayjs';
 import { TextField, Stack } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { StaticTimePicker, DesktopTimePicker } from '@mui/x-date-pickers';
+import { DesktopTimePicker } from '@mui/x-date-pickers';
 import { useSelector } from "react-redux";
 import Unauthorised from "../Unauthorised.jsx"
-
-// Restrict via roles on here - hide button or container if no admin role
-// roles selector
-// then either match or equal to
-// for conditional rendering on code gen button
-// then sneaky students can't generate a code from the frontend (enough for Proof of Context)
 
 export default function GenerateCode() {
   const [code, setCode] = useState("");
@@ -28,7 +21,6 @@ export default function GenerateCode() {
   const [endTime, setEndTime] = useState(dayjs());
   const roles = useSelector((state) => state.roles);
   const adminRoles = "Admin";
-  console.log(roles);
 
   const createSessionRequestOptions = {
     method: "POST",
@@ -38,8 +30,6 @@ export default function GenerateCode() {
     },
     
   };
-
-  console.log(`Bearer ${fetchToken().token}`);
   
   useEffect(() => {
     fetch(`${window.location.origin}/api/modules/resource`,
@@ -49,10 +39,6 @@ export default function GenerateCode() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${fetchToken().token}`
       },
-      // body: JSON.stringify({
-        // joinStudents: ids or whole object
-        // joinStaff: ids or whole object
-      // })
     }).then((res) => res.json())
     .then((modules) => {
       if (modules.Success) {
@@ -74,7 +60,7 @@ export default function GenerateCode() {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json", // speech marks needed?
+          "Content-Type": "application/json",
           Authorization: `Bearer ${fetchToken().token}`,
         },
         body: JSON.stringify(requestBody)
@@ -146,22 +132,6 @@ export default function GenerateCode() {
                 {cohortsList.map((cohort) => <option value={cohort.name}>{cohort.identifier}</option>)}
               </Field>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                {/* <StaticTimePicker
-                  renderInput={(props) => <TextField {...props} />}
-                  label="Start Time"
-                  value={startTime}
-                  onChange={(value) => {
-                    setStartTime(value);
-                  }}
-                />
-                <StaticTimePicker
-                  renderInput={(props) => <TextField {...props} />}
-                  label="End Time"
-                  value={endTime}
-                  onChange={(value) => {
-                    setEndTime(value);
-                  }}
-                /> */}
                 <DesktopTimePicker
                   renderInput={(props) => <TextField {...props} />}
                   label="Start Time"

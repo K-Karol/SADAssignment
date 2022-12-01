@@ -32,8 +32,6 @@ export default function EditAttendance() {
   const roles = useSelector((state) => state.roles);
   const adminRoles = "Admin";
 
-  console.log(`Bearer ${fetchToken().token}`);
-
   const getAllCourses = async () => {
     var page = 1;
     var courses = [];
@@ -92,7 +90,6 @@ export default function EditAttendance() {
       if (requestBody.Success) {
         sessions = sessions.concat(requestBody.Response.sessions);
         hasNextPage = requestBody.Response.hasNextPage;
-        console.log("HAPPY HAPPY HAPPY");
       }
     }
 
